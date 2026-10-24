@@ -46,6 +46,8 @@ Until these exist: search returns a clean "ranking not implemented yet" (HTTP 50
 
 Train loss kept falling while val loss rose after epoch 1 → **overfitting** (small dataset). Fixes being tried: lower learning rate (`--lr 1e-4`), training-data de-duplication, more data via sentence-level alignment, and a fixed 125-pair comparison set (`data/pdq_val_fixed.jsonl`) so all runs are scored on the same examples.
 
+**⚠️ Known risk (found 2026-10-24):** on real trial text the first checkpoint lowers reading grade (~25 → ~10) but writes generic or made-up sentences that a number/drug check cannot catch, e.g. *"Women age 18 years or older are more likely to have breast cancer than men."* (source was only an age rule) and openers like *"There are different types of treatment for…"*. Cause: trained on NCI education pages, used on trial eligibility text (domain mismatch). Being addressed with a sentence-level "support" check (each output sentence must match something in the source) and a trial-text evaluation set. Until the human-written `faithfulness_check` exists, the app shows glossary-swapped original wording, so patients never see unchecked model text.
+
 **Experiments:** _results table will be filled in here and in `docs/EVAL.md` when runs finish (real numbers only)._
 
 ## 4. Decisions the team needs to make
