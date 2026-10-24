@@ -19,7 +19,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Callable
 
-from backend import config
+from backend import config, support
 from backend.readability import reading_grade
 
 logger = logging.getLogger(__name__)
@@ -356,11 +356,41 @@ def glossary_swap(text: str) -> str:
 # ---------------------------------------------------------------------------
 # 6. Whole-trial summary
 # ---------------------------------------------------------------------------
-def _rewrite_pieces(pieces: list[str], nct_id: str) -> tuple[list[str], bool]:
-    """Rewrite each piece (as sentence-window chunks) and check every chunk against ITS source chunk.
+def _encode(texts: list[str]):
+    """MiniLM sentence vectors (the shared encoder from backend.embedding, loaded once). Tests replace this."""
+    from backend.embedding import get_encoder
+    return get_encoder()(texts)
 
-    Returns (outputs, any_fallback). Failed or empty chunks become the
-    glossary-swapped original and are logged with the missing terms.
+
+def _screen(src: str, out: str, nct: str, bad: list[str]) -> str | None:
+    """Apply the sentence-level guards to one output that already passed faithfulness_check.
+
+    `bad` = sentences the semantic-support check rejected. Boilerplate sentences
+    (generic PDQ openers absent from the source) are added. Rule: if nothing is
+    bad, keep the whole output; if some are bad, drop only those sentences
+    provided at least SUMMARY_MIN_KEPT_FRACTION of the sentences remain (so the
+    piece still covers the source); otherwise return None = fall back for the
+    whole piece. Dropping can only remove words, so nothing new can appear.
+    """
+    sents = support.split_sentences(out)
+    drop = set(bad) | set(support.boilerplate_sentences(src, out))
+    if not drop:
+        return out
+    kept = [x for x in sents if x not in drop]
+    logger.warning("support check nct=%s dropped_sentences=%s kept=%d/%d", nct, sorted(drop), len(kept), len(sents))
+    if kept and len(kept) / len(sents) >= config.SUMMARY_MIN_KEPT_FRACTION:
+        return " ".join(kept)
+    return None
+
+
+def _rewrite_pieces(pieces: list[str], nct: str) -> tuple[list[str], bool]:
+    """Rewrite each piece (as sentence-window chunks); a model chunk is shown only if BOTH checks pass.
+
+    Check 1: faithfulness_check (numbers/drugs/units, rule 3). Check 2:
+    support.sentence_support (every sentence must be semantically and lexically
+    backed by the source) plus the boilerplate-opener guard, see _screen.
+    Failed or empty chunks become the glossary-swapped original; details are
+    logged (nct, which check, offending text). Returns (outputs, any_fallback).
     """
     count = _token_counter()
     per_piece = [chunk_sentences(p, count) for p in pieces]
@@ -368,14 +398,25 @@ def _rewrite_pieces(pieces: list[str], nct_id: str) -> tuple[list[str], bool]:
     raw = simplify_chunks(flat)
     results: dict[int, str] = {}
     fallback = False
+    passed: list[int] = []
     for i, (src, out) in enumerate(zip(flat, raw)):
         ok, missing = _check(src, out) if out.strip() else (False, ["empty output"])
         if ok:
-            results[i] = out
+            passed.append(i)
         else:
             fallback = True
-            logger.warning("faithfulness fallback nct=%s missing=%s", nct_id, missing)
+            logger.warning("faithfulness fallback nct=%s missing=%s", nct, missing)
             results[i] = glossary_swap(src)
+    if passed:
+        verdicts = support.sentence_support_many([(flat[i], raw[i]) for i in passed], _encode)
+        for i, (_, bad, _n) in zip(passed, verdicts):
+            shown = _screen(flat[i], raw[i], nct, bad)
+            if shown is None:
+                fallback = True
+                logger.warning("support fallback nct=%s unsupported=%s", nct, bad)
+                results[i] = glossary_swap(flat[i])
+            else:
+                results[i] = shown
     out_pieces, k = [], 0
     for chunks in per_piece:
         out_pieces.append(" ".join(results[k + j] for j in range(len(chunks))))

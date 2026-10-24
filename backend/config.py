@@ -130,7 +130,15 @@ PDQ_SKIP_HEADINGS = (           # sections with no teachable content (boilerplat
 )
 PDQ_SENT_SIM_THRESHOLD = 0.70   # min cosine similarity to keep a SENTENCE-level pair
 PDQ_SENT_MIN_WORDS = 6          # sentences are short; lower floor than PDQ_MIN_WORDS
-PDQ_SENT_MAX_WINDOW = 3         # professional side may be 1-3 consecutive sentences
+PDQ_GENERIC_TARGET_PATTERNS = (  # generic PDQ intro/definition sentences; removed from targets unless the source has them
+    r"\bis a disease in which\b", r"\bare diseases? in which\b", r"\bthere are different types of\b",
+    r"\bare different types of\b", r"\bis a type of cancer that (?:forms|starts|begins)\b",
+    r"\bis a cancer that (?:forms|starts|begins)\b", r"\bsigns? (?:and symptoms )?of [^.]{0,60}\binclude\b",
+    r"\b(?:is|are) (?:a|an) (?:kind|type) of (?:cancer|tumor)\b", r"\bcancer is (?:a )?disease\b",
+)
+PDQ_CLEAN_SUPPORT_SIM = 0.45     # target sentence needs this MiniLM cosine to a source window (patient text uses different words, so no word-overlap test)
+PDQ_CLEAN_WORD_FRACTION = 0.0   # word-overlap test is off when cleaning targets (calibrated: 0.7 would drop 2/3 of sentences)
+PDQ_SENT_MAX_WINDOW = 3        # professional side may be 1-3 consecutive sentences
 PDQ_COMBINED_MIN_PARA_SIM = 0.70  # paragraph pairs at least this similar are what the combined run trains on
 PDQ_SENT_PATIENT_WINDOW = 2     # patient side: single sentence or 2-sentence window
 RANDOM_SEED = 42
@@ -165,16 +173,27 @@ SUMMARY_FALLBACK_TOKENS_PER_WORD = 1.4  # token estimate when no tokenizer is lo
 SUMMARY_MAX_CRITERIA_PER_SIDE = 25  # criteria beyond this are shown in original (glossary-swapped) wording
 SUMMARY_MIN_CRITERION_WORDS = 3     # shorter fragments ("None") are not worth a model call
 READING_LEVEL_DECIMALS = 1
+SUMMARY_MIN_KEPT_FRACTION = 0.5     # if unsupported/boilerplate sentences are dropped, keep the rest only when at least this share of the output survives
 
 # --- Semantic support check (backend/support.py, pipeline/baselines.py) -------
 SUPPORT_SIM_THRESHOLD = 0.60        # min MiniLM cosine between an output sentence and a source sentence/window
 SUPPORT_WORD_FRACTION = 0.70        # min share of an output sentence's content words found in source or glossary
 SUPPORT_MIN_CONTENT_WORDS = 2       # shorter sentences are judged on similarity alone
 SUPPORT_WINDOW = 2                  # source windows of 1..N consecutive sentences
-BOILERPLATE_OPENERS = (             # generic PDQ phrases the model may invent (flagged only when absent from source)
-    "there are different types of", "is a disease in which", "is a type of cancer that forms",
-    "is a cancer that forms", "are different types of",
+BOILERPLATE_OPENERS = (             # generic-claim / textbook-definition phrases: an output sentence containing one is
+    "there are different types of", "are different types of",   # DROPPED unless the exact phrase is also in the source
+    "is a disease in which", "is a type of cancer that forms", "is a cancer that forms",
+    "more likely to", "less likely to", "is a type of", "is a kind of", "are a group of",
+    "is used to treat", "may cause", "can cause", "most common", "is called", "forms in",
+    "signs of", "symptoms of",
 )
+RISK_WORDS = (                      # words that turn an eligibility rule into a medical claim (rule 7); a sentence that
+    "likely", "risk", "cause", "common", "survival", "cure", "better", "worse", "effective", "safe",
+)                                   # uses one the source does not use is dropped
+DEFINITION_RE = r"^\s*[\w\s\-\(\)]{1,60}\b(?:is|are)\s+(?:a|an|the)\s+\w+(?:\s+\w+){0,3}\s+(?:that|which|who)\b"
+DEFINITION_VERBS = ("may include", "can include", "includes")  # 'X may include Y' is also a definition-style claim
+DEFINITION_ABSENT_FRACTION = 0.50   # drop a definitional sentence when MORE than this share of its predicate's content words are absent from the source
+TAUTOLOGY_CONTENT_WORDS = 3         # "X is a type of X": the first N content words of the subject must reappear in the predicate
 RESULTS_DIR = ROOT_DIR / "results"
 TRIAL_EVAL_PATH = DATA_DIR / "trial_eval_set.jsonl"
 TRIAL_EVAL_COUNT = 40               # real trials in the trial-domain eval set

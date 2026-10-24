@@ -104,3 +104,65 @@ def has_boilerplate(source: str, output: str) -> bool:
     """True if the output contains a generic PDQ opener that the source does not contain."""
     o, s = output.lower(), source.lower()
     return any(p in o and p not in s for p in config.BOILERPLATE_OPENERS)
+
+
+_IS_A_RE = re.compile(r"^(.{2,80}?)\s+(?:is|are)\s+(?:an?\s+)?(?:type|kind|form|group)s?\s+of\s+(.+)$", re.IGNORECASE)
+
+
+def _ordered_content_words(text: str) -> list[str]:
+    return [_stem(w) for w in _WORD_RE.findall(text.lower()) if w not in _STOP]
+
+
+def is_tautology(sentence: str) -> bool:
+    """'Radiation therapy is a type of radiation therapy ...': the subject's first words reappear after 'is a type of'."""
+    m = _IS_A_RE.match(sentence.strip())
+    if not m:
+        return False
+    subj = _ordered_content_words(m.group(1))[: config.TAUTOLOGY_CONTENT_WORDS]
+    return bool(subj) and all(w in set(_ordered_content_words(m.group(2))) for w in subj)
+
+
+def adds_risk_claim(source: str, sentence: str) -> bool:
+    """True if the sentence uses a risk-lexicon word (likely, risk, cure, ...) that the source never uses."""
+    src = content_words(source)
+    return any(_stem(w) in content_words(sentence) and _stem(w) not in src for w in config.RISK_WORDS)
+
+
+_DEF_RE = re.compile(config.DEFINITION_RE, re.IGNORECASE)
+_DEF_SPLIT_RE = re.compile(r"\b(?:is|are)\s+(?:a|an|the)\s+", re.IGNORECASE)
+
+
+def is_unbacked_definition(source: str, sentence: str) -> bool:
+    """General rule: drop a definitional sentence whose predicate the source does not back.
+
+    Why: trial summaries and eligibility rules state requirements; they never
+    need us to add definitions the source didn't give. A sentence is definitional
+    if it looks like "X is a <noun> that/which/who ..." or says "may include /
+    can include / includes" (and the source lacks that verb phrase). It is dropped
+    when more than DEFINITION_ABSENT_FRACTION of the predicate's content words are
+    missing from the source. Source-backed definitions therefore survive.
+    """
+    low, src_low = sentence.lower(), source.lower()
+    if _DEF_RE.match(sentence):
+        pred = _DEF_SPLIT_RE.split(sentence, maxsplit=1)[-1]
+    else:
+        verb = next((v for v in config.DEFINITION_VERBS if re.search(rf"\b{v}\b", low) and not re.search(rf"\b{v}\b", src_low)), None)
+        if verb is None:
+            return False
+        pred = sentence
+    words = content_words(pred)
+    if not words:
+        return False
+    src = content_words(source)
+    return sum(1 for w in words if w not in src) / len(words) > config.DEFINITION_ABSENT_FRACTION
+
+
+def boilerplate_sentences(source: str, output: str) -> list[str]:
+    """Output sentences to hard-drop at inference time (generic claims the model learned from PDQ, not from the trial).
+
+    Four rules: (1) contains a generic-claim phrase from config.BOILERPLATE_OPENERS that the source lacks;
+    (2) 'X is a type of X' tautology; (3) introduces a risk-lexicon word absent from the source;
+    (4) unbacked definition (is_unbacked_definition).
+    """
+    return [x for x in split_sentences(output)
+            if has_boilerplate(source, x) or is_tautology(x) or adds_risk_claim(source, x) or is_unbacked_definition(source, x)]

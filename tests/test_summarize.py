@@ -184,6 +184,16 @@ def test_fk_grade_orders_text_difficulty():
 
 
 # ---------------------------------------------------------------------- summarize_trial
+def _fake_encode(texts):
+    """Bag-of-words hashing vectors (normalised): similar wording -> high cosine, no model download."""
+    import numpy as np
+    out = np.zeros((len(texts), 256), dtype="float32")
+    for r, t in enumerate(texts):
+        for w in re.findall(r"[a-z0-9]+", t.lower()):
+            out[r, hash(w) % 256] += 1
+    return out / np.maximum(np.linalg.norm(out, axis=1, keepdims=True), 1e-9)
+
+
 @pytest.fixture
 def fake_model(monkeypatch):
     """Word-count tokens + a fake generator that returns 'PLAIN: <text>' for every chunk."""
@@ -195,6 +205,7 @@ def fake_model(monkeypatch):
         calls.append(prompts)
         return ["PLAIN: " + p[len(config.TASK_PREFIX):] for p in prompts]
     monkeypatch.setattr(summarize, "_generate_batch", gen)
+    monkeypatch.setattr(summarize, "_encode", _fake_encode)
     return calls
 
 
@@ -424,3 +435,65 @@ def test_fc_returns_missing_list_empty_when_ok():
 def test_fc_reports_every_missing_term():
     ok, missing = fc("Age 18", "Age 21, taking 5 mg of pembrolizumab")
     assert ok is False and len(missing) >= 3
+
+
+# ------------------------------------------------------- support check + boilerplate guard
+SRC = "Patients must have breast cancer. Patients must not have taken chemotherapy in the past. Patients must be healthy enough to join."
+
+
+def _run_screen(monkeypatch, model_output, source=SRC):
+    """Run one piece through _rewrite_pieces with a fake model that returns `model_output`."""
+    monkeypatch.setattr(summarize, "_token_counter", lambda: summarize._word_count_tokens)
+    monkeypatch.setattr(summarize, "_generate_batch", lambda ps: [model_output for _ in ps])
+    monkeypatch.setattr(summarize, "_encode", _fake_encode)
+    monkeypatch.setattr(summarize, "faithfulness_check", lambda s, o: (True, []))
+    (out,), fb = summarize._rewrite_pieces([source], "NCT9")
+    return out, fb
+
+
+def test_supported_output_is_kept(monkeypatch):
+    out, fb = _run_screen(monkeypatch, "You must have breast cancer. You must not have taken chemotherapy before.")
+    assert out.startswith("You must have breast cancer") and fb is False
+
+
+def test_unsupported_sentence_is_dropped_rest_kept(monkeypatch, caplog):
+    bad = "Many women enjoy gardening on sunny weekends."
+    with caplog.at_level("WARNING"):
+        out, fb = _run_screen(monkeypatch, f"You must have breast cancer. You must not have taken chemotherapy before. {bad}")
+    assert bad not in out and "breast cancer" in out and "chemotherapy" in out
+    assert fb is False                                  # shown text is still checked model text
+    assert "gardening" in caplog.text and "NCT9" in caplog.text
+
+
+def test_fully_unsupported_falls_back_to_glossary_original(monkeypatch):
+    out, fb = _run_screen(monkeypatch, "Many women enjoy gardening on sunny weekends. Bananas are yellow fruit.")
+    assert fb is True and out.startswith("Patients must have breast cancer")
+    assert "gardening" not in out
+
+
+def test_mostly_unsupported_falls_back_whole_piece(monkeypatch):
+    # 1 supported of 3 sentences is below SUMMARY_MIN_KEPT_FRACTION (0.5): whole piece falls back
+    out, fb = _run_screen(monkeypatch, "You must have breast cancer. Bananas are yellow fruit. Gardening is relaxing on weekends.")
+    assert fb is True and "Bananas" not in out and out.startswith("Patients must have")
+
+
+def test_boilerplate_opener_sentence_is_dropped(monkeypatch):
+    src = "Patients must have breast cancer. Patients must not have taken chemotherapy."
+    out, fb = _run_screen(monkeypatch,
+                          "There are different types of breast cancer. You must have breast cancer. You must not have taken chemotherapy.",
+                          source=src)
+    assert "different types" not in out and "chemotherapy" in out and fb is False
+
+
+def test_boilerplate_allowed_when_source_has_it(monkeypatch):
+    src = "There are different types of breast cancer. Patients must have breast cancer."
+    out, _ = _run_screen(monkeypatch, "There are different types of breast cancer. You must have breast cancer.", source=src)
+    assert "different types" in out
+
+
+def test_faithfulness_stub_still_forces_fallback_even_if_supported(monkeypatch):
+    monkeypatch.setattr(summarize, "_token_counter", lambda: summarize._word_count_tokens)
+    monkeypatch.setattr(summarize, "_generate_batch", lambda ps: ["You must have breast cancer." for _ in ps])
+    monkeypatch.setattr(summarize, "_encode", _fake_encode)
+    (out,), fb = summarize._rewrite_pieces([SRC], "NCT9")   # real stub raises NotImplementedError
+    assert fb is True and out.startswith("Patients must have breast cancer. Patients must not")
