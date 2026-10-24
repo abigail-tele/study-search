@@ -6,8 +6,8 @@ Every dependency and data source used by this project. The Version column shows 
 
 | Name | Version | License | URL | What we use it for |
 |---|---|---|---|---|
-| fastapi | (not yet installed); min >=0.110.0 | MIT (verify) | https://pypi.org/project/fastapi/ | Web API (`/api/*` endpoints) |
-| uvicorn[standard] | (not yet installed); min >=0.29.0 | BSD-3-Clause (verify) | https://pypi.org/project/uvicorn/ | ASGI server that runs FastAPI |
+| fastapi | 0.162.0 (min >=0.110.0) | MIT | https://pypi.org/project/fastapi/ | Web API (`/api/*` endpoints) |
+| uvicorn[standard] | 0.54.0 (min >=0.29.0) | BSD-3-Clause | https://pypi.org/project/uvicorn/ | ASGI server that runs FastAPI |
 | httpx | 0.28.1 (min >=0.27.0) | BSD-3-Clause | https://pypi.org/project/httpx/ | Offline calls to the ClinicalTrials.gov v2 API and PDQ pages |
 | beautifulsoup4 | 4.15.0 (min >=4.12.0) | MIT | https://pypi.org/project/beautifulsoup4/ | Parsing cancer.gov PDQ HTML |
 | lxml | 6.1.3 (min >=5.2.0) | BSD-3-Clause | https://pypi.org/project/lxml/ | Fast HTML/XML parser used by BeautifulSoup |
@@ -15,13 +15,10 @@ Every dependency and data source used by this project. The Version column shows 
 | faiss-cpu | 1.15.1 | MIT | https://pypi.org/project/faiss-cpu/ | Vector similarity index (flat inner-product search) |
 | sentence-transformers | 6.2.0 (min >=3.0.0) | Apache-2.0 | https://pypi.org/project/sentence-transformers/ | Loads all-MiniLM-L6-v2 to embed trials and queries |
 | transformers | 5.20.2 (min >=4.41.0) | Apache-2.0 | https://pypi.org/project/transformers/ | Loads and runs flan-t5-base for plain-language rewriting |
-| datasets | (not yet installed); min >=2.19.0 | Apache-2.0 (verify) | https://pypi.org/project/datasets/ | Dataset handling for model training |
-| torch | 2.14.1+cpu (min >=2.3.0) | BSD-3-Clause (verify: pip metadata lists a combined expression of Apache-2.0, BSD-2-Clause, BSD-3-Clause, BSL-1.0, MIT and others) | https://pypi.org/project/torch/ | Deep learning backend for embeddings and T5 training/inference |
-| accelerate | (not yet installed); min >=0.30.0 | Apache-2.0 (verify) | https://pypi.org/project/accelerate/ | Training loop support for the Hugging Face stack |
+| torch | 2.14.1+cpu (min >=2.3.0) | Combined expression per package metadata: Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT (all permissive) | https://pypi.org/project/torch/ | Deep learning backend for embeddings and T5 training/inference |
 | sentencepiece | 0.2.2 (min >=0.2.0) | Apache-2.0 | https://pypi.org/project/sentencepiece/ | Tokenizer required by flan-t5 |
-| textstat | (not yet installed); min >=0.7.3 | MIT (verify) | https://pypi.org/project/textstat/ | Reading-level scores (Flesch-Kincaid grade) before and after rewriting |
-| rapidfuzz | 3.14.6 | MIT | https://pypi.org/project/rapidfuzz/ | Fuzzy string matching for cancer-type detection |
-| rouge-score | (not yet installed); min >=0.1.2 | Apache-2.0 (verify) | https://pypi.org/project/rouge-score/ | ROUGE-L evaluation of generated summaries |
+| rapidfuzz | 3.14.6 (min >=3.9.0) | MIT | https://pypi.org/project/rapidfuzz/ | Fuzzy string matching for cancer-type detection (planned for `taxonomy.py`; not imported yet) |
+| rouge-score | 0.1.2 (min >=0.1.2) | Apache-2.0 | https://pypi.org/project/rouge-score/ | ROUGE-L evaluation of generated summaries |
 | pytest | 9.1.1 (min >=8.0.0) | MIT | https://pypi.org/project/pytest/ | Test suite |
 
 ## Transitive dependencies
@@ -43,6 +40,7 @@ These are not listed in `requirements.txt` but are installed as dependencies of 
 | NCI PDQ cancer information summaries | cancer.gov pages, fetched offline | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/pdq | Professional and patient-version text pairs for training the plain-language model |
 | NCI PDQ breast cancer treatment patient page (Internet Archive Wayback Machine snapshot) | Wayback snapshot 2025-11-22 (`web/20251122021816`) | Public domain (U.S. government work); content remains NCI public domain | http://web.archive.org/web/20251122021816id_/https://www.cancer.gov/types/breast/patient/breast-treatment-pdq | Used because the live cancer.gov URL redirect-looped on 2026-10-24. Stored in `data/pdq_pages.json` as `patient_fetch_url`. |
 | NCI Dictionary of Cancer Terms / NCI Thesaurus | current online edition | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/dictionaries | Clinical and lay wording used in `data/cancer_types.json` |
+| NCI Dictionary of Cancer Terms (cancer.gov) | Online edition, paraphrased 2026-10-24 | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/dictionaries | Plain-language definitions paraphrased (by an AI agent) into `data/glossary.json` (76 terms), shown to patients as a fallback |
 | U.S. Census Bureau Gazetteer ZCTA file | 2024 release (`2024_Gaz_zcta_national.zip`) | Public domain (U.S. government work) | https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_Gaz_zcta_national.zip | ZIP code centroid coordinates for distance calculation (`data/zip_centroids.csv`, built by `pipeline/zip_centroids.py`) |
 
 ## Models
@@ -67,23 +65,29 @@ A separate virtual environment used only for fine-tuning flan-t5-base on the GPU
 
 ## Full installed dependency list (auto-generated 2026-10-24)
 
-Generated from the installed distributions in  (importlib.metadata), excluding pip, setuptools and wheel. Includes both direct and transitive packages.
+Generated from the installed distributions in `.venv` (importlib.metadata), excluding pip, setuptools and wheel. Includes both direct and transitive packages. License lookup order: License-Expression, then License, then classifiers (each short field under 80 characters); if none of those is short, the full License-Expression is used.
 
 | Name | Version | License |
 |---|---|---|
+| absl-py | 2.5.1 | Apache-2.0 |
 | annotated-doc | 0.0.5 | MIT |
+| annotated-types | 0.8.0 | MIT |
 | anyio | 4.15.1 | MIT |
 | beautifulsoup4 | 4.15.0 | MIT License |
 | certifi | 2026.10.23 | MPL-2.0 |
 | click | 8.5.0 | BSD-3-Clause |
 | cloudpickle | 3.1.2 | BSD-3-Clause |
 | colorama | 0.4.6 | BSD License |
+| defusedxml | 0.7.1 | PSFL |
+| faiss-cpu | 1.15.1 | MIT |
+| fastapi | 0.162.0 | MIT |
 | filelock | 3.32.3 | MIT |
 | fsspec | 2026.7.0 | BSD-3-Clause |
 | h11 | 0.16.0 | MIT |
 | hf-xet | 1.7.0 | Apache-2.0 |
 | httpcore | 1.0.9 | BSD-3-Clause |
 | httpcore2 | 2.16.0 | BSD-3-Clause |
+| httptools | 0.9.0 | MIT |
 | httpx | 0.28.1 | BSD-3-Clause |
 | httpx2 | 2.16.0 | BSD-3-Clause |
 | huggingface_hub | 2.3.0 | Apache-2.0 |
@@ -98,21 +102,30 @@ Generated from the installed distributions in  (importlib.metadata), excluding p
 | mpmath | 1.3.0 | BSD |
 | narwhals | 2.27.1 | MIT |
 | networkx | 3.6.1 | BSD-3-Clause |
+| nltk | 3.10.4 | Apache License, Version 2.0 |
 | numpy | 2.4.6 | BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0 |
+| opentelemetry-api | 1.45.1 | Apache-2.0 |
 | packaging | 26.3 | Apache-2.0 OR BSD-2-Clause |
 | pluggy | 1.7.0 | MIT |
+| pydantic | 2.14.1 | MIT |
+| pydantic_core | 2.50.1 | MIT |
 | Pygments | 2.21.0 | BSD-2-Clause |
 | pytest | 9.1.1 | MIT |
+| python-dotenv | 1.2.4 | BSD-3-Clause |
 | PyYAML | 6.0.3 | MIT |
+| RapidFuzz | 3.14.6 | MIT |
 | regex | 2026.9.29 | Apache-2.0 AND CNRI-Python |
 | rich | 15.0.0 | MIT |
+| rouge_score | 0.1.2 | Apache Software License |
 | safetensors | 0.8.0 | Apache Software License |
 | scikit-learn | 1.9.1 | BSD-3-Clause |
 | scipy | 1.17.1 | BSD License |
 | sentence-transformers | 6.2.0 | Apache-2.0 |
 | sentencepiece | 0.2.2 | Apache-2.0 |
 | shellingham | 1.5.4 | ISC License |
+| six | 1.17.0 | MIT |
 | soupsieve | 3.0.4 | MIT |
+| starlette | 1.10.0 | BSD-3-Clause |
 | sympy | 1.14.0 | BSD |
 | threadpoolctl | 3.7.0 | BSD-3-Clause |
 | tokenizers | 0.23.3 | Apache Software License |
@@ -121,13 +134,20 @@ Generated from the installed distributions in  (importlib.metadata), excluding p
 | transformers | 5.20.2 | Apache 2.0 License |
 | truststore | 0.10.5 | MIT |
 | typer | 0.27.3 | MIT |
+| typing-inspection | 0.4.4 | MIT |
 | typing_extensions | 4.16.0 | PSF-2.0 |
+| uvicorn | 0.54.0 | BSD-3-Clause |
+| watchfiles | 1.3.0 | MIT |
+| websockets | 17.3 | BSD-3-Clause |
 
 ### License notes
 
 - certifi MPL-2.0 (transitive via httpx, unmodified): reviewer says acceptable.
 - tqdm MPL-2.0 AND MIT (transitive, unmodified): acceptable.
-- CNRI-Python (regex, via transformers), PSF-2.0 (typing_extensions), ISC (shellingham): permissive but not in the rule 5 list (MIT, Apache 2.0, BSD, public domain). NEEDS HUMAN REVIEW.
+- textstat removed; reading level uses our own Flesch-Kincaid in `backend/readability.py`.
+- NEEDS HUMAN REVIEW (permissive, but not on the rule 5 list of MIT, Apache 2.0, BSD, public domain):
+  - regex: Apache-2.0 AND CNRI-Python (transitive via transformers).
+  - typing_extensions: PSF-2.0 (transitive).
+  - shellingham: ISC (transitive via typer).
+  - defusedxml: PSF-2.0 (transitive via rouge-score, which is in `pipeline/compare_checkpoints.py` and `pipeline/baselines.py`).
 - No package with GPL, LGPL or AGPL in its license was found. No package has an unknown license.
-- textstat (planned, not installed) depends on pyphen (GPLv2+/LGPLv2+/MPL-1.1 tri-license): needs human decision before install. Use under MPL-1.1, or write our own Flesch-Kincaid.
-- rouge-score 0.1.2 (Apache-2.0; deps nltk Apache-2.0, absl-py Apache-2.0, six MIT, defusedxml PSF-2.0) installed in `.venv` and `.venv-train` for ROUGE in `pipeline/compare_checkpoints.py` and `pipeline/baselines.py`. defusedxml (PSF-2.0) is not on the rule 5 list: NEEDS HUMAN REVIEW.

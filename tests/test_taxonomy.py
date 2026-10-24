@@ -102,3 +102,27 @@ def test_bare_all_never_matches_leukemia():
 @HUMAN
 def test_all_leukemia_phrase_matches():
     assert "leukemia_all" in taxonomy.detect_cancer_types("all leukemia")
+
+
+@HUMAN
+def test_mixed_query_unions_types():
+    assert set(taxonomy.detect_cancer_types("breast and lung cancer")) == {
+        "breast", "lung_nsclc", "lung_sclc"}
+
+
+@HUMAN
+def test_small_cell_lung_cancer_includes_sclc():
+    out = taxonomy.detect_cancer_types("small cell lung cancer")
+    assert "lung_sclc" in out
+
+
+@HUMAN
+@pytest.mark.parametrize("q", ["small", "camel", "ball", "a small camel and a ball"])
+def test_short_acronyms_not_matched_inside_words(q):
+    out = set(taxonomy.detect_cancer_types(q))
+    assert not out & {"leukemia_aml", "leukemia_cml", "leukemia_all"}
+
+
+@HUMAN
+def test_aml_whole_word_matches():
+    assert "leukemia_aml" in taxonomy.detect_cancer_types("AML")

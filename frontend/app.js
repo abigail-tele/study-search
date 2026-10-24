@@ -203,9 +203,9 @@ function keyFacts(s) {
 function bullets(items) { const ul = el("ul"); (items || []).forEach(i => ul.appendChild(el("li", { text: i }))); return ul; }
 
 function renderSummary(body, m) {
-  const ok = m.faithful && !m.fallback_used;
+  const ok = !m.fallback_used;
   const status = ok ? el("span", { class: "check", text: "✓ Checked against the original" })
-                    : el("span", { class: "notice", text: "Showing original wording (the simplified text did not pass our accuracy check)" });
+                    : el("span", { class: "notice", text: "Some parts are shown in the original wording (with plain definitions) because our checker couldn't confirm the simplified version." });
   const rl = m.reading_level ? el("p", { class: "muted", text: "Reading level: grade " + m.reading_level.before + " → grade " + m.reading_level.after }) : null;
   body.appendChild(el("section", { class: "panel" },
     el("h3", { text: "What this study is testing" }), status, rl, el("p", { text: m.what_is_tested })));

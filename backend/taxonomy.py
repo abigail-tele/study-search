@@ -32,17 +32,27 @@ def cancer_type_chips() -> list[dict]:
 def detect_cancer_types(query: str) -> list[str]:
     """Return the cancer type ids a plain-words query refers to; [] if off-topic.
 
-    Intended algorithm (try each step in order; stop at the first that matches):
-      1. Exact match: lowercase/trim the query; if it contains a lay_term or
-         clinical_term of a type (whole-word match), return that type's id.
-      2. Umbrella terms: if it contains a phrase from umbrella_terms.json
-         ("blood cancer", "lung cancer"), return ALL the listed ids.
-      3. Fuzzy: rapidfuzz partial/ratio match of the query (and its word
-         n-grams) against all lay + clinical terms with score >=
-         config.TYPE_DETECT_FUZZY_THRESHOLD ("brest cancer", "prostrate").
-      4. Embedding fallback: embed the query with MiniLM (backend.embedding.
-         get_encoder) and compare with the embedded terms; accept the best
-         type(s) only if cosine similarity >= config.TYPE_DETECT_EMBED_THRESHOLD.
+    Intended algorithm:
+      1. Exact: lowercase/trim the query; every type whose lay_term or
+         clinical_term appears as a whole word/phrase is a match.
+      2. Umbrella: every phrase from umbrella_terms.json ("blood cancer",
+         "lung cancer") in the query adds ALL its listed ids.
+      Steps 1 and 2 are UNIONED (do not stop at the first hit), so a mixed
+      query like "breast and lung cancer" returns breast, lung_nsclc and
+      lung_sclc together.
+      3. Fuzzy (only if steps 1+2 found nothing): rapidfuzz partial/ratio match
+         of the query (and its word n-grams) against lay + clinical terms with
+         score >= config.TYPE_DETECT_FUZZY_THRESHOLD ("brest cancer",
+         "prostrate"). Skip every term of 3 letters or fewer (aml, cll, cml,
+         all, nhl): partial_ratio finds them inside unrelated words such as
+         "small", "camel" or "ball".
+      4. Embedding fallback (only if steps 1-3 found nothing): embed the query
+         with MiniLM (backend.embedding.get_encoder) and compare with the
+         embedded terms; accept the best type(s) only if cosine similarity >=
+         config.TYPE_DETECT_EMBED_THRESHOLD.
+    Short acronyms (3 letters or fewer) only count as whole words in step 1,
+    and "ALL" (leukemia) only counts case-sensitively, so "AML" matches
+    leukemia_aml but "small" does not.
     Rules: never match the bare word "all" (the lay term "all leukemia" only
     counts as that whole phrase, so "all of my family" is off-topic). Anything
     that matches nothing is off-topic: return [] so search never touches the

@@ -7,8 +7,9 @@ Why thin: judges can read this file in two minutes. Rules enforced here:
 from __future__ import annotations
 
 import logging
+import os
 import re
-from contextlib import contextmanager
+from contextlib import asynccontextmanager, contextmanager
 from typing import Iterator
 
 from fastapi import FastAPI, Request
@@ -17,7 +18,11 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from backend import config
+# Rule 4: the live server must never contact Hugging Face. Set BEFORE any HF library is imported.
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
+from backend import config  # noqa: E402
 
 MAX_QUERY_CHARS = 200
 MAX_AGE_YEARS = 120
@@ -51,7 +56,21 @@ def _install_log_redaction() -> None:
 
 _install_log_redaction()
 
-app = FastAPI(title="Cancer Trials Plain-Language Finder", docs_url=None, redoc_url=None)
+@asynccontextmanager
+async def _lifespan(_: FastAPI):
+    """Warm up at startup so the first user does not wait ~9 s and a missing model fails loudly now.
+
+    Set STUDY_SEARCH_SKIP_WARMUP=1 to skip (tests).
+    """
+    if not os.environ.get("STUDY_SEARCH_SKIP_WARMUP"):
+        from backend import embedding, search as search_mod
+        embedding.get_encoder()
+        search_mod._get_index()
+        logging.getLogger("uvicorn.error").info("Warm-up done: encoder and FAISS index loaded from local files.")
+    yield
+
+
+app = FastAPI(title="Cancer Trials Plain-Language Finder", docs_url=None, redoc_url=None, lifespan=_lifespan)
 
 
 def _err(status: int, message: str) -> JSONResponse:

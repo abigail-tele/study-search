@@ -166,3 +166,106 @@ def boilerplate_sentences(source: str, output: str) -> list[str]:
     """
     return [x for x in split_sentences(output)
             if has_boilerplate(source, x) or is_tautology(x) or adds_risk_claim(source, x) or is_unbacked_definition(source, x)]
+
+
+# ---------------------------------------------------------------------------
+# Direction / negation check (automatic, NOT human-owned)
+# ---------------------------------------------------------------------------
+# Why: the number check only asks "is 18 in the source?". It cannot see that
+# "at least 18" became "under 18", or that "no prior chemotherapy" became
+# "prior chemotherapy". Both turn a rule into its opposite. Two simple rules:
+#   1. Number direction: for every number that appears in both texts, if the
+#      source bounds it one way (lower: at least / or older / >= ...) and the
+#      output bounds it the other way (upper: under / up to / <= ...), flag it.
+#      If the source gives no bound for that number nothing is flagged (the
+#      number check still guards the digits themselves).
+#   2. Negation: split both texts into short clauses. For each output clause,
+#      find the source clause sharing the most content words (at least
+#      DIRECTION_MIN_SHARED_WORDS). If one is negated (no/not/without/never/
+#      cannot/excluded/ineligible...) and the other is not, flag the clause.
+# When unsure (no overlapping clause, different wording) it stays silent: it is
+# a cheap tripwire for flips, not a proof of equivalence.
+_NUM = r"(\d[\d,]*(?:\.\d+)?)"
+_LOWER, _UPPER = "lower", "upper"
+
+
+def _alt(phrases) -> str:
+    return "|".join(re.escape(p) for p in sorted(phrases, key=len, reverse=True))
+
+
+_PREFIX_DIR = {p: _LOWER for p in config.BOUND_LOWER_PREFIX} | {p: _UPPER for p in config.BOUND_UPPER_PREFIX}
+_SUFFIX_DIR = {p: _LOWER for p in config.BOUND_LOWER_SUFFIX} | {p: _UPPER for p in config.BOUND_UPPER_SUFFIX}
+_PREFIX_RE = re.compile(rf"(?<!\w)({_alt(_PREFIX_DIR)})\s*(?:of\s+)?{_NUM}", re.IGNORECASE)
+_SUFFIX_RE = re.compile(rf"{_NUM}\s*(?:[A-Za-z%/]+\s+){{0,3}}({_alt(_SUFFIX_DIR)})(?!\w)", re.IGNORECASE)
+_PLUS_RE = re.compile(rf"{_NUM}\+")
+
+
+def _norm_num(s: str) -> str:
+    return "%g" % float(s.replace(",", ""))
+
+
+def number_bounds(text: str) -> list[tuple[str, str, str]]:
+    """(number, 'lower'|'upper', matched phrase) for every bounded number in the text."""
+    out = []
+    for m in _PREFIX_RE.finditer(text):
+        out.append((_norm_num(m.group(2)), _PREFIX_DIR[m.group(1).lower()], m.group(0)))
+    for m in _SUFFIX_RE.finditer(text):
+        out.append((_norm_num(m.group(1)), _SUFFIX_DIR[m.group(2).lower()], m.group(0)))
+    out += [(_norm_num(m.group(1)), _LOWER, m.group(0)) for m in _PLUS_RE.finditer(text)]
+    return out
+
+
+def _flipped_numbers(source: str, output: str) -> list[str]:
+    src: dict[str, dict[str, str]] = {}
+    for n, d, phrase in number_bounds(source):
+        src.setdefault(n, {})[d] = phrase
+    problems = []
+    for n, d, phrase in number_bounds(output):
+        if n in src and d not in src[n]:
+            problems.append(f"direction flipped for {n}: output '{phrase}' vs source '{next(iter(src[n].values()))}'")
+    return problems
+
+
+_NEG_RE = re.compile(rf"(?<!\w)(?:{_alt(config.NEGATION_CUES)})(?!\w)|n't", re.IGNORECASE)
+_NEUTRAL_RE = re.compile(rf"(?<!\w)(?:{_alt(config.NEGATION_NEUTRAL_PHRASES)})(?!\w)", re.IGNORECASE)
+_CLAUSE_RE = re.compile(r"[.;:\n]|\s+(?:and|but|or)\s+(?=(?:must|should|are|is|have|has|do|does|be|can|cannot|may|will)\b)", re.IGNORECASE)
+# words that carry no topic: ignoring them stops "must"/"patients" alone from matching two clauses
+_GENERIC = frozenset("must should need patient participant subject person people trial study includ include eligible eligibility criteria".split())
+
+
+def _clauses(text: str) -> list[tuple[bool, frozenset[str]]]:
+    """(is_negated, topic words) per clause. Neutral phrases ('no more than') are blanked first."""
+    out = []
+    for c in _CLAUSE_RE.split(text):
+        c = _NEUTRAL_RE.sub(" ", c)
+        neg = bool(_NEG_RE.search(c))
+        words = frozenset(w for w in content_words(_NEG_RE.sub(" ", c)) if w not in _GENERIC)
+        if words:
+            out.append((neg, words))
+    return out
+
+
+def _flipped_negations(source: str, output: str) -> list[str]:
+    src = _clauses(source)
+    problems = []
+    for o_neg, o_words in _clauses(output):
+        need = min(config.DIRECTION_MIN_SHARED_WORDS, len(o_words))
+        scored = [(len(o_words & s_words), s_neg) for s_neg, s_words in src
+                  if len(o_words & s_words) / len(s_words) >= config.DIRECTION_MIN_SOURCE_FRACTION]
+        best = max((n for n, _ in scored), default=0)
+        if best < need or best / len(o_words) < config.DIRECTION_MIN_SHARED_FRACTION:
+            continue                      # no source clause says "the same thing": stay silent
+        if all(s_neg != o_neg for n, s_neg in scored if n == best):
+            problems.append(f"negation flipped on {sorted(o_words)}: output {'negates' if o_neg else 'asserts'}, source {'asserts' if o_neg else 'negates'}")
+    return problems
+
+
+def direction_check(source: str, output: str) -> tuple[bool, list[str]]:
+    """(ok, problems): did the output reverse a comparison or a negation that the source states?"""
+    problems = _flipped_numbers(source, output) + _flipped_negations(source, output)
+    return not problems, problems
+
+
+def direction_flipped_sentences(source: str, output: str) -> list[str]:
+    """Output sentences that direction_check rejects (checked one by one against the whole source)."""
+    return [s for s in split_sentences(output) if not direction_check(source, s)[0]]

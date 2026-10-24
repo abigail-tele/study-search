@@ -97,3 +97,41 @@ def test_source_backed_definition_kept():
     src = "A biomarker is a molecule that is found in blood and tissue. Patients must have a biomarker."
     assert not support.is_unbacked_definition(src, "A biomarker is a molecule that is found in blood and tissue.")
     assert not support.is_unbacked_definition(src, "Patients must have a biomarker.")
+
+
+# ------------------------------------------------------------ direction_check
+@pytest.mark.parametrize("source,output", [
+    ("Age at least 18 years", "Age under 18 years"),
+    ("Patients must be 18 years or older", "You must be younger than 18 years"),
+    ("At least 2 prior lines", "At most 2 prior lines"),
+    ("\u2265 2 lines of therapy", "\u2264 2 lines of therapy"),
+    ("No prior chemotherapy", "Prior chemotherapy"),
+    ("Patients must not be pregnant", "Patients must be pregnant"),
+    ("Patients with brain metastases are excluded", "Patients with brain metastases are included"),
+])
+def test_direction_flips_are_caught(source, output):
+    ok, problems = support.direction_check(source, output)
+    assert not ok and problems
+
+
+@pytest.mark.parametrize("source,output", [
+    ("Patients must be 18 years or older", "You must be at least 18 years old"),
+    ("Age 18+", "At least 18 years old"),
+    ("No prior chemo", "You have not had chemotherapy before"),
+    ("No prior chemotherapy", "You have not had prior chemotherapy"),
+    ("Life expectancy of no more than 6 months", "Life expectancy of less than 6 months"),
+    ("Patients must be 18 years or older and must not be pregnant", "You must be 18 or older. You must not be pregnant."),
+    ("Patients must have breast cancer. Patients must not have had chemotherapy.", "You must have breast cancer."),
+])
+def test_direction_safe_paraphrases_pass(source, output):
+    assert support.direction_check(source, output) == (True, [])
+
+
+def test_direction_unrelated_sentences_stay_silent():
+    assert support.direction_check("No prior chemotherapy", "You must be 18 years old")[0]
+
+
+def test_direction_flipped_sentences_reports_only_bad_ones():
+    src = "Patients must be at least 18 years old. Patients must have breast cancer."
+    bad = support.direction_flipped_sentences(src, "You must have breast cancer. You must be under 18 years old.")
+    assert bad == ["You must be under 18 years old."]

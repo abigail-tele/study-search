@@ -8,7 +8,11 @@ Central settings for the whole project. Every path, threshold, k value, and UI s
 
 ## app.py
 
-TODO: 3–5 plain-English sentences.
+The web server only reads files already on disk (SQLite, the FAISS index and the local MiniLM model in `models/`); it never calls ClinicalTrials.gov or Hugging Face while a person is waiting. When it starts, it loads the model and index once so the first visitor is fast and any missing file shows up immediately instead of mid-search. Hugging Face offline mode is switched on in code and in `run_api.ps1` as a second safety lock. Search text and ZIP codes are scrubbed from logs. Run `python -m pipeline.fetch_models` once before the first start.
+
+## embedding.py
+
+This small module is the single place that turns text into 384 numbers with all-MiniLM-L6-v2, so trials (offline) and questions (live) share one vector space. It loads the model only from the local `models/all-MiniLM-L6-v2` folder and raises a clear error if it is missing, rather than quietly downloading it during a request.
 
 ## db.py
 
@@ -16,15 +20,23 @@ db.py defines our database, a single SQLite file that holds every trial, the can
 
 ## taxonomy.py
 
-This file holds the list of cancer types (breast, lung, leukemia and so on) and broad phrases like "blood cancer" that stand for several types at once. Its main job is `detect_cancer_types`, which reads what a patient typed and decides which cancer type they mean, trying exact wording first, then broad phrases, then close spellings ("brest"), and last a meaning comparison. If nothing matches, the question is not about cancer and the app shows cancer buttons instead of searching, which is how we keep to the cancer-only rule. The detection function is written by a team member, so this section is still theirs to fill in.
+This file holds the list of cancer types (breast, lung, leukemia and so on) and broad phrases like "blood cancer" that stand for several types at once. Its main job is `detect_cancer_types`, which reads what a patient typed and decides which cancer type they mean, combining exact wording and broad phrases (so "breast and lung cancer" finds breast plus both lung types), and only if neither matches trying close spellings ("brest") and last a meaning comparison. Very short names like AML or CLL only count as whole words, so "small" or "camel" never trigger a leukemia. If nothing matches, the question is not about cancer and the app shows cancer buttons instead of searching, which is how we keep to the cancer-only rule. The detection function is written by a team member, so this section is still theirs to fill in.
 
 ## search.py
 
-Search first narrows the database to trials tagged with the cancer type(s) found, and to the status, age and distance the patient chose, so every ranked result is usable. Inside that group it makes two ranked lists: one from keyword matching (SQLite FTS5) and one from meaning matching (FAISS over MiniLM vectors, which finds trials that say the same thing in different words). Reciprocal rank fusion then merges the two lists by giving each trial 1/(60 + position) points from each list, so trials that both methods like rise to the top. Finally the top 10 become cards, each with a citation built only from stored ClinicalTrials.gov fields and, if a ZIP was given, the distance to the nearest site. Nothing here calls the internet, and the query and ZIP are never saved or logged.
+Search first narrows the database to trials tagged with every cancer type found (a query naming two cancers keeps trials of both), and to the status, age and distance the patient chose, so every ranked result is usable. Inside that group it makes two ranked lists: one from keyword matching (SQLite FTS5) and one from meaning matching (FAISS over MiniLM vectors, which finds trials that say the same thing in different words). Reciprocal rank fusion then merges the two lists by giving each trial 1/(60 + position) points from each list, so trials that both methods like rise to the top. Finally the top 10 become cards, each with a citation built only from stored ClinicalTrials.gov fields and, if a ZIP was given, the distance to the nearest site. Nothing here calls the internet, and the query and ZIP are never saved or logged.
 
 ## summarize.py
 
-summarize.py turns a trial's brief summary and eligibility text into plain language. It first splits the eligibility text into "can join" and "cannot join" lists (so the two are never mixed up), then cuts long text into whole-sentence chunks that fit the small model's input limit. The fine-tuned flan-t5 model rewrites each chunk, and every rewritten chunk must pass a faithfulness check: any number, age, unit, drug, gene or stage term in the rewrite has to appear in the original. After that check, a second automatic check compares every sentence of the rewrite with the source (backend/support.py: a small sentence-embedding model plus a word-overlap test). Sentences that say something the source does not, or that start with a generic textbook opener such as "There are different types of...", are dropped on their own as long as at least half of the rewrite survives; otherwise the whole chunk falls back. Details (trial id, which check failed, the dropped sentences) go to the log, and the response shape does not change. A chunk that fails is replaced by the original wording with hard words explained from a short glossary based on the NCI Dictionary of Cancer Terms, and the summary is marked as using the fallback. Until the team writes the faithfulness check, every chunk fails on purpose, so patients only ever see checked or original text. Only the summary and eligibility text are rewritten; titles, ages, sites and dates always come straight from ClinicalTrials.gov, and nothing about the visitor is stored.
+summarize.py turns a trial's brief summary and eligibility text into plain language. It first splits the eligibility text into "can join" and "cannot join" lists (so the two are never mixed up), then cuts long text into whole-sentence chunks that fit the small model's input limit. The fine-tuned flan-t5 model rewrites each chunk, and every rewritten chunk must pass a faithfulness check: any number, age, unit, drug, gene or stage term in the rewrite has to appear in the original. If that check ever crashes, only that chunk falls back (the error type and trial id are logged, never the text). After that check, automatic sentence-level guards from backend/support.py run: a meaning-and-word-overlap check against the source, a generic-opener filter, and a direction check that catches flipped comparisons or negations. Sentences caught by any guard are dropped on their own as long as at least half of the rewrite survives; otherwise the whole chunk falls back. A chunk that fails is replaced by the original wording with hard words explained from a short glossary based on the NCI Dictionary of Cancer Terms. The result has two flags: `fallback_used` is true if any part fell back to original wording, and `faithful` is true only when nothing fell back, meaning everything shown is checked model text. Until the team writes the faithfulness check, every chunk fails on purpose, so patients only ever see checked or original text. Only the summary and eligibility text are rewritten; titles, ages, sites and dates always come straight from ClinicalTrials.gov, and nothing about the visitor is stored.
+
+## support.py
+
+support.py holds the automatic safety nets that run after the model rewrites a chunk, on top of the team's number-and-drug faithfulness check. The support check compares each rewritten sentence with the source using sentence embeddings (MiniLM) and also requires most of its words to come from the source or the NCI glossary, so a fluent but invented sentence like "Women over 18 are more likely to get breast cancer" is dropped. Further filters drop generic textbook openers, "X is a type of X" sentences, risk words the trial never used ("likely", "cure"), and definitions the source did not give. The direction check looks for rules turned into their opposite: a number whose bound flips ("at least 18" becoming "under 18", ">= 2" becoming "<= 2"), and a statement whose negation flips ("no prior chemotherapy" becoming "prior chemotherapy", "excluded" becoming "included"). It does this by comparing short clauses that share most of their topic words; when the wording differs too much to compare, it stays quiet instead of guessing, so it is a cheap tripwire rather than a proof. All thresholds and word lists live in config.py.
+
+## readability.py
+
+readability.py estimates how hard a text is to read, using the Flesch-Kincaid grade formula: longer sentences and longer words raise the grade. We wrote the short formula ourselves instead of adding a library, with a simple vowel-group syllable counter, which is accurate enough to compare the original text with our rewrite but not to publish as an exact grade. summarize.py stores a "before" and an "after" grade with every summary so the app can show that the plain-language version is easier to read.
 
 ## geo.py
 
@@ -54,11 +66,11 @@ This script teaches a small existing language model (Google's flan-t5-base) to d
 
 ## batch_summarize.py
 
-TODO: 3–5 plain-English sentences.
+Not built yet (Phase 3). This offline script will run the fine-tuned model over every stored trial ahead of time, so patients get a summary instantly instead of waiting for the model. Each rewrite will go through the same faithfulness check as live summaries, and the result (or the safe fallback text) will be saved in the database's summaries table. The live website only reads these saved rows, and falls back to on-the-spot generation if one is missing.
 
 ## evaluate.py
 
-TODO: 3–5 plain-English sentences.
+Not built yet (Phase 3). This script will grade the final model on the held-out test pairs that training never saw, using scores for readability, overlap with the NCI patient text, and how often the faithfulness check passes. It is run once at the end so the numbers are honest, and the results go into `docs/EVAL.md`.
 
 ## frontend
 
@@ -67,3 +79,15 @@ The frontend is one plain HTML page with CSS and JavaScript, with no build step 
 ## data/umbrella_terms.json (note for type detection)
 
 Broad phrases such as "lung cancer", "skin cancer" or "blood cancer" are not single cancer types, so they live in `data/umbrella_terms.json` (phrase to list of type ids) instead of any one type's lay terms. Detection must show all the listed types for these, and must never match the bare word "all" (the lay term "all leukemia" only counts as that whole phrase).
+
+## baselines.py
+
+baselines.py answers "is our fine-tuned model actually better than simple alternatives?" It runs the same examples through easy comparisons (copying the source unchanged, the untrained flan-t5 with a simple prompt, the untrained model shown three examples) and through each of our trained checkpoints. Every output gets scored for how close it is to the NCI patient wording (ROUGE and word-overlap precision, recall and F1) and for key terms like numbers, drugs and stages, where low precision means the model invented facts. The scores are written to a results table and error-analysis files so we can show judges the evidence.
+
+## clean_pairs.py
+
+The first models we trained picked up textbook habits such as "X is a disease in which..." and wrote them even when a trial never said so. clean_pairs.py goes through every training answer sentence by sentence and deletes the ones that are generic openers or that the source text does not support, using the same support check the live app uses (with looser limits, since patient and doctor wording differ). If too little of an answer is left the whole pair is dropped, and duplicates are removed again. The original files are never overwritten, so the cleaning can be re-run or undone.
+
+## compare_checkpoints.py
+
+Each training run splits its own validation data, so their loss numbers can't be compared fairly. This script freezes one fixed set of 125 validation pairs and scores every checkpoint on it the same way: loss, ROUGE-L against the NCI patient text, reading grade level (lower is easier), and the share of outputs whose numbers all appear in the source. That lets us pick the best checkpoint by facts instead of by feel. It never touches the test split, which stays reserved for the final evaluation.

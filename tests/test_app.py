@@ -1,4 +1,6 @@
 """API tests. search/db/taxonomy are monkeypatched, so these pass without a built database (rule 4: no network)."""
+import os
+os.environ.setdefault("STUDY_SEARCH_SKIP_WARMUP", "1")  # tests never load real models
 import logging
 
 import pytest

@@ -24,6 +24,8 @@ PDQ_SENT_PAIRS_PATH = DATA_DIR / "pdq_pairs_sent.jsonl"   # sentence-level pairs
 PDQ_COMBINED_PAIRS_PATH = DATA_DIR / "pdq_pairs_combined.jsonl"  # paragraph + sentence pairs, deduped together
 PDQ_VAL_FIXED_PATH = DATA_DIR / "pdq_val_fixed.jsonl"     # frozen val set used to compare checkpoints
 CHECKPOINT_DIR = ROOT_DIR / "checkpoints"
+MODELS_DIR = ROOT_DIR / "models"  # downloaded once by pipeline/fetch_models.py; git-ignored
+EMBED_MODEL_DIR = MODELS_DIR / "all-MiniLM-L6-v2"  # the ONLY place the live app loads MiniLM from (rule 4)
 FRONTEND_DIR = ROOT_DIR / "frontend"
 MOCK_DIR = FRONTEND_DIR / "mock"
 
@@ -193,7 +195,21 @@ RISK_WORDS = (                      # words that turn an eligibility rule into a
 DEFINITION_RE = r"^\s*[\w\s\-\(\)]{1,60}\b(?:is|are)\s+(?:a|an|the)\s+\w+(?:\s+\w+){0,3}\s+(?:that|which|who)\b"
 DEFINITION_VERBS = ("may include", "can include", "includes")  # 'X may include Y' is also a definition-style claim
 DEFINITION_ABSENT_FRACTION = 0.50   # drop a definitional sentence when MORE than this share of its predicate's content words are absent from the source
-TAUTOLOGY_CONTENT_WORDS = 3         # "X is a type of X": the first N content words of the subject must reappear in the predicate
+# direction / negation check (support.direction_check): comparator phrases that sit next to a number
+BOUND_LOWER_PREFIX = ("greater than or equal to", "at least", "no less than", "not less than", "minimum of", "minimum",
+                      "more than", "greater than", "older than", "over", "above", "≥", ">=", ">")
+BOUND_UPPER_PREFIX = ("less than or equal to", "at most", "no more than", "not more than", "maximum of", "maximum",
+                      "up to", "less than", "fewer than", "younger than", "under", "below", "≤", "<=", "<")
+BOUND_LOWER_SUFFIX = ("or older", "and older", "or more", "or above", "and above", "or greater", "or higher", "or longer")
+BOUND_UPPER_SUFFIX = ("or younger", "or less", "or below", "or under", "or fewer", "or lower", "or shorter")
+NEGATION_CUES = ("no", "not", "without", "never", "none", "cannot", "excluded", "excluding", "exclude", "excludes",
+                 "ineligible", "free of", "absence of", "lack of")
+NEGATION_NEUTRAL_PHRASES = ("no more than", "not more than", "no less than", "not less than", "no longer than",
+                            "no later than", "not limited to", "not only", "not otherwise specified")  # 'not' here does not negate the rule
+DIRECTION_MIN_SHARED_WORDS = 2      # a source clause "says the same thing" when it shares this many content words (or all of a shorter output clause)
+DIRECTION_MIN_SHARED_FRACTION = 0.5 # ...and at least this share of the output clause's content words
+DIRECTION_MIN_SOURCE_FRACTION = 0.4 # ...and at least this share of the SOURCE clause's content words (a long clause with one 'not' somewhere is not 'the same statement')
+TAUTOLOGY_CONTENT_WORDS = 3        # "X is a type of X": the first N content words of the subject must reappear in the predicate
 RESULTS_DIR = ROOT_DIR / "results"
 TRIAL_EVAL_PATH = DATA_DIR / "trial_eval_set.jsonl"
 TRIAL_EVAL_COUNT = 40               # real trials in the trial-domain eval set

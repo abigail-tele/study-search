@@ -233,7 +233,7 @@ def test_summarize_trial_failure_falls_back_to_glossary_original(fake_model, mon
     monkeypatch.setattr(summarize, "faithfulness_check", lambda s, o: (False, ["99 mg"]))
     with caplog.at_level("WARNING"):
         s = summarize.summarize_trial(TRIAL)
-    assert s["fallback_used"] is True and s["faithful"] is True
+    assert s["fallback_used"] is True and s["faithful"] is False
     assert "PLAIN" not in json.dumps(s["who_can_join"]) and "PLAIN" not in s["what_is_tested"]
     assert "metastatic (has spread" in s["what_is_tested"]
     assert "NCT00000001" in caplog.text and "99 mg" in caplog.text
@@ -246,6 +246,26 @@ def test_summarize_trial_per_piece_fallback(fake_model, monkeypatch):
     assert s["who_can_join"]["include"][0] == "Age 18 years or older"      # fell back, numbers intact
     assert s["who_can_join"]["include"][1].startswith("PLAIN:")             # other pieces keep model text
     assert s["fallback_used"] is True
+
+
+def test_check_crash_falls_back_for_that_piece_only(fake_model, monkeypatch, caplog):
+    def boom(s, o):
+        if "18 years" in s:
+            raise ValueError("secret text 99 mg")
+        return True, []
+    monkeypatch.setattr(summarize, "faithfulness_check", boom)
+    with caplog.at_level("ERROR"):
+        s = summarize.summarize_trial(TRIAL)               # must not raise
+    assert s["who_can_join"]["include"][0] == "Age 18 years or older"
+    assert s["who_can_join"]["include"][1].startswith("PLAIN:")
+    assert s["fallback_used"] is True and s["faithful"] is False
+    assert "NCT00000001" in caplog.text and "ValueError" in caplog.text and "secret" not in caplog.text
+
+
+def test_faithful_true_only_when_nothing_fell_back(fake_model, monkeypatch):
+    monkeypatch.setattr(summarize, "faithfulness_check", lambda s, o: (True, []))
+    s = summarize.summarize_trial(TRIAL)
+    assert s["faithful"] is True and s["fallback_used"] is False
 
 
 def test_summarize_trial_unimplemented_check_is_conservative(fake_model, caplog):
@@ -437,6 +457,30 @@ def test_fc_reports_every_missing_term():
     assert ok is False and len(missing) >= 3
 
 
+# direction / negation flips: every number and drug is present, yet the rule is reversed.
+@HUMAN
+@pytest.mark.parametrize("source,output", [
+    ("Age at least 18 years", "Age under 18 years"),
+    ("Patients must be 18 years or older", "You must be younger than 18 years"),
+    ("At least 2 prior lines of therapy", "At most 2 prior lines of therapy"),
+    ("No prior chemotherapy", "Prior chemotherapy"),
+    ("Patients must not be pregnant", "Patients must be pregnant"),
+    ("Patients with brain metastases are excluded", "Patients with brain metastases are included"),
+])
+def test_fc_rejects_flipped_direction_or_negation(source, output):
+    ok, _ = fc(source, output)
+    assert ok is False
+
+
+@HUMAN
+@pytest.mark.parametrize("source,output", [
+    ("Patients must be 18 years or older", "You must be at least 18 years old"),
+    ("No prior chemo", "You have not had chemotherapy before"),
+])
+def test_fc_accepts_safe_paraphrase_of_direction(source, output):
+    assert fc(source, output) == (True, [])
+
+
 # ------------------------------------------------------- support check + boilerplate guard
 SRC = "Patients must have breast cancer. Patients must not have taken chemotherapy in the past. Patients must be healthy enough to join."
 
@@ -497,3 +541,15 @@ def test_faithfulness_stub_still_forces_fallback_even_if_supported(monkeypatch):
     monkeypatch.setattr(summarize, "_encode", _fake_encode)
     (out,), fb = summarize._rewrite_pieces([SRC], "NCT9")   # real stub raises NotImplementedError
     assert fb is True and out.startswith("Patients must have breast cancer. Patients must not")
+
+
+def test_flipped_direction_sentence_is_dropped(monkeypatch):
+    src = "Patients must have breast cancer. Patients must be at least 18 years old."
+    out, fb = _run_screen(monkeypatch, "You must have breast cancer. You must be under 18 years old.", source=src)
+    assert "under 18" not in out and "breast cancer" in out and fb is False
+
+
+def test_flipped_negation_everything_falls_back(monkeypatch):
+    src = "Patients must not have taken chemotherapy in the past."
+    out, fb = _run_screen(monkeypatch, "Patients must have taken chemotherapy in the past.", source=src)
+    assert fb is True and out.startswith("Patients must not have taken")

@@ -213,8 +213,9 @@ def load_model(path: Path | str = config.SUMMARY_MODEL_DIR):
         import torch
         from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        tok = AutoTokenizer.from_pretrained(str(d))
-        model = AutoModelForSeq2SeqLM.from_pretrained(str(d)).to(device).eval()
+        # local_files_only: rule 4, never contact the Hugging Face Hub at request time.
+        tok = AutoTokenizer.from_pretrained(str(d), local_files_only=True)
+        model = AutoModelForSeq2SeqLM.from_pretrained(str(d), local_files_only=True).to(device).eval()
         _cache[key] = (tok, model, device)
     return _cache[key]
 
@@ -288,6 +289,32 @@ def faithfulness_check(source: str, output: str) -> tuple[bool, list[str]]:
     categories are fine (that is the point of simplifying). Return
     (True, []) when nothing is missing, else (False, [the missing terms]).
     An empty output is not faithful (nothing to show): return (False, [...]).
+
+    How to recognise a drug name (a spec, not an implementation). Treat a word
+    as a drug if ANY of these holds:
+      * it is lower-case (or capitalised) and ends in a common drug stem:
+        -mab, -zumab, -ximab, -umab, -nib, -tinib, -ciclib, -parib, -lib,
+        -platin, -taxel, -rubicin, -mycin, -stat, -vir;
+      * it is a capitalised brand name in parentheses after a generic name,
+        e.g. "pembrolizumab (Keytruda)";
+      * it is on a small lexicon file the team adds (e.g. data/drug_lexicon.txt)
+        for drugs the stems miss ("methotrexate", "tamoxifen", "letrozole").
+        The endings -ide and -ine are too common in ordinary words ("outside",
+        "decline"), so use them ONLY together with the lexicon, never alone.
+
+    Direction and negation must also survive (the number check alone misses
+    these). The output must NOT reverse a comparison or a negation the source
+    states, even when every number and drug is present:
+      * "at least 18" -> "under 18"; "18 years or older" -> "younger than 18";
+      * ">= 2 lines" -> "<= 2 lines";
+      * "no prior chemotherapy" -> "prior chemotherapy";
+      * "must not be pregnant" -> "must be pregnant";
+      * "excluded" <-> "included".
+    Safe paraphrases that MUST still pass: "18 years or older" <-> "at least 18
+    years old"; "no prior chemo" <-> "have not had chemotherapy before".
+    (support.direction_check already screens this automatically as a second
+    layer; this function should reject it too, so rule 3 does not depend on
+    the optional screen.)
     """
     raise NotImplementedError("HUMAN-WRITTEN: faithfulness_check")
 
@@ -295,8 +322,12 @@ def faithfulness_check(source: str, output: str) -> tuple[bool, list[str]]:
 _warned_stub = False
 
 
-def _check(source: str, output: str) -> tuple[bool, list[str]]:
-    """faithfulness_check, but a missing implementation counts as FAILED.
+def _check(source: str, output: str, nct: str = "") -> tuple[bool, list[str]]:
+    """faithfulness_check, but a missing implementation OR any crash counts as FAILED.
+
+    Why: one bug in the human-written check (say, a regex error on odd text)
+    must cost that piece its model rewrite, not abort the whole trial. Only the
+    NCT id and the exception type are logged, never the text.
 
     LOUD NOTE: until the team writes faithfulness_check, EVERY model output is
     rejected and patients see only the glossary-swapped original. That is the
@@ -311,6 +342,10 @@ def _check(source: str, output: str) -> tuple[bool, list[str]]:
                          "and original wording (glossary-swapped) is shown instead.")
             _warned_stub = True
         return False, ["faithfulness_check not implemented"]
+    except Exception as exc:
+        logger.error("faithfulness_check crashed nct=%s error=%s; piece falls back to original wording",
+                     nct, type(exc).__name__)
+        return False, [f"faithfulness_check error: {type(exc).__name__}"]
 
 
 # ---------------------------------------------------------------------------
@@ -366,14 +401,15 @@ def _screen(src: str, out: str, nct: str, bad: list[str]) -> str | None:
     """Apply the sentence-level guards to one output that already passed faithfulness_check.
 
     `bad` = sentences the semantic-support check rejected. Boilerplate sentences
-    (generic PDQ openers absent from the source) are added. Rule: if nothing is
+    (generic PDQ openers absent from the source) and sentences that flip a
+    comparison or negation (support.direction_check) are added. Rule: if nothing is
     bad, keep the whole output; if some are bad, drop only those sentences
     provided at least SUMMARY_MIN_KEPT_FRACTION of the sentences remain (so the
     piece still covers the source); otherwise return None = fall back for the
     whole piece. Dropping can only remove words, so nothing new can appear.
     """
     sents = support.split_sentences(out)
-    drop = set(bad) | set(support.boilerplate_sentences(src, out))
+    drop = set(bad) | set(support.boilerplate_sentences(src, out)) | set(support.direction_flipped_sentences(src, out))
     if not drop:
         return out
     kept = [x for x in sents if x not in drop]
@@ -400,7 +436,7 @@ def _rewrite_pieces(pieces: list[str], nct: str) -> tuple[list[str], bool]:
     fallback = False
     passed: list[int] = []
     for i, (src, out) in enumerate(zip(flat, raw)):
-        ok, missing = _check(src, out) if out.strip() else (False, ["empty output"])
+        ok, missing = _check(src, out, nct) if out.strip() else (False, ["empty output"])
         if ok:
             passed.append(i)
         else:
@@ -435,8 +471,10 @@ def summarize_trial(trial: dict) -> dict:
 
     Rule 3 in code: every model piece goes through faithfulness_check; a miss
     swaps in the glossary-wrapped original for that piece and sets
-    fallback_used. `faithful` stays True when every piece either passed or was
-    safely replaced by original wording (what the patient sees is trustworthy).
+    fallback_used. `faithful` is True only when NO piece fell back, i.e. every
+    shown rewrite is checked model text; `fallback_used` is True when any piece
+    (or any overflow criterion) was shown as original wording instead. Either
+    way the patient only sees checked or original text.
     """
     nct = trial["nct_id"]
     summary_src = clean_text(trial.get("brief_summary"))
@@ -468,7 +506,7 @@ def summarize_trial(trial: dict) -> dict:
         "what_is_tested": what,
         "who_can_join": {"include": sides["include"], "exclude": sides["exclude"]},
         "original": {"summary": trial.get("brief_summary"), "eligibility": trial.get("eligibility_text")},
-        "faithful": True,   # every shown piece is either checked model text or original wording
+        "faithful": not fallback,   # True = every shown piece is checked model text; False = some piece is original wording
         "fallback_used": fallback,
         "reading_level": {"before": before, "after": after},
         "model_version": model_version(),

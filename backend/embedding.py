@@ -34,11 +34,15 @@ def trial_text(row: Any) -> str:
 
 
 def get_encoder() -> Callable[[list[str]], np.ndarray]:
-    """Load MiniLM once; return a function mapping texts -> normalized float32 vectors."""
+    """Load MiniLM once from the local models/ folder only; return a function mapping texts -> normalized float32 vectors."""
     global _encoder
     if _encoder is None:
+        if not (config.EMBED_MODEL_DIR / "config.json").exists():
+            # Rule 4: never fall back to the Hugging Face Hub while serving a user.
+            raise RuntimeError(f"Embedding model not found at {config.EMBED_MODEL_DIR}. "
+                               "Run `python -m pipeline.fetch_models` once (offline setup step).")
         from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer(config.EMBED_MODEL_NAME)
+        model = SentenceTransformer(str(config.EMBED_MODEL_DIR), local_files_only=True)
 
         def encode(texts: list[str]) -> np.ndarray:
             return np.asarray(model.encode(texts, normalize_embeddings=True,

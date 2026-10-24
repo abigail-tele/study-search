@@ -46,7 +46,8 @@ def main() -> None:
     conn = db.connect()
     total = conn.execute("SELECT COUNT(*) FROM trials").fetchone()[0]
     print(f"Embedding {total} trials with {config.EMBED_MODEL_NAME} ...")
-    model = SentenceTransformer(config.EMBED_MODEL_NAME)
+    model = SentenceTransformer(str(config.EMBED_MODEL_DIR) if config.EMBED_MODEL_DIR.exists()
+                                else config.EMBED_MODEL_NAME)
     encode = lambda t: np.asarray(model.encode(t, normalize_embeddings=True,
                                                show_progress_bar=False), dtype="float32")
     t0 = time.time()

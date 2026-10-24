@@ -10,3 +10,4 @@ data/raw/
 checkpoints/
 *.log
 .venv-train/
+models/

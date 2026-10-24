@@ -25,3 +25,13 @@ def test_index_searchable():
     scores, rows = index.search(tiny_db.fake_encode(["prostate cancer radiation"]), 1)
     assert ids[rows[0][0]] == "NCT00000006"
     assert scores[0][0] <= 1.0001
+
+
+def test_get_encoder_missing_local_model_raises_not_downloads(monkeypatch, tmp_path):
+    """Rule 4: a missing local model must be a clear error, never a Hub download."""
+    import pytest
+    from backend import config, embedding
+    monkeypatch.setattr(config, "EMBED_MODEL_DIR", tmp_path / "nope")
+    monkeypatch.setattr(embedding, "_encoder", None)
+    with pytest.raises(RuntimeError, match="fetch_models"):
+        embedding.get_encoder()
