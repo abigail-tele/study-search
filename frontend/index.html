@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cancer Trials Plain-Language Finder</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site-header">
+  <h1>Cancer Trials Plain-Language Finder</h1>
+  <p class="tagline">Search cancer clinical trials in plain words. For education, not medical advice.</p>
+</header>
+
+<main id="main" tabindex="-1">
+  <div id="status" class="sr-status" role="status" aria-live="polite"></div>
+
+  <section id="search-view" aria-labelledby="search-h">
+    <h2 id="search-h">Find a cancer trial</h2>
+    <form id="search-form" novalidate>
+      <div class="field">
+        <label for="q">What kind of cancer? Use your own words.</label>
+        <input id="q" name="q" type="search" autocomplete="off" placeholder="for example: breast cancer, blood cancer, skin cancer">
+      </div>
+
+      <div class="field">
+        <span id="chips-label" class="label">Or pick a type</span>
+        <div id="chips" class="chips" role="group" aria-labelledby="chips-label"></div>
+      </div>
+
+      <div class="filters">
+        <div class="field">
+          <label for="zip">ZIP code (optional)</label>
+          <input id="zip" name="zip" type="text" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" autocomplete="postal-code" aria-describedby="zip-err">
+          <span id="zip-err" class="err" hidden>Enter a 5-digit ZIP code.</span>
+        </div>
+        <div class="field">
+          <label for="radius">Distance</label>
+          <select id="radius">
+            <option value="25">25 miles</option><option value="50">50 miles</option>
+            <option value="100" selected>100 miles</option><option value="250">250 miles</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="status-filter">Trial status</label>
+          <select id="status-filter">
+            <option value="RECRUITING" selected>Recruiting</option>
+            <option value="NOT_YET_RECRUITING">Not yet recruiting</option>
+            <option value="ACTIVE_NOT_RECRUITING">Active, not recruiting</option>
+            <option value="ENROLLING_BY_INVITATION">Enrolling by invitation</option>
+            <option value="">Any</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="age">Patient age (optional)</label>
+          <input id="age" type="number" min="0" max="120" inputmode="numeric">
+        </div>
+      </div>
+
+      <button type="submit" class="btn primary">Search trials</button>
+    </form>
+    <p class="disclaimer">For education, not medical advice.</p>
+
+    <div id="results-area" hidden>
+      <h2 id="results-h" tabindex="-1">Results</h2>
+      <div id="offtopic" class="offtopic" hidden>
+        <p><strong>We only cover cancer trials.</strong> Try one of these types:</p>
+        <div id="offtopic-chips" class="chips"></div>
+      </div>
+      <ul id="results" class="cards"></ul>
+    </div>
+  </section>
+
+  <section id="summary-view" aria-labelledby="summary-h" hidden>
+    <button type="button" id="back" class="btn no-print">&larr; Back to results</button>
+    <div id="summary-body"></div>
+  </section>
+</main>
+
+<footer class="site-footer no-print">
+  <p>Trial data comes from ClinicalTrials.gov. Plain-language text is machine-made and may contain mistakes; always check the original and talk with your care team.</p>
+</footer>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

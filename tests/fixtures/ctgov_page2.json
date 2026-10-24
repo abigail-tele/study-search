@@ -1,0 +1,73 @@
+{
+ "studies": [
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT00000004",
+     "briefTitle": "Fourth",
+     "officialTitle": "Fourth (official)"
+    },
+    "statusModule": {
+     "overallStatus": "RECRUITING",
+     "startDateStruct": {
+      "date": "2025-03"
+     },
+     "lastUpdatePostDateStruct": {
+      "date": "2026-09-30"
+     }
+    },
+    "designModule": {
+     "phases": [
+      "PHASE2"
+     ],
+     "enrollmentInfo": {
+      "count": 120
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "Breast Cancer"
+     ],
+     "keywords": [
+      "HER2"
+     ]
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "Test Univ"
+     }
+    },
+    "descriptionModule": {
+     "briefSummary": "A study of drug X."
+    },
+    "eligibilityModule": {
+     "eligibilityCriteria": "Inclusion: age 18+",
+     "healthyVolunteers": false,
+     "sex": "ALL",
+     "minimumAge": "18 Years"
+    },
+    "contactsLocationsModule": {
+     "locations": [
+      {
+       "facility": "Mayo Clinic",
+       "city": "Rochester",
+       "state": "Minnesota",
+       "zip": "55905",
+       "country": "United States",
+       "status": "RECRUITING",
+       "geoPoint": {
+        "lat": 44.02,
+        "lon": -92.47
+       }
+      },
+      {
+       "facility": "No Geo Hosp",
+       "city": "Nowhere",
+       "country": "United States"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

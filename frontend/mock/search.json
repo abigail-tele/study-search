@@ -1,0 +1,94 @@
+{
+  "query": "breast cancer near me",
+  "detected_types": [
+    "breast"
+  ],
+  "off_topic": false,
+  "suggested_types": [],
+  "results": [
+    {
+      "nct_id": "NCT05000001",
+      "title": "MOCK: Targeted Medicine Plus Chemotherapy for HER2-Positive Breast Cancer",
+      "status": "RECRUITING",
+      "phase": "PHASE2",
+      "cancer_tags": [
+        "breast"
+      ],
+      "sponsor": "Example Cancer Center (MOCK)",
+      "last_updated": "2026-09-14",
+      "nearest_site": {
+        "city": "Springfield",
+        "state": "IL",
+        "distance_mi": 12.4
+      },
+      "url": "https://clinicaltrials.gov/study/NCT05000001",
+      "citation": "Example Cancer Center (MOCK). A Randomized Phase 2 Study (MOCK DATA) of a Targeted Medicine Added to Chemotherapy for HER2-Positive Breast Cancer. ClinicalTrials.gov ID: NCT05000001. Last updated 2026-09-14. Available from: https://clinicaltrials.gov/study/NCT05000001",
+      "score": 0.0328
+    },
+    {
+      "nct_id": "NCT05000002",
+      "title": "MOCK: Hormone Therapy Timing in Early Breast Cancer",
+      "status": "NOT_YET_RECRUITING",
+      "phase": "PHASE3",
+      "cancer_tags": [
+        "breast"
+      ],
+      "sponsor": "Example Cancer Center (MOCK)",
+      "last_updated": "2026-10-02",
+      "nearest_site": null,
+      "url": "https://clinicaltrials.gov/study/NCT05000002",
+      "citation": "Example Cancer Center (MOCK). A Phase 3 Study (MOCK DATA) of Hormone Therapy Timing in Early Breast Cancer. ClinicalTrials.gov ID: NCT05000002. Last updated 2026-10-02. Available from: https://clinicaltrials.gov/study/NCT05000002",
+      "score": 0.0315
+    },
+    {
+      "nct_id": "NCT05000003",
+      "title": "MOCK: Exercise Program During Breast Cancer Treatment",
+      "status": "ACTIVE_NOT_RECRUITING",
+      "phase": "NA",
+      "cancer_tags": [
+        "breast"
+      ],
+      "sponsor": "Example University Medical School (MOCK)",
+      "last_updated": "2026-08-21",
+      "nearest_site": null,
+      "url": "https://clinicaltrials.gov/study/NCT05000003",
+      "citation": "Example University Medical School (MOCK). A Behavioral Study (MOCK DATA) of an Exercise Program During Breast Cancer Treatment. ClinicalTrials.gov ID: NCT05000003. Last updated 2026-08-21. Available from: https://clinicaltrials.gov/study/NCT05000003",
+      "score": 0.0297
+    },
+    {
+      "nct_id": "NCT05000004",
+      "title": "MOCK: Imaging Method to Detect Breast Tumors Early",
+      "status": "RECRUITING",
+      "phase": "PHASE1|PHASE2",
+      "cancer_tags": [
+        "breast",
+        "lymphoma_nhl"
+      ],
+      "sponsor": "Example Imaging Institute (MOCK)",
+      "last_updated": "2026-07-30",
+      "nearest_site": {
+        "city": "Chicago",
+        "state": "IL",
+        "distance_mi": 180.2
+      },
+      "url": "https://clinicaltrials.gov/study/NCT05000004",
+      "citation": "Example Imaging Institute (MOCK). A Phase 1/2 Study (MOCK DATA) of an Imaging Method to Detect Breast Tumors Early. ClinicalTrials.gov ID: NCT05000004. Last updated 2026-07-30. Available from: https://clinicaltrials.gov/study/NCT05000004",
+      "score": 0.0281
+    },
+    {
+      "nct_id": "NCT05000005",
+      "title": "MOCK: Survivorship Care Plan for Women With Breast Cancer",
+      "status": "RECRUITING",
+      "phase": "NA",
+      "cancer_tags": [
+        "breast"
+      ],
+      "sponsor": "Example Survivorship Network (MOCK)",
+      "last_updated": "2026-10-10",
+      "nearest_site": null,
+      "url": "https://clinicaltrials.gov/study/NCT05000005",
+      "citation": "Example Survivorship Network (MOCK). A Behavioral Study (MOCK DATA) of a Survivorship Care Plan for Women With Breast Cancer. ClinicalTrials.gov ID: NCT05000005. Last updated 2026-10-10. Available from: https://clinicaltrials.gov/study/NCT05000005",
+      "score": 0.0264
+    }
+  ]
+}

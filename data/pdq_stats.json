@@ -1,0 +1,5307 @@
+{
+  "pages": {
+    "breast": {
+      "hp_sections": 11,
+      "patient_sections": 9,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 343,
+        "dropped_list_leadin": 67,
+        "paragraphs_kept": 214,
+        "dropped_evidence_or_empty": 2,
+        "dropped_too_short": 60
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 176,
+        "paragraphs_kept": 104,
+        "dropped_too_short": 28,
+        "dropped_list_leadin": 43,
+        "dropped_evidence_or_empty": 1
+      },
+      "pairs_below_similarity": 77,
+      "pairs_below_similarity_fallback": 80,
+      "pairs_dropped": {
+        "number_not_in_source": 4,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 19,
+      "pairs_kept_heading": 10,
+      "pairs_kept_fallback": 9,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 104
+    },
+    "colon": {
+      "hp_sections": 8,
+      "patient_sections": 7,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 144,
+        "paragraphs_kept": 93,
+        "dropped_list_leadin": 16,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 34
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 90,
+        "paragraphs_kept": 63,
+        "dropped_too_short": 15,
+        "dropped_list_leadin": 12
+      },
+      "pairs_below_similarity": 52,
+      "pairs_below_similarity_fallback": 48,
+      "pairs_dropped": {
+        "length_ratio": 4,
+        "near_identical": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 6,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 63
+    },
+    "lung_nsclc": {
+      "hp_sections": 12,
+      "patient_sections": 11,
+      "sections_matched": 6,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 431,
+        "paragraphs_kept": 260,
+        "dropped_list_leadin": 52,
+        "dropped_too_short": 119
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 153,
+        "paragraphs_kept": 90,
+        "dropped_list_leadin": 34,
+        "dropped_too_short": 29
+      },
+      "pairs_below_similarity": 52,
+      "pairs_below_similarity_fallback": 75,
+      "pairs_dropped": {
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 8,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 90
+    },
+    "prostate": {
+      "hp_sections": 9,
+      "patient_sections": 8,
+      "sections_matched": 8,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 342,
+        "paragraphs_kept": 227,
+        "dropped_list_leadin": 49,
+        "dropped_evidence_or_empty": 2,
+        "dropped_too_short": 64
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 127,
+        "paragraphs_kept": 79,
+        "dropped_list_leadin": 17,
+        "dropped_too_short": 31
+      },
+      "pairs_below_similarity": 47,
+      "pairs_below_similarity_fallback": 43,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "xref_too_short": 3,
+        "length_ratio": 3
+      },
+      "xref_sentences_stripped": 4,
+      "pairs_with_xref_stripped": 4,
+      "pairs_kept": 29,
+      "pairs_kept_heading": 26,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 4,
+      "patient_paragraphs_total": 79
+    },
+    "aml_adult": {
+      "hp_sections": 7,
+      "patient_sections": 8,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 166,
+        "paragraphs_kept": 111,
+        "dropped_list_leadin": 16,
+        "dropped_too_short": 38,
+        "dropped_evidence_or_empty": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 94,
+        "paragraphs_kept": 61,
+        "dropped_list_leadin": 17,
+        "dropped_too_short": 14,
+        "dropped_evidence_or_empty": 2
+      },
+      "pairs_below_similarity": 48,
+      "pairs_below_similarity_fallback": 51,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 6,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 61
+    },
+    "bladder": {
+      "hp_sections": 9,
+      "patient_sections": 7,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 170,
+        "paragraphs_kept": 112,
+        "dropped_list_leadin": 23,
+        "dropped_too_short": 35
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 31,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 1,
+        "paragraphs_kept": 23
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 19,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 23
+    },
+    "ovarian": {
+      "hp_sections": 8,
+      "patient_sections": 6,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 142,
+        "paragraphs_kept": 99,
+        "dropped_list_leadin": 23,
+        "dropped_too_short": 20
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 87,
+        "paragraphs_kept": 64,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 12
+      },
+      "pairs_below_similarity": 26,
+      "pairs_below_similarity_fallback": 47,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "xref_too_short": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 11,
+      "pairs_kept_heading": 8,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 4,
+      "patient_paragraphs_total": 64
+    },
+    "pancreatic": {
+      "hp_sections": 6,
+      "patient_sections": 8,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 71,
+        "paragraphs_kept": 43,
+        "dropped_list_leadin": 13,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 14
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "paragraphs_kept": 24,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 17,
+      "pairs_dropped": {
+        "length_ratio": 3
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 24
+    },
+    "lymphoma_nhl": {
+      "hp_sections": 9,
+      "patient_sections": 9,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 132,
+        "paragraphs_kept": 99,
+        "dropped_list_leadin": 17,
+        "dropped_too_short": 16
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 127,
+        "paragraphs_kept": 76,
+        "dropped_list_leadin": 30,
+        "dropped_too_short": 21
+      },
+      "pairs_below_similarity": 12,
+      "pairs_below_similarity_fallback": 68,
+      "pairs_dropped": {
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 4,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 76
+    },
+    "lymphoma_hodgkin": {
+      "hp_sections": 9,
+      "patient_sections": 9,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 125,
+        "dropped_list_leadin": 16,
+        "paragraphs_kept": 87,
+        "dropped_too_short": 22
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 111,
+        "paragraphs_kept": 63,
+        "dropped_too_short": 22,
+        "dropped_list_leadin": 26
+      },
+      "pairs_below_similarity": 50,
+      "pairs_below_similarity_fallback": 60,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 63
+    },
+    "cervical": {
+      "hp_sections": 9,
+      "patient_sections": 7,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 118,
+        "paragraphs_kept": 84,
+        "dropped_list_leadin": 23,
+        "dropped_too_short": 11
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 30,
+        "dropped_too_short": 3,
+        "dropped_list_leadin": 4
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 26,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 30
+    },
+    "endometrial": {
+      "hp_sections": 6,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 88,
+        "paragraphs_kept": 57,
+        "dropped_list_leadin": 19,
+        "dropped_evidence_or_empty": 2,
+        "dropped_too_short": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 17,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 2,
+        "paragraphs_kept": 14
+      },
+      "pairs_below_similarity": 7,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 14
+    },
+    "esophageal": {
+      "hp_sections": 7,
+      "patient_sections": 11,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 68,
+        "paragraphs_kept": 46,
+        "dropped_list_leadin": 14,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 29,
+        "paragraphs_kept": 27,
+        "dropped_list_leadin": 2
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 23,
+      "pairs_dropped": {
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 27
+    },
+    "thyroid": {
+      "hp_sections": 5,
+      "patient_sections": 8,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 120,
+        "dropped_list_leadin": 14,
+        "paragraphs_kept": 78,
+        "dropped_too_short": 28
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 98,
+        "paragraphs_kept": 69,
+        "dropped_list_leadin": 17,
+        "dropped_too_short": 12
+      },
+      "pairs_below_similarity": 42,
+      "pairs_below_similarity_fallback": 52,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 13,
+      "pairs_kept_heading": 9,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 69
+    },
+    "melanoma": {
+      "hp_sections": 10,
+      "patient_sections": 8,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 179,
+        "paragraphs_kept": 129,
+        "dropped_list_leadin": 16,
+        "dropped_evidence_or_empty": 2,
+        "dropped_too_short": 32
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 107,
+        "paragraphs_kept": 69,
+        "dropped_list_leadin": 8,
+        "dropped_too_short": 29,
+        "dropped_evidence_or_empty": 1
+      },
+      "pairs_below_similarity": 48,
+      "pairs_below_similarity_fallback": 53,
+      "pairs_dropped": {
+        "xref_too_short": 1,
+        "number_not_in_source": 2,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 12,
+      "pairs_kept_heading": 11,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 69
+    },
+    "brain_adult": {
+      "hp_sections": 7,
+      "patient_sections": 7,
+      "sections_matched": 6,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 161,
+        "dropped_list_leadin": 29,
+        "paragraphs_kept": 105,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 26
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 152,
+        "paragraphs_kept": 95,
+        "dropped_list_leadin": 30,
+        "dropped_too_short": 27
+      },
+      "pairs_below_similarity": 65,
+      "pairs_below_similarity_fallback": 52,
+      "pairs_dropped": {
+        "length_ratio": 7,
+        "xref_too_short": 2
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 21,
+      "pairs_kept_heading": 17,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 95
+    },
+    "cll": {
+      "hp_sections": 7,
+      "patient_sections": 6,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 79,
+        "dropped_list_leadin": 11,
+        "paragraphs_kept": 49,
+        "dropped_too_short": 19
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 67,
+        "paragraphs_kept": 45,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 15
+      },
+      "pairs_below_similarity": 17,
+      "pairs_below_similarity_fallback": 39,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 45
+    },
+    "cml": {
+      "hp_sections": 8,
+      "patient_sections": 7,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 69,
+        "dropped_list_leadin": 15,
+        "dropped_too_short": 12,
+        "paragraphs_kept": 42
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 73,
+        "paragraphs_kept": 52,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 14
+      },
+      "pairs_below_similarity": 36,
+      "pairs_below_similarity_fallback": 44,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 4,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 52
+    },
+    "all_adult": {
+      "hp_sections": 7,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 70,
+        "paragraphs_kept": 49,
+        "dropped_too_short": 11,
+        "dropped_list_leadin": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 82,
+        "paragraphs_kept": 55,
+        "dropped_list_leadin": 10,
+        "dropped_too_short": 17
+      },
+      "pairs_below_similarity": 38,
+      "pairs_below_similarity_fallback": 48,
+      "pairs_dropped": {
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 55
+    },
+    "myeloma": {
+      "hp_sections": 11,
+      "patient_sections": 8,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 176,
+        "paragraphs_kept": 119,
+        "dropped_list_leadin": 19,
+        "dropped_too_short": 38
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 106,
+        "paragraphs_kept": 68,
+        "dropped_list_leadin": 16,
+        "dropped_too_short": 22
+      },
+      "pairs_below_similarity": 30,
+      "pairs_below_similarity_fallback": 55,
+      "pairs_dropped": {
+        "length_ratio": 1,
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 7,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 68
+    },
+    "testicular": {
+      "hp_sections": 9,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 127,
+        "dropped_list_leadin": 13,
+        "paragraphs_kept": 93,
+        "dropped_too_short": 21
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 21,
+        "dropped_too_short": 1,
+        "paragraphs_kept": 20
+      },
+      "pairs_below_similarity": 8,
+      "pairs_below_similarity_fallback": 17,
+      "pairs_dropped": {
+        "xref_too_short": 2
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 20
+    },
+    "lung_sclc": {
+      "hp_sections": 7,
+      "patient_sections": 6,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 96,
+        "paragraphs_kept": 68,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 17
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 82,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 10,
+        "dropped_too_short": 14
+      },
+      "pairs_below_similarity": 48,
+      "pairs_below_similarity_fallback": 53,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 58
+    },
+    "anal": {
+      "hp_sections": 9,
+      "patient_sections": 8,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 35,
+        "dropped_list_leadin": 4,
+        "paragraphs_kept": 29,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 21,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 4,
+        "paragraphs_kept": 15
+      },
+      "pairs_below_similarity": 6,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 15
+    },
+    "osteosarcoma": {
+      "hp_sections": 9,
+      "patient_sections": 6,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 144,
+        "paragraphs_kept": 112,
+        "dropped_list_leadin": 27,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 83,
+        "paragraphs_kept": 57,
+        "dropped_list_leadin": 16,
+        "dropped_too_short": 10
+      },
+      "pairs_below_similarity": 17,
+      "pairs_below_similarity_fallback": 37,
+      "pairs_dropped": {
+        "length_ratio": 5
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 13,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 8,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 57
+    },
+    "wilms": {
+      "hp_sections": 14,
+      "patient_sections": 16,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 365,
+        "paragraphs_kept": 293,
+        "dropped_too_short": 14,
+        "dropped_list_leadin": 56,
+        "dropped_evidence_or_empty": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 94,
+        "paragraphs_kept": 68,
+        "dropped_list_leadin": 23,
+        "dropped_too_short": 3
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 30,
+      "pairs_dropped": {
+        "number_not_in_source": 4,
+        "length_ratio": 7,
+        "xref_too_short": 3
+      },
+      "xref_sentences_stripped": 5,
+      "pairs_with_xref_stripped": 5,
+      "pairs_kept": 24,
+      "pairs_kept_heading": 4,
+      "pairs_kept_fallback": 20,
+      "pairs_kept_multi_source": 5,
+      "patient_paragraphs_total": 68
+    },
+    "rectal": {
+      "hp_sections": 8,
+      "patient_sections": 7,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 187,
+        "paragraphs_kept": 119,
+        "dropped_list_leadin": 31,
+        "dropped_evidence_or_empty": 2,
+        "dropped_too_short": 35
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 94,
+        "paragraphs_kept": 64,
+        "dropped_too_short": 16,
+        "dropped_list_leadin": 14
+      },
+      "pairs_below_similarity": 50,
+      "pairs_below_similarity_fallback": 46,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 3
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 10,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 64
+    },
+    "vaginal": {
+      "hp_sections": 8,
+      "patient_sections": 8,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 46,
+        "paragraphs_kept": 31,
+        "dropped_list_leadin": 12,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 80,
+        "paragraphs_kept": 48,
+        "dropped_list_leadin": 19,
+        "dropped_too_short": 13
+      },
+      "pairs_below_similarity": 39,
+      "pairs_below_similarity_fallback": 37,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 7,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 48
+    },
+    "gallbladder": {
+      "hp_sections": 4,
+      "patient_sections": 5,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 32,
+        "dropped_list_leadin": 4,
+        "paragraphs_kept": 25,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 78,
+        "paragraphs_kept": 51,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 15
+      },
+      "pairs_below_similarity": 27,
+      "pairs_below_similarity_fallback": 44,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 51
+    },
+    "small-intestine": {
+      "hp_sections": 3,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 14,
+        "dropped_list_leadin": 2,
+        "paragraphs_kept": 8,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 68,
+        "paragraphs_kept": 51,
+        "dropped_list_leadin": 10,
+        "dropped_too_short": 7
+      },
+      "pairs_below_similarity": 18,
+      "pairs_below_similarity_fallback": 47,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 51
+    },
+    "skin": {
+      "hp_sections": 6,
+      "patient_sections": 6,
+      "sections_matched": 6,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 96,
+        "dropped_list_leadin": 12,
+        "paragraphs_kept": 70,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 13
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 121,
+        "paragraphs_kept": 72,
+        "dropped_list_leadin": 22,
+        "dropped_too_short": 27
+      },
+      "pairs_below_similarity": 66,
+      "pairs_below_similarity_fallback": 62,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 6,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 72
+    },
+    "merkel-cell": {
+      "hp_sections": 8,
+      "patient_sections": 7,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 113,
+        "paragraphs_kept": 92,
+        "dropped_evidence_or_empty": 1,
+        "dropped_list_leadin": 8,
+        "dropped_too_short": 12
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 76,
+        "paragraphs_kept": 54,
+        "dropped_too_short": 10,
+        "dropped_list_leadin": 12
+      },
+      "pairs_below_similarity": 33,
+      "pairs_below_similarity_fallback": 45,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 54
+    },
+    "intraocular-melanoma": {
+      "hp_sections": 10,
+      "patient_sections": 4,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 75,
+        "paragraphs_kept": 57,
+        "dropped_list_leadin": 10,
+        "dropped_too_short": 8
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 97,
+        "paragraphs_kept": 59,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 26
+      },
+      "pairs_below_similarity": 27,
+      "pairs_below_similarity_fallback": 44,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 11,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 59
+    },
+    "retinoblastoma": {
+      "hp_sections": 9,
+      "patient_sections": 6,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 166,
+        "paragraphs_kept": 138,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 3,
+        "dropped_list_leadin": 24
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 117,
+        "paragraphs_kept": 75,
+        "dropped_too_short": 19,
+        "dropped_list_leadin": 23
+      },
+      "pairs_below_similarity": 45,
+      "pairs_below_similarity_fallback": 38,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "xref_too_short": 2,
+        "length_ratio": 3
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 29,
+      "pairs_kept_heading": 19,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 75
+    },
+    "unknown-primary": {
+      "hp_sections": 5,
+      "patient_sections": 5,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 47,
+        "paragraphs_kept": 38,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 74,
+        "paragraphs_kept": 48,
+        "dropped_too_short": 9,
+        "dropped_list_leadin": 17
+      },
+      "pairs_below_similarity": 20,
+      "pairs_below_similarity_fallback": 39,
+      "pairs_dropped": {
+        "xref_too_short": 3
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 48
+    },
+    "primary-cns-lymphoma": {
+      "hp_sections": 5,
+      "patient_sections": 6,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 38,
+        "paragraphs_kept": 22,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 11
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 59,
+        "paragraphs_kept": 42,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 10
+      },
+      "pairs_below_similarity": 9,
+      "pairs_below_similarity_fallback": 35,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 42
+    },
+    "hairy-cell": {
+      "hp_sections": 3,
+      "patient_sections": 4,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 31,
+        "paragraphs_kept": 21,
+        "dropped_too_short": 8,
+        "dropped_list_leadin": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 54,
+        "paragraphs_kept": 39,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 9
+      },
+      "pairs_below_similarity": 13,
+      "pairs_below_similarity_fallback": 33,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 39
+    },
+    "child-all": {
+      "hp_sections": 10,
+      "patient_sections": 13,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 492,
+        "paragraphs_kept": 392,
+        "dropped_list_leadin": 67,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 32
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 107,
+        "paragraphs_kept": 82,
+        "dropped_list_leadin": 19,
+        "dropped_too_short": 6
+      },
+      "pairs_below_similarity": 3,
+      "pairs_below_similarity_fallback": 66,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 5
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 82
+    },
+    "child-aml": {
+      "hp_sections": 9,
+      "patient_sections": 9,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 212,
+        "paragraphs_kept": 164,
+        "dropped_list_leadin": 32,
+        "dropped_too_short": 16
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 117,
+        "paragraphs_kept": 67,
+        "dropped_list_leadin": 34,
+        "dropped_too_short": 16
+      },
+      "pairs_below_similarity": 39,
+      "pairs_below_similarity_fallback": 44,
+      "pairs_dropped": {
+        "length_ratio": 6,
+        "number_not_in_source": 3
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 11,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 67
+    },
+    "child-hodgkin": {
+      "hp_sections": 8,
+      "patient_sections": 9,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 194,
+        "paragraphs_kept": 144,
+        "dropped_list_leadin": 43,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 120,
+        "paragraphs_kept": 83,
+        "dropped_too_short": 19,
+        "dropped_list_leadin": 18
+      },
+      "pairs_below_similarity": 20,
+      "pairs_below_similarity_fallback": 44,
+      "pairs_dropped": {
+        "length_ratio": 6
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 29,
+      "pairs_kept_heading": 14,
+      "pairs_kept_fallback": 15,
+      "pairs_kept_multi_source": 7,
+      "patient_paragraphs_total": 83
+    },
+    "child-nhl": {
+      "hp_sections": 10,
+      "patient_sections": 4,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 262,
+        "paragraphs_kept": 204,
+        "dropped_list_leadin": 44,
+        "dropped_too_short": 14
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 152,
+        "paragraphs_kept": 94,
+        "dropped_too_short": 23,
+        "dropped_list_leadin": 35
+      },
+      "pairs_below_similarity": 40,
+      "pairs_below_similarity_fallback": 67,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 5
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 21,
+      "pairs_kept_heading": 11,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 6,
+      "patient_paragraphs_total": 94
+    },
+    "neuroblastoma": {
+      "hp_sections": 10,
+      "patient_sections": 8,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 316,
+        "paragraphs_kept": 245,
+        "dropped_evidence_or_empty": 2,
+        "dropped_list_leadin": 51,
+        "dropped_too_short": 18
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 132,
+        "paragraphs_kept": 83,
+        "dropped_too_short": 27,
+        "dropped_list_leadin": 22
+      },
+      "pairs_below_similarity": 35,
+      "pairs_below_similarity_fallback": 36,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "length_ratio": 6,
+        "xref_too_short": 3
+      },
+      "xref_sentences_stripped": 7,
+      "pairs_with_xref_stripped": 7,
+      "pairs_kept": 33,
+      "pairs_kept_heading": 21,
+      "pairs_kept_fallback": 12,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 83
+    },
+    "ewing": {
+      "hp_sections": 10,
+      "patient_sections": 6,
+      "sections_matched": 6,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 157,
+        "paragraphs_kept": 125,
+        "dropped_list_leadin": 22,
+        "dropped_too_short": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 76,
+        "paragraphs_kept": 52,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 11
+      },
+      "pairs_below_similarity": 39,
+      "pairs_below_similarity_fallback": 28,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 19,
+      "pairs_kept_heading": 10,
+      "pairs_kept_fallback": 9,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 52
+    },
+    "child-thyroid": {
+      "hp_sections": 4,
+      "patient_sections": 12,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 88,
+        "paragraphs_kept": 71,
+        "dropped_evidence_or_empty": 1,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 59,
+        "paragraphs_kept": 41,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 5
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 29,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 11,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 41
+    },
+    "pheochromocytoma": {
+      "hp_sections": 9,
+      "patient_sections": 5,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 79,
+        "paragraphs_kept": 57,
+        "dropped_too_short": 10,
+        "dropped_list_leadin": 12
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 94,
+        "paragraphs_kept": 66,
+        "dropped_too_short": 16,
+        "dropped_list_leadin": 12
+      },
+      "pairs_below_similarity": 22,
+      "pairs_below_similarity_fallback": 37,
+      "pairs_dropped": {
+        "length_ratio": 1,
+        "near_identical": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 26,
+      "pairs_kept_heading": 17,
+      "pairs_kept_fallback": 9,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 66
+    },
+    "parathyroid": {
+      "hp_sections": 6,
+      "patient_sections": 6,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 33,
+        "paragraphs_kept": 26,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 65,
+        "paragraphs_kept": 44,
+        "dropped_too_short": 12,
+        "dropped_list_leadin": 9
+      },
+      "pairs_below_similarity": 15,
+      "pairs_below_similarity_fallback": 28,
+      "pairs_dropped": {
+        "length_ratio": 3
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 13,
+      "pairs_kept_heading": 11,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 44
+    },
+    "male-breast": {
+      "hp_sections": 6,
+      "patient_sections": 7,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 31,
+        "dropped_list_leadin": 6,
+        "paragraphs_kept": 22,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 20,
+        "paragraphs_kept": 14,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 8,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "xref_too_short": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 14
+    },
+    "prostate-screening": {
+      "hp_sections": 16,
+      "patient_sections": 4,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 121,
+        "paragraphs_kept": 113,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 6
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 43,
+        "paragraphs_kept": 34,
+        "dropped_list_leadin": 2,
+        "dropped_too_short": 7
+      },
+      "pairs_below_similarity": 28,
+      "pairs_below_similarity_fallback": 17,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "xref_too_short": 1,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 9,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 34
+    },
+    "colorectal-screening": {
+      "hp_sections": 4,
+      "patient_sections": 4,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 87,
+        "paragraphs_kept": 82,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 51,
+        "paragraphs_kept": 36,
+        "dropped_list_leadin": 3,
+        "dropped_too_short": 12
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 25,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 36
+    },
+    "lung-screening": {
+      "hp_sections": 7,
+      "patient_sections": 4,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 59,
+        "paragraphs_kept": 54,
+        "dropped_list_leadin": 2,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 43,
+        "paragraphs_kept": 36,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 3
+      },
+      "pairs_below_similarity": 3,
+      "pairs_below_similarity_fallback": 18,
+      "pairs_dropped": {
+        "number_not_in_source": 2,
+        "xref_too_short": 1,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 13,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 36
+    },
+    "skin-screening": {
+      "hp_sections": 6,
+      "patient_sections": 4,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 25,
+        "paragraphs_kept": 21,
+        "dropped_list_leadin": 2,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 41,
+        "paragraphs_kept": 33,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 4
+      },
+      "pairs_below_similarity": 6,
+      "pairs_below_similarity_fallback": 24,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 8,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 33
+    },
+    "ovarian-screening": {
+      "hp_sections": 5,
+      "patient_sections": 4,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 34,
+        "paragraphs_kept": 32,
+        "dropped_list_leadin": 1,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 28,
+        "dropped_list_leadin": 2,
+        "dropped_too_short": 7
+      },
+      "pairs_below_similarity": 9,
+      "pairs_below_similarity_fallback": 18,
+      "pairs_dropped": {
+        "length_ratio": 4
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 28
+    },
+    "colorectal-prevention": {
+      "hp_sections": 10,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 85,
+        "paragraphs_kept": 83,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 66,
+        "paragraphs_kept": 40,
+        "dropped_list_leadin": 8,
+        "dropped_too_short": 18
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 26,
+      "pairs_dropped": {
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 12,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 12,
+      "pairs_kept_multi_source": 4,
+      "patient_paragraphs_total": 40
+    },
+    "lung-prevention": {
+      "hp_sections": 8,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 75,
+        "paragraphs_kept": 66,
+        "dropped_list_leadin": 3,
+        "dropped_too_short": 6
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 55,
+        "paragraphs_kept": 34,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 14
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 15,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "near_identical": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 15,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 15,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 34
+    },
+    "prostate-prevention": {
+      "hp_sections": 4,
+      "patient_sections": 3,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 53,
+        "paragraphs_kept": 47,
+        "dropped_list_leadin": 6
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 49,
+        "paragraphs_kept": 32,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 13
+      },
+      "pairs_below_similarity": 3,
+      "pairs_below_similarity_fallback": 16,
+      "pairs_dropped": {
+        "number_not_in_source": 4
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 12,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 32
+    },
+    "skin-prevention": {
+      "hp_sections": 7,
+      "patient_sections": 3,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 56,
+        "paragraphs_kept": 53,
+        "dropped_list_leadin": 2,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 57,
+        "paragraphs_kept": 38,
+        "dropped_list_leadin": 8,
+        "dropped_too_short": 11
+      },
+      "pairs_below_similarity": 6,
+      "pairs_below_similarity_fallback": 22,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 13,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 12,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 38
+    },
+    "ovarian-prevention": {
+      "hp_sections": 8,
+      "patient_sections": 3,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 71,
+        "paragraphs_kept": 68,
+        "dropped_list_leadin": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 58,
+        "paragraphs_kept": 36,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 15
+      },
+      "pairs_below_similarity": 4,
+      "pairs_below_similarity_fallback": 14,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 6
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 15,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 13,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 36
+    },
+    "supportive_pain": {
+      "hp_sections": 6,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 207,
+        "paragraphs_kept": 171,
+        "dropped_list_leadin": 34,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 91,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 15,
+        "dropped_too_short": 18
+      },
+      "pairs_below_similarity": 10,
+      "pairs_below_similarity_fallback": 26,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "number_not_in_source": 1,
+        "near_identical": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 28,
+      "pairs_kept_heading": 6,
+      "pairs_kept_fallback": 22,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 58
+    },
+    "supportive_nausea": {
+      "hp_sections": 11,
+      "patient_sections": 7,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 151,
+        "dropped_list_leadin": 17,
+        "paragraphs_kept": 130,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 16,
+        "dropped_list_leadin": 6
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 11,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 16
+    },
+    "supportive_fatigue": {
+      "hp_sections": 5,
+      "patient_sections": 7,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 150,
+        "paragraphs_kept": 116,
+        "dropped_list_leadin": 30,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 23,
+        "paragraphs_kept": 21,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 7,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 13,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 13,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 21
+    },
+    "supportive_lymphedema": {
+      "hp_sections": 5,
+      "patient_sections": 8,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 70,
+        "paragraphs_kept": 63,
+        "dropped_evidence_or_empty": 2,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 34,
+        "paragraphs_kept": 25,
+        "dropped_list_leadin": 9
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 22,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 25
+    },
+    "supportive_nutrition": {
+      "hp_sections": 7,
+      "patient_sections": 7,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 185,
+        "paragraphs_kept": 150,
+        "dropped_too_short": 8,
+        "dropped_list_leadin": 27
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 94,
+        "paragraphs_kept": 62,
+        "dropped_too_short": 14,
+        "dropped_list_leadin": 18
+      },
+      "pairs_below_similarity": 4,
+      "pairs_below_similarity_fallback": 47,
+      "pairs_dropped": {
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 11,
+      "pairs_kept_multi_source": 5,
+      "patient_paragraphs_total": 62
+    },
+    "supportive_gi_complications": {
+      "hp_sections": 6,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 106,
+        "paragraphs_kept": 81,
+        "dropped_list_leadin": 18,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 23,
+        "paragraphs_kept": 15,
+        "dropped_too_short": 4,
+        "dropped_list_leadin": 4
+      },
+      "pairs_below_similarity": 4,
+      "pairs_below_similarity_fallback": 10,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 15
+    },
+    "bereavement": {
+      "hp_sections": 8,
+      "patient_sections": 6,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 114,
+        "paragraphs_kept": 88,
+        "dropped_list_leadin": 21,
+        "dropped_too_short": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 82,
+        "paragraphs_kept": 61,
+        "dropped_too_short": 16,
+        "dropped_list_leadin": 5
+      },
+      "pairs_below_similarity": 7,
+      "pairs_below_similarity_fallback": 10,
+      "pairs_dropped": {
+        "number_not_in_source": 2,
+        "near_identical": 1,
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 46,
+      "pairs_kept_heading": 27,
+      "pairs_kept_fallback": 19,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 61
+    },
+    "prevention-overview": {
+      "hp_sections": 9,
+      "patient_sections": 5,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 53,
+        "paragraphs_kept": 47,
+        "dropped_list_leadin": 6
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 73,
+        "paragraphs_kept": 43,
+        "dropped_list_leadin": 19,
+        "dropped_too_short": 11
+      },
+      "pairs_below_similarity": 7,
+      "pairs_below_similarity_fallback": 17,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "number_not_in_source": 2,
+        "source_too_long": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 21,
+      "pairs_kept_heading": 14,
+      "pairs_kept_fallback": 7,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 43
+    },
+    "quit-smoking": {
+      "hp_sections": 2,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 75,
+        "paragraphs_kept": 66,
+        "dropped_too_short": 6,
+        "dropped_list_leadin": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 46,
+        "paragraphs_kept": 29,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 5
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 17,
+      "pairs_dropped": {
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 29
+    },
+    "communication": {
+      "hp_sections": 9,
+      "patient_sections": 5,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 107,
+        "dropped_list_leadin": 17,
+        "paragraphs_kept": 89,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 34,
+        "paragraphs_kept": 24,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 3
+      },
+      "pairs_below_similarity": 8,
+      "pairs_below_similarity_fallback": 9,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 9,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 24
+    },
+    "spirituality": {
+      "hp_sections": 8,
+      "patient_sections": 4,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 65,
+        "paragraphs_kept": 53,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 11
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 24,
+        "paragraphs_kept": 19,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 3
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 4,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 14,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 19
+    },
+    "family-caregivers": {
+      "hp_sections": 8,
+      "patient_sections": 5,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 92,
+        "paragraphs_kept": 68,
+        "dropped_list_leadin": 20,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "paragraphs_kept": 20,
+        "dropped_list_leadin": 9,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 5,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 15,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 20
+    },
+    "anxiety-distress": {
+      "hp_sections": 9,
+      "patient_sections": 5,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 213,
+        "paragraphs_kept": 151,
+        "dropped_list_leadin": 57,
+        "dropped_too_short": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 74,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 16,
+        "dropped_too_short": 9
+      },
+      "pairs_below_similarity": 13,
+      "pairs_below_similarity_fallback": 12,
+      "pairs_dropped": {
+        "length_ratio": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 5,
+      "pairs_with_xref_stripped": 5,
+      "pairs_kept": 35,
+      "pairs_kept_heading": 21,
+      "pairs_kept_fallback": 14,
+      "pairs_kept_multi_source": 6,
+      "patient_paragraphs_total": 49
+    },
+    "depression": {
+      "hp_sections": 6,
+      "patient_sections": 5,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 181,
+        "paragraphs_kept": 132,
+        "dropped_list_leadin": 44,
+        "dropped_too_short": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 67,
+        "dropped_too_short": 7,
+        "paragraphs_kept": 57,
+        "dropped_list_leadin": 3
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 32,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 24,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 24,
+      "pairs_kept_multi_source": 4,
+      "patient_paragraphs_total": 57
+    },
+    "ptsd": {
+      "hp_sections": 6,
+      "patient_sections": 5,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 59,
+        "dropped_list_leadin": 12,
+        "paragraphs_kept": 47
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 38,
+        "paragraphs_kept": 28,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 4
+      },
+      "pairs_below_similarity": 5,
+      "pairs_below_similarity_fallback": 10,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 17,
+      "pairs_kept_heading": 4,
+      "pairs_kept_fallback": 13,
+      "pairs_kept_multi_source": 5,
+      "patient_paragraphs_total": 28
+    },
+    "financial-toxicity": {
+      "hp_sections": 4,
+      "patient_sections": 4,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 99,
+        "paragraphs_kept": 89,
+        "dropped_list_leadin": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 45,
+        "paragraphs_kept": 34,
+        "dropped_list_leadin": 11
+      },
+      "pairs_below_similarity": 6,
+      "pairs_below_similarity_fallback": 10,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "number_not_in_source": 2,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 19,
+      "pairs_kept_heading": 15,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 34
+    },
+    "screening-overview": {
+      "hp_sections": 15,
+      "patient_sections": 7,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 58,
+        "paragraphs_kept": 49,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 8
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 72,
+        "paragraphs_kept": 51,
+        "dropped_too_short": 16,
+        "dropped_list_leadin": 5
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 40,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 9,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 51
+    },
+    "cardiopulmonary": {
+      "hp_sections": 6,
+      "patient_sections": 7,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 135,
+        "paragraphs_kept": 94,
+        "dropped_too_short": 7,
+        "dropped_list_leadin": 34
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 73,
+        "dropped_list_leadin": 15,
+        "paragraphs_kept": 45,
+        "dropped_too_short": 13
+      },
+      "pairs_below_similarity": 9,
+      "pairs_below_similarity_fallback": 17,
+      "pairs_dropped": {
+        "length_ratio": 4
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 24,
+      "pairs_kept_heading": 22,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 45
+    },
+    "hot-flashes": {
+      "hp_sections": 3,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 59,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 31,
+        "paragraphs_kept": 25,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 4
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 12,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 12,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 25
+    },
+    "cognitive-impairment": {
+      "hp_sections": 6,
+      "patient_sections": 3,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 62,
+        "dropped_list_leadin": 18,
+        "paragraphs_kept": 44
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 27,
+        "paragraphs_kept": 18,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 5
+      },
+      "pairs_below_similarity": 7,
+      "pairs_below_similarity_fallback": 12,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 6,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 18
+    },
+    "oral-complications": {
+      "hp_sections": 12,
+      "patient_sections": 9,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 162,
+        "dropped_list_leadin": 14,
+        "paragraphs_kept": 145,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 181,
+        "paragraphs_kept": 113,
+        "dropped_list_leadin": 34,
+        "dropped_too_short": 34
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 88,
+      "pairs_dropped": {
+        "xref_too_short": 1,
+        "length_ratio": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 22,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 22,
+      "pairs_kept_multi_source": 6,
+      "patient_paragraphs_total": 113
+    },
+    "pruritus": {
+      "hp_sections": 4,
+      "patient_sections": 4,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 51,
+        "paragraphs_kept": 37,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 43,
+        "paragraphs_kept": 27,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 10
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "near_identical": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 12,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 12,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 27
+    },
+    "sleep-disorders": {
+      "hp_sections": 5,
+      "patient_sections": 5,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 82,
+        "paragraphs_kept": 59,
+        "dropped_too_short": 6,
+        "dropped_list_leadin": 17
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 63,
+        "paragraphs_kept": 33,
+        "dropped_too_short": 13,
+        "dropped_list_leadin": 17
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 22,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 10,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 33
+    },
+    "adrenocortical-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 6,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "paragraphs_kept": 22,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 17,
+        "dropped_too_short": 1,
+        "paragraphs_kept": 15,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 15
+    },
+    "child-adrenocortical-treatment": {
+      "hp_sections": 10,
+      "patient_sections": 9,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 41,
+        "paragraphs_kept": 32,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 25,
+        "dropped_list_leadin": 9,
+        "dropped_too_short": 3
+      },
+      "pairs_below_similarity": 10,
+      "pairs_below_similarity_fallback": 19,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 25
+    },
+    "anal-prevention": {
+      "hp_sections": 6,
+      "patient_sections": 4,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 51,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 17,
+        "paragraphs_kept": 16,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 12,
+      "pairs_dropped": {
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 16
+    },
+    "bladder-screening": {
+      "hp_sections": 9,
+      "patient_sections": 2,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 40,
+        "paragraphs_kept": 37,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 13,
+        "paragraphs_kept": 8,
+        "dropped_too_short": 4,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 6,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 8
+    },
+    "child-bladder-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 10,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 16,
+        "paragraphs_kept": 12,
+        "dropped_list_leadin": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 30,
+        "dropped_list_leadin": 7
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 24,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 30
+    },
+    "child-chordoma-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 10,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 25,
+        "paragraphs_kept": 20,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 32,
+        "paragraphs_kept": 26,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 3,
+      "pairs_below_similarity_fallback": 17,
+      "pairs_dropped": {
+        "length_ratio": 3,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 26
+    },
+    "child-cns-atrt-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 5,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 56,
+        "paragraphs_kept": 48,
+        "dropped_evidence_or_empty": 1,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 71,
+        "paragraphs_kept": 53,
+        "dropped_too_short": 9,
+        "dropped_list_leadin": 9
+      },
+      "pairs_below_similarity": 13,
+      "pairs_below_similarity_fallback": 37,
+      "pairs_dropped": {
+        "number_not_in_source": 2,
+        "length_ratio": 1,
+        "near_identical": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 12,
+      "pairs_kept_heading": 9,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 53
+    },
+    "child-cns-embryonal-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 10,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 179,
+        "paragraphs_kept": 143,
+        "dropped_list_leadin": 27,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 8
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 130,
+        "paragraphs_kept": 88,
+        "dropped_list_leadin": 29,
+        "dropped_too_short": 13
+      },
+      "pairs_below_similarity": 36,
+      "pairs_below_similarity_fallback": 58,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 25,
+      "pairs_kept_heading": 10,
+      "pairs_kept_fallback": 15,
+      "pairs_kept_multi_source": 5,
+      "patient_paragraphs_total": 88
+    },
+    "child-cns-germ-cell-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 6,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 71,
+        "paragraphs_kept": 57,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 75,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 13
+      },
+      "pairs_below_similarity": 15,
+      "pairs_below_similarity_fallback": 38,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 49
+    },
+    "child-cranio-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 10,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 49,
+        "paragraphs_kept": 37,
+        "dropped_too_short": 1,
+        "dropped_evidence_or_empty": 1,
+        "dropped_list_leadin": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 60,
+        "paragraphs_kept": 45,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 4
+      },
+      "pairs_below_similarity": 23,
+      "pairs_below_similarity_fallback": 32,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 4
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 45
+    },
+    "child-ependymoma-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 14,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 89,
+        "paragraphs_kept": 67,
+        "dropped_list_leadin": 16,
+        "dropped_evidence_or_empty": 2,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 66,
+        "dropped_list_leadin": 18,
+        "paragraphs_kept": 46,
+        "dropped_too_short": 2
+      },
+      "pairs_below_similarity": 9,
+      "pairs_below_similarity_fallback": 31,
+      "pairs_dropped": {
+        "length_ratio": 3,
+        "number_not_in_source": 2,
+        "xref_too_short": 2
+      },
+      "xref_sentences_stripped": 4,
+      "pairs_with_xref_stripped": 4,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 6,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 46
+    },
+    "breast-prevention": {
+      "hp_sections": 12,
+      "patient_sections": 2,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 126,
+        "paragraphs_kept": 121,
+        "dropped_list_leadin": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 7,
+        "dropped_list_leadin": 2,
+        "paragraphs_kept": 5
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 3,
+      "pairs_dropped": {
+        "xref_too_short": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 0,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 5
+    },
+    "breast-screening": {
+      "hp_sections": 6,
+      "patient_sections": 2,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 183,
+        "paragraphs_kept": 162,
+        "dropped_list_leadin": 10,
+        "dropped_too_short": 11
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 12,
+        "paragraphs_kept": 11,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 4,
+      "pairs_dropped": {
+        "length_ratio": 1,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 11
+    },
+    "child-breast-treatment": {
+      "hp_sections": 3,
+      "patient_sections": 4,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 46,
+        "paragraphs_kept": 38,
+        "dropped_too_short": 3,
+        "dropped_list_leadin": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 11,
+        "dropped_list_leadin": 5,
+        "paragraphs_kept": 6
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 5,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 6
+    },
+    "pregnancy-breast-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 34,
+        "paragraphs_kept": 29,
+        "dropped_evidence_or_empty": 1,
+        "dropped_list_leadin": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 21,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 11,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 4,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 21
+    },
+    "child-cardiac-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 9,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 27,
+        "paragraphs_kept": 21,
+        "dropped_list_leadin": 6
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 45,
+        "paragraphs_kept": 34,
+        "dropped_list_leadin": 10,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 11,
+      "pairs_below_similarity_fallback": 26,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 34
+    },
+    "cervical-prevention": {
+      "hp_sections": 5,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 50,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 21,
+        "paragraphs_kept": 19,
+        "dropped_list_leadin": 1,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 8,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "xref_too_short": 1,
+        "length_ratio": 1,
+        "source_too_long": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 19
+    },
+    "cervical-screening": {
+      "hp_sections": 11,
+      "patient_sections": 5,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 62,
+        "paragraphs_kept": 62
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 17,
+        "dropped_list_leadin": 5
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 17
+    },
+    "child-cervical-vaginal-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 9,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 16,
+        "paragraphs_kept": 13,
+        "dropped_list_leadin": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 44,
+        "paragraphs_kept": 39,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 12,
+      "pairs_below_similarity_fallback": 34,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 39
+    },
+    "rare-childhood-cancers": {
+      "hp_sections": 6,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 55,
+        "paragraphs_kept": 44,
+        "dropped_list_leadin": 3,
+        "dropped_too_short": 8
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 36,
+        "paragraphs_kept": 19,
+        "dropped_too_short": 17
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 1,
+      "pairs_dropped": {
+        "near_identical": 1,
+        "xref_too_short": 12
+      },
+      "xref_sentences_stripped": 13,
+      "pairs_with_xref_stripped": 13,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 19
+    },
+    "late-effects": {
+      "hp_sections": 12,
+      "patient_sections": 12,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 447,
+        "paragraphs_kept": 310,
+        "dropped_list_leadin": 96,
+        "dropped_evidence_or_empty": 6,
+        "dropped_too_short": 35
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 336,
+        "paragraphs_kept": 197,
+        "dropped_too_short": 24,
+        "dropped_list_leadin": 115
+      },
+      "pairs_below_similarity": 75,
+      "pairs_below_similarity_fallback": 118,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 74,
+      "pairs_kept_heading": 54,
+      "pairs_kept_fallback": 20,
+      "pairs_kept_multi_source": 20,
+      "patient_paragraphs_total": 197
+    },
+    "child-colorectal-treatment": {
+      "hp_sections": 10,
+      "patient_sections": 12,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 43,
+        "paragraphs_kept": 35,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 64,
+        "paragraphs_kept": 50,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 5,
+      "pairs_below_similarity_fallback": 41,
+      "pairs_dropped": {
+        "length_ratio": 3
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 6,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 50
+    },
+    "child-esophageal-treatment": {
+      "hp_sections": 4,
+      "patient_sections": 10,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 18,
+        "paragraphs_kept": 14,
+        "dropped_list_leadin": 3,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 40,
+        "paragraphs_kept": 33,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 29,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 33
+    },
+    "esophageal-prevention": {
+      "hp_sections": 5,
+      "patient_sections": 4,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 30,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 15,
+        "dropped_list_leadin": 2,
+        "paragraphs_kept": 13
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 7,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 4,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 13
+    },
+    "esophageal-screening": {
+      "hp_sections": 4,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 25,
+        "paragraphs_kept": 22,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 20,
+        "dropped_list_leadin": 3,
+        "paragraphs_kept": 15,
+        "dropped_too_short": 2
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 15
+    },
+    "germ-cell-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 8,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 173,
+        "paragraphs_kept": 135,
+        "dropped_list_leadin": 34,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 145,
+        "paragraphs_kept": 89,
+        "dropped_list_leadin": 37,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 18
+      },
+      "pairs_below_similarity": 41,
+      "pairs_below_similarity_fallback": 62,
+      "pairs_dropped": {
+        "length_ratio": 6,
+        "number_not_in_source": 4
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 9,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 5,
+      "patient_paragraphs_total": 89
+    },
+    "extragonadal-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 7,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 32,
+        "paragraphs_kept": 14,
+        "dropped_list_leadin": 1,
+        "dropped_too_short": 17
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 72,
+        "paragraphs_kept": 47,
+        "dropped_list_leadin": 14,
+        "dropped_too_short": 11
+      },
+      "pairs_below_similarity": 17,
+      "pairs_below_similarity_fallback": 43,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 47
+    },
+    "child-intraocular-melanoma-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 23,
+        "paragraphs_kept": 18,
+        "dropped_list_leadin": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 58,
+        "paragraphs_kept": 40,
+        "dropped_list_leadin": 9,
+        "dropped_too_short": 9
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 34,
+      "pairs_dropped": {
+        "xref_too_short": 1,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 40
+    },
+    "gtd-treatment": {
+      "hp_sections": 10,
+      "patient_sections": 5,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 60,
+        "paragraphs_kept": 43,
+        "dropped_list_leadin": 15,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 99,
+        "paragraphs_kept": 63,
+        "dropped_list_leadin": 21,
+        "dropped_too_short": 15
+      },
+      "pairs_below_similarity": 22,
+      "pairs_below_similarity_fallback": 50,
+      "pairs_dropped": {
+        "near_identical": 1,
+        "length_ratio": 1,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 8,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 63
+    },
+    "gi-neuroendocrine-treatment": {
+      "hp_sections": 12,
+      "patient_sections": 10,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 104,
+        "paragraphs_kept": 91,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 94,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 23,
+        "dropped_too_short": 13
+      },
+      "pairs_below_similarity": 15,
+      "pairs_below_similarity_fallback": 39,
+      "pairs_dropped": {
+        "length_ratio": 4
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 7,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 58
+    },
+    "hypopharyngeal-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 8,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 63,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 87,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 16
+      },
+      "pairs_below_similarity": 28,
+      "pairs_below_similarity_fallback": 48,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 58
+    },
+    "laryngeal-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 8,
+      "sections_matched": 8,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 84,
+        "dropped_list_leadin": 22,
+        "paragraphs_kept": 53,
+        "dropped_too_short": 9
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 100,
+        "paragraphs_kept": 60,
+        "dropped_list_leadin": 21,
+        "dropped_too_short": 19
+      },
+      "pairs_below_similarity": 46,
+      "pairs_below_similarity_fallback": 44,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "number_not_in_source": 3
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 11,
+      "pairs_kept_heading": 9,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 60
+    },
+    "lip-mouth-treatment": {
+      "hp_sections": 10,
+      "patient_sections": 8,
+      "sections_matched": 6,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 82,
+        "dropped_list_leadin": 37,
+        "paragraphs_kept": 42,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 145,
+        "paragraphs_kept": 72,
+        "dropped_list_leadin": 29,
+        "dropped_too_short": 44
+      },
+      "pairs_below_similarity": 49,
+      "pairs_below_similarity_fallback": 60,
+      "pairs_dropped": {
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 72
+    },
+    "metastatic-squamous-neck-treatment": {
+      "hp_sections": 4,
+      "patient_sections": 5,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 16,
+        "paragraphs_kept": 12,
+        "dropped_list_leadin": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 54,
+        "paragraphs_kept": 40,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 9
+      },
+      "pairs_below_similarity": 8,
+      "pairs_below_similarity_fallback": 35,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 5,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 40
+    },
+    "nasopharyngeal-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 6,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 55,
+        "paragraphs_kept": 32,
+        "dropped_too_short": 11,
+        "dropped_list_leadin": 12
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 83,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 14,
+        "dropped_too_short": 11
+      },
+      "pairs_below_similarity": 27,
+      "pairs_below_similarity_fallback": 48,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 58
+    },
+    "oropharyngeal-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 6,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 100,
+        "dropped_list_leadin": 18,
+        "paragraphs_kept": 71,
+        "dropped_too_short": 11
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 102,
+        "paragraphs_kept": 72,
+        "dropped_list_leadin": 17,
+        "dropped_too_short": 13
+      },
+      "pairs_below_similarity": 46,
+      "pairs_below_similarity_fallback": 41,
+      "pairs_dropped": {
+        "length_ratio": 3,
+        "number_not_in_source": 4,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 21,
+      "pairs_kept_heading": 17,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 72
+    },
+    "paranasal-sinus-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 8,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 77,
+        "paragraphs_kept": 33,
+        "dropped_too_short": 4,
+        "dropped_list_leadin": 40
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 157,
+        "paragraphs_kept": 86,
+        "dropped_too_short": 33,
+        "dropped_list_leadin": 37,
+        "dropped_evidence_or_empty": 1
+      },
+      "pairs_below_similarity": 56,
+      "pairs_below_similarity_fallback": 72,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 13,
+      "pairs_kept_heading": 7,
+      "pairs_kept_fallback": 6,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 86
+    },
+    "salivary-gland-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 8,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 108,
+        "paragraphs_kept": 89,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 89,
+        "paragraphs_kept": 57,
+        "dropped_list_leadin": 20,
+        "dropped_too_short": 12
+      },
+      "pairs_below_similarity": 22,
+      "pairs_below_similarity_fallback": 42,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 11,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 57
+    },
+    "esthesioneuroblastoma-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 11,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 24,
+        "paragraphs_kept": 17,
+        "dropped_list_leadin": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 60,
+        "paragraphs_kept": 47,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 18,
+      "pairs_below_similarity_fallback": 39,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 47
+    },
+    "head-and-neck-laryngeal-treatment": {
+      "hp_sections": 3,
+      "patient_sections": 9,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 21,
+        "paragraphs_kept": 16,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 40,
+        "paragraphs_kept": 33,
+        "dropped_list_leadin": 7
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 28,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 33
+    },
+    "head-and-neck-nasopharyngeal-treatment": {
+      "hp_sections": 11,
+      "patient_sections": 11,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 48,
+        "paragraphs_kept": 38,
+        "dropped_list_leadin": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 60,
+        "paragraphs_kept": 47,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 2
+      },
+      "pairs_below_similarity": 15,
+      "pairs_below_similarity_fallback": 32,
+      "pairs_dropped": {
+        "length_ratio": 5,
+        "xref_too_short": 1,
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 47
+    },
+    "oral-cavity-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 9,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 18,
+        "dropped_list_leadin": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 31,
+        "paragraphs_kept": 24,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 6
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 20,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 24
+    },
+    "head-and-neck-salivary-gland-treatment": {
+      "hp_sections": 3,
+      "patient_sections": 11,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 29,
+        "paragraphs_kept": 26,
+        "dropped_list_leadin": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 32,
+        "paragraphs_kept": 25,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 18,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 25
+    },
+    "oral-prevention": {
+      "hp_sections": 5,
+      "patient_sections": 3,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 33,
+        "dropped_list_leadin": 1,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 45,
+        "paragraphs_kept": 30,
+        "dropped_list_leadin": 8,
+        "dropped_too_short": 7
+      },
+      "pairs_below_similarity": 4,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {
+        "length_ratio": 3,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 13,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 11,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 30
+    },
+    "oral-screening": {
+      "hp_sections": 5,
+      "patient_sections": 4,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 29,
+        "paragraphs_kept": 26,
+        "dropped_list_leadin": 2,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 29,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 3
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 18,
+      "pairs_dropped": {
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 9,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 29
+    },
+    "kidney-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 7,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 91,
+        "dropped_list_leadin": 8,
+        "paragraphs_kept": 58,
+        "dropped_too_short": 25
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 79,
+        "paragraphs_kept": 52,
+        "dropped_too_short": 11,
+        "dropped_list_leadin": 16
+      },
+      "pairs_below_similarity": 48,
+      "pairs_below_similarity_fallback": 46,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 52
+    },
+    "transitional-cell-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 6,
+      "sections_matched": 6,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "paragraphs_kept": 23,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 3
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 82,
+        "paragraphs_kept": 54,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 17
+      },
+      "pairs_below_similarity": 45,
+      "pairs_below_similarity_fallback": 45,
+      "pairs_dropped": {
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 7,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 54
+    },
+    "langerhans-treatment": {
+      "hp_sections": 4,
+      "patient_sections": 7,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 238,
+        "paragraphs_kept": 188,
+        "dropped_list_leadin": 40,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 9
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 128,
+        "paragraphs_kept": 65,
+        "dropped_list_leadin": 42,
+        "dropped_too_short": 21
+      },
+      "pairs_below_similarity": 12,
+      "pairs_below_similarity_fallback": 43,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "number_not_in_source": 3,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 16,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 16,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 65
+    },
+    "adult-liver-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 2,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 106,
+        "paragraphs_kept": 73,
+        "dropped_list_leadin": 14,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 18
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 14,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 13,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 14
+    },
+    "bile-duct-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 3,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 73,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 9,
+        "dropped_too_short": 6
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 31,
+        "dropped_list_leadin": 11,
+        "paragraphs_kept": 20
+      },
+      "pairs_below_similarity": 3,
+      "pairs_below_similarity_fallback": 16,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 20
+    },
+    "liver-prevention": {
+      "hp_sections": 6,
+      "patient_sections": 2,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 94,
+        "paragraphs_kept": 92,
+        "dropped_list_leadin": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 9,
+        "paragraphs_kept": 7,
+        "dropped_list_leadin": 2
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 4,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 7
+    },
+    "liver-screening": {
+      "hp_sections": 4,
+      "patient_sections": 2,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 20,
+        "paragraphs_kept": 18,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 12,
+        "dropped_list_leadin": 2,
+        "paragraphs_kept": 10
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 8,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 10
+    },
+    "child-pleuropulmonary-blastoma-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 11,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 44,
+        "paragraphs_kept": 38,
+        "dropped_list_leadin": 6
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 49,
+        "paragraphs_kept": 38,
+        "dropped_too_short": 3,
+        "dropped_list_leadin": 8
+      },
+      "pairs_below_similarity": 7,
+      "pairs_below_similarity_fallback": 30,
+      "pairs_dropped": {
+        "length_ratio": 4,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 38
+    },
+    "child-tracheobronchial-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 11,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "paragraphs_kept": 23,
+        "dropped_list_leadin": 5,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 38,
+        "paragraphs_kept": 29,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 2
+      },
+      "pairs_below_similarity": 3,
+      "pairs_below_similarity_fallback": 22,
+      "pairs_dropped": {
+        "length_ratio": 4
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 29
+    },
+    "aids-related-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 5,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 35,
+        "paragraphs_kept": 27,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 78,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 14,
+        "dropped_too_short": 15
+      },
+      "pairs_below_similarity": 19,
+      "pairs_below_similarity_fallback": 41,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 49
+    },
+    "mycosis-fungoides-treatment": {
+      "hp_sections": 12,
+      "patient_sections": 6,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 47,
+        "paragraphs_kept": 35,
+        "dropped_list_leadin": 5,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 88,
+        "paragraphs_kept": 59,
+        "dropped_list_leadin": 15,
+        "dropped_too_short": 14
+      },
+      "pairs_below_similarity": 6,
+      "pairs_below_similarity_fallback": 50,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 8,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 8,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 59
+    },
+    "child-mesothelioma-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 7,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 24,
+        "paragraphs_kept": 20,
+        "dropped_list_leadin": 3,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 34,
+        "paragraphs_kept": 26,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 2
+      },
+      "pairs_below_similarity": 1,
+      "pairs_below_similarity_fallback": 22,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 26
+    },
+    "mesothelioma-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 7,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 42,
+        "dropped_list_leadin": 7,
+        "paragraphs_kept": 25,
+        "dropped_too_short": 10
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 31,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 8,
+        "paragraphs_kept": 21
+      },
+      "pairs_below_similarity": 13,
+      "pairs_below_similarity_fallback": 19,
+      "pairs_dropped": {
+        "xref_too_short": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 0,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 21
+    },
+    "child-men-syndromes-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 47,
+        "paragraphs_kept": 40,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 11,
+        "paragraphs_kept": 11
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 10,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 11
+    },
+    "mds-mpd-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 9,
+      "sections_matched": 3,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 42,
+        "paragraphs_kept": 31,
+        "dropped_list_leadin": 4,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 71,
+        "paragraphs_kept": 49,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 10
+      },
+      "pairs_below_similarity": 10,
+      "pairs_below_similarity_fallback": 43,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 49
+    },
+    "myelodysplastic-treatment": {
+      "hp_sections": 4,
+      "patient_sections": 4,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 49,
+        "paragraphs_kept": 47,
+        "dropped_list_leadin": 1,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 55,
+        "paragraphs_kept": 41,
+        "dropped_list_leadin": 8,
+        "dropped_too_short": 6
+      },
+      "pairs_below_similarity": 8,
+      "pairs_below_similarity_fallback": 32,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 4,
+      "pairs_kept_fallback": 5,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 41
+    },
+    "neuroblastoma-screening": {
+      "hp_sections": 3,
+      "patient_sections": 4,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 20,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 29,
+        "paragraphs_kept": 24,
+        "dropped_too_short": 4,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 18,
+      "pairs_dropped": {
+        "number_not_in_source": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 24
+    },
+    "child-ovarian-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 12,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 52,
+        "paragraphs_kept": 39,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 66,
+        "paragraphs_kept": 52,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 9,
+      "pairs_below_similarity_fallback": 42,
+      "pairs_dropped": {
+        "length_ratio": 5,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 52
+    },
+    "ovarian-germ-cell-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 8,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 41,
+        "paragraphs_kept": 28,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 11
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 87,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 18
+      },
+      "pairs_below_similarity": 26,
+      "pairs_below_similarity_fallback": 48,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 9,
+      "pairs_kept_heading": 8,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 58
+    },
+    "child-pancreatic-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 12,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 48,
+        "paragraphs_kept": 40,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 58,
+        "dropped_list_leadin": 15,
+        "paragraphs_kept": 40,
+        "dropped_too_short": 3
+      },
+      "pairs_below_similarity": 3,
+      "pairs_below_similarity_fallback": 32,
+      "pairs_dropped": {
+        "length_ratio": 2,
+        "xref_too_short": 2
+      },
+      "xref_sentences_stripped": 3,
+      "pairs_with_xref_stripped": 3,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 4,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 40
+    },
+    "pnet-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 47,
+        "paragraphs_kept": 36,
+        "dropped_list_leadin": 7,
+        "dropped_too_short": 4
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 57,
+        "paragraphs_kept": 38,
+        "dropped_list_leadin": 18,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 26,
+      "pairs_below_similarity_fallback": 26,
+      "pairs_dropped": {
+        "xref_too_short": 2
+      },
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 38
+    },
+    "penile-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "dropped_list_leadin": 8,
+        "paragraphs_kept": 15,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 20,
+        "dropped_too_short": 2,
+        "dropped_list_leadin": 2,
+        "paragraphs_kept": 16
+      },
+      "pairs_below_similarity": 9,
+      "pairs_below_similarity_fallback": 15,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 1,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 16
+    },
+    "child-pheochromocytoma-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 5,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 37,
+        "paragraphs_kept": 28,
+        "dropped_list_leadin": 9
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 65,
+        "dropped_too_short": 7,
+        "paragraphs_kept": 50,
+        "dropped_list_leadin": 8
+      },
+      "pairs_below_similarity": 8,
+      "pairs_below_similarity_fallback": 37,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 10,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 9,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 50
+    },
+    "pituitary-treatment": {
+      "hp_sections": 11,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 69,
+        "dropped_list_leadin": 13,
+        "paragraphs_kept": 49,
+        "dropped_too_short": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 23,
+        "dropped_too_short": 7,
+        "dropped_list_leadin": 3,
+        "paragraphs_kept": 13
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 11,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 13
+    },
+    "child-melanoma-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 49,
+        "paragraphs_kept": 34,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 61,
+        "paragraphs_kept": 42,
+        "dropped_list_leadin": 14,
+        "dropped_too_short": 5
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 38,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 42
+    },
+    "child-skin-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 1,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 18,
+        "dropped_list_leadin": 3,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 14,
+        "paragraphs_kept": 8,
+        "dropped_list_leadin": 6
+      },
+      "pairs_below_similarity": 8,
+      "pairs_below_similarity_fallback": 6,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 8
+    },
+    "adult-soft-tissue-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 8,
+      "sections_matched": 5,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 126,
+        "dropped_list_leadin": 24,
+        "paragraphs_kept": 83,
+        "dropped_too_short": 19
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 100,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 27,
+        "dropped_too_short": 15
+      },
+      "pairs_below_similarity": 18,
+      "pairs_below_similarity_fallback": 33,
+      "pairs_dropped": {
+        "number_not_in_source": 3,
+        "length_ratio": 2,
+        "xref_too_short": 3
+      },
+      "xref_sentences_stripped": 6,
+      "pairs_with_xref_stripped": 6,
+      "pairs_kept": 15,
+      "pairs_kept_heading": 12,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 58
+    },
+    "child-gist-treatment": {
+      "hp_sections": 6,
+      "patient_sections": 10,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "paragraphs_kept": 25,
+        "dropped_list_leadin": 5
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 39,
+        "paragraphs_kept": 29,
+        "dropped_list_leadin": 10
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 24,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 3,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 29
+    },
+    "child-soft-tissue-treatment": {
+      "hp_sections": 17,
+      "patient_sections": 13,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 465,
+        "paragraphs_kept": 345,
+        "dropped_list_leadin": 66,
+        "dropped_evidence_or_empty": 1,
+        "dropped_too_short": 53
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 109,
+        "paragraphs_kept": 70,
+        "dropped_list_leadin": 29,
+        "dropped_too_short": 10
+      },
+      "pairs_below_similarity": 23,
+      "pairs_below_similarity_fallback": 41,
+      "pairs_dropped": {
+        "xref_too_short": 4,
+        "length_ratio": 2,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 5,
+      "pairs_with_xref_stripped": 5,
+      "pairs_kept": 21,
+      "pairs_kept_heading": 6,
+      "pairs_kept_fallback": 15,
+      "pairs_kept_multi_source": 6,
+      "patient_paragraphs_total": 70
+    },
+    "child-vascular-tumors-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 8,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 230,
+        "paragraphs_kept": 186,
+        "dropped_list_leadin": 19,
+        "dropped_too_short": 18,
+        "dropped_evidence_or_empty": 7
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 170,
+        "paragraphs_kept": 125,
+        "dropped_list_leadin": 22,
+        "dropped_too_short": 23
+      },
+      "pairs_below_similarity": 82,
+      "pairs_below_similarity_fallback": 83,
+      "pairs_dropped": {
+        "xref_too_short": 2,
+        "number_not_in_source": 3,
+        "length_ratio": 9
+      },
+      "xref_sentences_stripped": 5,
+      "pairs_with_xref_stripped": 5,
+      "pairs_kept": 28,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 27,
+      "pairs_kept_multi_source": 4,
+      "patient_paragraphs_total": 125
+    },
+    "gist-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 7,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 121,
+        "paragraphs_kept": 68,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 41
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 63,
+        "paragraphs_kept": 45,
+        "dropped_list_leadin": 11,
+        "dropped_too_short": 7
+      },
+      "pairs_below_similarity": 26,
+      "pairs_below_similarity_fallback": 36,
+      "pairs_dropped": {
+        "length_ratio": 3,
+        "xref_too_short": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 5,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 45
+    },
+    "kaposi-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 6,
+      "sections_matched": 2,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 67,
+        "paragraphs_kept": 47,
+        "dropped_list_leadin": 6,
+        "dropped_too_short": 14
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 77,
+        "paragraphs_kept": 54,
+        "dropped_list_leadin": 14,
+        "dropped_too_short": 9
+      },
+      "pairs_below_similarity": 7,
+      "pairs_below_similarity_fallback": 50,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 4,
+      "pairs_kept_heading": 3,
+      "pairs_kept_fallback": 1,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 54
+    },
+    "rhabdomyosarcoma-treatment": {
+      "hp_sections": 7,
+      "patient_sections": 5,
+      "sections_matched": 4,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 249,
+        "paragraphs_kept": 210,
+        "dropped_list_leadin": 30,
+        "dropped_too_short": 9
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 117,
+        "paragraphs_kept": 65,
+        "dropped_too_short": 27,
+        "dropped_list_leadin": 25
+      },
+      "pairs_below_similarity": 19,
+      "pairs_below_similarity_fallback": 31,
+      "pairs_dropped": {
+        "length_ratio": 7,
+        "xref_too_short": 2
+      },
+      "xref_sentences_stripped": 4,
+      "pairs_with_xref_stripped": 4,
+      "pairs_kept": 25,
+      "pairs_kept_heading": 14,
+      "pairs_kept_fallback": 11,
+      "pairs_kept_multi_source": 2,
+      "patient_paragraphs_total": 65
+    },
+    "stomach-prevention": {
+      "hp_sections": 5,
+      "patient_sections": 2,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 32,
+        "paragraphs_kept": 30,
+        "dropped_too_short": 1,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 13,
+        "paragraphs_kept": 10,
+        "dropped_list_leadin": 3
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 3,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 2,
+      "pairs_with_xref_stripped": 2,
+      "pairs_kept": 7,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 7,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 10
+    },
+    "stomach-screening": {
+      "hp_sections": 5,
+      "patient_sections": 2,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 21,
+        "paragraphs_kept": 21
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 6,
+        "dropped_list_leadin": 1,
+        "paragraphs_kept": 4,
+        "dropped_too_short": 1
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 4,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 0,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 4
+    },
+    "stomach-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 10,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 75,
+        "dropped_list_leadin": 8,
+        "paragraphs_kept": 49,
+        "dropped_too_short": 18
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 30,
+        "paragraphs_kept": 25,
+        "dropped_list_leadin": 5
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 25,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 0,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 25
+    },
+    "child-testicular-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 11,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 18,
+        "dropped_list_leadin": 3,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 38,
+        "dropped_too_short": 1,
+        "paragraphs_kept": 32,
+        "dropped_list_leadin": 5
+      },
+      "pairs_below_similarity": 4,
+      "pairs_below_similarity_fallback": 30,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 32
+    },
+    "testicular-screening": {
+      "hp_sections": 5,
+      "patient_sections": 1,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 22,
+        "paragraphs_kept": 21,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 3,
+        "paragraphs_kept": 3
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 3,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 0,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 3
+    },
+    "child-unknown-primary-treatment": {
+      "hp_sections": 5,
+      "patient_sections": 4,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 19,
+        "paragraphs_kept": 17,
+        "dropped_list_leadin": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 54,
+        "paragraphs_kept": 40,
+        "dropped_list_leadin": 8,
+        "dropped_too_short": 6
+      },
+      "pairs_below_similarity": 2,
+      "pairs_below_similarity_fallback": 36,
+      "pairs_dropped": {
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 3,
+      "pairs_kept_heading": 1,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 3,
+      "patient_paragraphs_total": 40
+    },
+    "urethral-treatment": {
+      "hp_sections": 8,
+      "patient_sections": 7,
+      "sections_matched": 7,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 55,
+        "paragraphs_kept": 40,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 2
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 79,
+        "paragraphs_kept": 55,
+        "dropped_list_leadin": 12,
+        "dropped_too_short": 12
+      },
+      "pairs_below_similarity": 41,
+      "pairs_below_similarity_fallback": 39,
+      "pairs_dropped": {
+        "number_not_in_source": 1,
+        "length_ratio": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 14,
+      "pairs_kept_heading": 12,
+      "pairs_kept_fallback": 2,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 55
+    },
+    "endometrial-prevention": {
+      "hp_sections": 6,
+      "patient_sections": 3,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 59,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 29,
+        "paragraphs_kept": 26,
+        "dropped_list_leadin": 3
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 8,
+      "pairs_dropped": {
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 17,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 17,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 26
+    },
+    "endometrial-screening": {
+      "hp_sections": 5,
+      "patient_sections": 5,
+      "sections_matched": 0,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 32,
+        "paragraphs_kept": 32
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 20,
+        "dropped_list_leadin": 2,
+        "paragraphs_kept": 18
+      },
+      "pairs_below_similarity": 0,
+      "pairs_below_similarity_fallback": 10,
+      "pairs_dropped": {
+        "length_ratio": 1,
+        "number_not_in_source": 1
+      },
+      "xref_sentences_stripped": 1,
+      "pairs_with_xref_stripped": 1,
+      "pairs_kept": 6,
+      "pairs_kept_heading": 0,
+      "pairs_kept_fallback": 6,
+      "pairs_kept_multi_source": 1,
+      "patient_paragraphs_total": 18
+    },
+    "uterine-sarcoma-treatment": {
+      "hp_sections": 9,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 34,
+        "dropped_list_leadin": 10,
+        "paragraphs_kept": 23,
+        "dropped_too_short": 1
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 16,
+        "dropped_too_short": 1,
+        "paragraphs_kept": 14,
+        "dropped_list_leadin": 1
+      },
+      "pairs_below_similarity": 5,
+      "pairs_below_similarity_fallback": 12,
+      "pairs_dropped": {},
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 14
+    },
+    "vulvar-treatment": {
+      "hp_sections": 10,
+      "patient_sections": 5,
+      "sections_matched": 1,
+      "hp_paragraph_stats": {
+        "paragraphs_seen": 79,
+        "paragraphs_kept": 58,
+        "dropped_list_leadin": 13,
+        "dropped_too_short": 8
+      },
+      "patient_paragraph_stats": {
+        "paragraphs_seen": 21,
+        "dropped_too_short": 2,
+        "paragraphs_kept": 16,
+        "dropped_list_leadin": 3
+      },
+      "pairs_below_similarity": 5,
+      "pairs_below_similarity_fallback": 12,
+      "pairs_dropped": {
+        "length_ratio": 2
+      },
+      "xref_sentences_stripped": 0,
+      "pairs_with_xref_stripped": 0,
+      "pairs_kept": 2,
+      "pairs_kept_heading": 2,
+      "pairs_kept_fallback": 0,
+      "pairs_kept_multi_source": 0,
+      "patient_paragraphs_total": 16
+    }
+  },
+  "failed_pages": {},
+  "split_before_near_dup": {
+    "train": 1333,
+    "val": 166,
+    "test": 166
+  },
+  "near_dup": {
+    "ratio": 0.85,
+    "dropped": {
+      "val": 5,
+      "test": 11
+    }
+  },
+  "pairs_dropped_total": {
+    "number_not_in_source": 129,
+    "length_ratio": 245,
+    "near_identical": 9,
+    "xref_too_short": 72,
+    "source_too_long": 2
+  },
+  "xref_sentences_stripped_total": 185,
+  "pairs_with_xref_stripped_total": 185,
+  "sim_threshold": 0.6,
+  "family_to_split": {
+    "sarcoma": "train",
+    "head_neck": "train",
+    "blood": "train",
+    "childhood_misc": "train",
+    "brain": "train",
+    "lymphoma": "train",
+    "supportive_mental": "train",
+    "endocrine": "train",
+    "prostate": "train",
+    "skin": "train",
+    "lung": "train",
+    "colorectal": "train",
+    "eye": "train",
+    "supportive_bereavement": "train",
+    "ovarian": "train",
+    "neuroblastoma": "train",
+    "kidney": "train",
+    "breast": "val",
+    "overview": "test",
+    "supportive_pain": "train",
+    "uterine": "test",
+    "supportive_cardiopulmonary": "val",
+    "thyroid": "train",
+    "cervical_vaginal": "test",
+    "supportive_oral-complications": "val",
+    "germ_cell": "train",
+    "supportive_financial-toxicity": "train",
+    "liver_biliary": "val",
+    "supportive_family-caregivers": "test",
+    "urinary_other": "val",
+    "supportive_spirituality": "test",
+    "gi_neuroendocrine": "train",
+    "supportive_nutrition": "test",
+    "supportive_communication": "val",
+    "supportive_fatigue": "train",
+    "supportive_hot-flashes": "test",
+    "supportive_pruritus": "val",
+    "esophageal": "train",
+    "pancreatic": "test",
+    "supportive_quit-smoking": "val",
+    "supportive_sleep-disorders": "train",
+    "gtd": "val",
+    "bladder": "test",
+    "unknown_primary": "train",
+    "stomach": "train",
+    "supportive_cognitive-impairment": "val",
+    "anal": "test",
+    "supportive_gi_complications": "test",
+    "supportive_nausea": "val",
+    "supportive_lymphedema": "train",
+    "vulvar": "train"
+  },
+  "page_to_family": {
+    "breast": "breast",
+    "colon": "colorectal",
+    "lung_nsclc": "lung",
+    "prostate": "prostate",
+    "aml_adult": "blood",
+    "bladder": "bladder",
+    "ovarian": "ovarian",
+    "pancreatic": "pancreatic",
+    "lymphoma_nhl": "lymphoma",
+    "lymphoma_hodgkin": "lymphoma",
+    "cervical": "cervical_vaginal",
+    "endometrial": "uterine",
+    "esophageal": "esophageal",
+    "thyroid": "thyroid",
+    "melanoma": "skin",
+    "brain_adult": "brain",
+    "cll": "blood",
+    "cml": "blood",
+    "all_adult": "blood",
+    "myeloma": "blood",
+    "testicular": "germ_cell",
+    "lung_sclc": "lung",
+    "anal": "anal",
+    "osteosarcoma": "sarcoma",
+    "wilms": "kidney",
+    "rectal": "colorectal",
+    "vaginal": "cervical_vaginal",
+    "gallbladder": "liver_biliary",
+    "small-intestine": "gi_neuroendocrine",
+    "skin": "skin",
+    "merkel-cell": "skin",
+    "intraocular-melanoma": "eye",
+    "retinoblastoma": "eye",
+    "unknown-primary": "unknown_primary",
+    "primary-cns-lymphoma": "lymphoma",
+    "hairy-cell": "blood",
+    "child-all": "blood",
+    "child-aml": "blood",
+    "child-hodgkin": "lymphoma",
+    "child-nhl": "lymphoma",
+    "neuroblastoma": "neuroblastoma",
+    "ewing": "sarcoma",
+    "child-thyroid": "thyroid",
+    "pheochromocytoma": "endocrine",
+    "parathyroid": "endocrine",
+    "male-breast": "breast",
+    "prostate-screening": "prostate",
+    "colorectal-screening": "colorectal",
+    "lung-screening": "lung",
+    "skin-screening": "skin",
+    "ovarian-screening": "ovarian",
+    "colorectal-prevention": "colorectal",
+    "lung-prevention": "lung",
+    "prostate-prevention": "prostate",
+    "skin-prevention": "skin",
+    "ovarian-prevention": "ovarian",
+    "supportive_pain": "supportive_pain",
+    "supportive_nausea": "supportive_nausea",
+    "supportive_fatigue": "supportive_fatigue",
+    "supportive_lymphedema": "supportive_lymphedema",
+    "supportive_nutrition": "supportive_nutrition",
+    "supportive_gi_complications": "supportive_gi_complications",
+    "bereavement": "supportive_bereavement",
+    "prevention-overview": "overview",
+    "quit-smoking": "supportive_quit-smoking",
+    "communication": "supportive_communication",
+    "spirituality": "supportive_spirituality",
+    "family-caregivers": "supportive_family-caregivers",
+    "anxiety-distress": "supportive_mental",
+    "depression": "supportive_mental",
+    "ptsd": "supportive_mental",
+    "financial-toxicity": "supportive_financial-toxicity",
+    "screening-overview": "overview",
+    "cardiopulmonary": "supportive_cardiopulmonary",
+    "hot-flashes": "supportive_hot-flashes",
+    "cognitive-impairment": "supportive_cognitive-impairment",
+    "oral-complications": "supportive_oral-complications",
+    "pruritus": "supportive_pruritus",
+    "sleep-disorders": "supportive_sleep-disorders",
+    "adrenocortical-treatment": "endocrine",
+    "child-adrenocortical-treatment": "endocrine",
+    "anal-prevention": "anal",
+    "bladder-screening": "bladder",
+    "child-bladder-treatment": "bladder",
+    "child-chordoma-treatment": "sarcoma",
+    "child-cns-atrt-treatment": "brain",
+    "child-cns-embryonal-treatment": "brain",
+    "child-cns-germ-cell-treatment": "brain",
+    "child-cranio-treatment": "brain",
+    "child-ependymoma-treatment": "brain",
+    "breast-prevention": "breast",
+    "breast-screening": "breast",
+    "child-breast-treatment": "breast",
+    "pregnancy-breast-treatment": "breast",
+    "child-cardiac-treatment": "childhood_misc",
+    "cervical-prevention": "cervical_vaginal",
+    "cervical-screening": "cervical_vaginal",
+    "child-cervical-vaginal-treatment": "cervical_vaginal",
+    "rare-childhood-cancers": "childhood_misc",
+    "late-effects": "childhood_misc",
+    "child-colorectal-treatment": "colorectal",
+    "child-esophageal-treatment": "esophageal",
+    "esophageal-prevention": "esophageal",
+    "esophageal-screening": "esophageal",
+    "germ-cell-treatment": "germ_cell",
+    "extragonadal-treatment": "germ_cell",
+    "child-intraocular-melanoma-treatment": "eye",
+    "gtd-treatment": "gtd",
+    "gi-neuroendocrine-treatment": "gi_neuroendocrine",
+    "hypopharyngeal-treatment": "head_neck",
+    "laryngeal-treatment": "head_neck",
+    "lip-mouth-treatment": "head_neck",
+    "metastatic-squamous-neck-treatment": "head_neck",
+    "nasopharyngeal-treatment": "head_neck",
+    "oropharyngeal-treatment": "head_neck",
+    "paranasal-sinus-treatment": "head_neck",
+    "salivary-gland-treatment": "head_neck",
+    "esthesioneuroblastoma-treatment": "head_neck",
+    "head-and-neck-laryngeal-treatment": "head_neck",
+    "head-and-neck-nasopharyngeal-treatment": "head_neck",
+    "oral-cavity-treatment": "head_neck",
+    "head-and-neck-salivary-gland-treatment": "head_neck",
+    "oral-prevention": "head_neck",
+    "oral-screening": "head_neck",
+    "kidney-treatment": "kidney",
+    "transitional-cell-treatment": "kidney",
+    "langerhans-treatment": "blood",
+    "adult-liver-treatment": "liver_biliary",
+    "bile-duct-treatment": "liver_biliary",
+    "liver-prevention": "liver_biliary",
+    "liver-screening": "liver_biliary",
+    "child-pleuropulmonary-blastoma-treatment": "lung",
+    "child-tracheobronchial-treatment": "lung",
+    "aids-related-treatment": "lymphoma",
+    "mycosis-fungoides-treatment": "lymphoma",
+    "child-mesothelioma-treatment": "lung",
+    "mesothelioma-treatment": "lung",
+    "child-men-syndromes-treatment": "endocrine",
+    "mds-mpd-treatment": "blood",
+    "myelodysplastic-treatment": "blood",
+    "neuroblastoma-screening": "neuroblastoma",
+    "child-ovarian-treatment": "ovarian",
+    "ovarian-germ-cell-treatment": "ovarian",
+    "child-pancreatic-treatment": "pancreatic",
+    "pnet-treatment": "pancreatic",
+    "penile-treatment": "urinary_other",
+    "child-pheochromocytoma-treatment": "endocrine",
+    "pituitary-treatment": "brain",
+    "child-melanoma-treatment": "skin",
+    "child-skin-treatment": "skin",
+    "adult-soft-tissue-treatment": "sarcoma",
+    "child-gist-treatment": "sarcoma",
+    "child-soft-tissue-treatment": "sarcoma",
+    "child-vascular-tumors-treatment": "sarcoma",
+    "gist-treatment": "sarcoma",
+    "kaposi-treatment": "sarcoma",
+    "rhabdomyosarcoma-treatment": "sarcoma",
+    "stomach-prevention": "stomach",
+    "stomach-screening": "stomach",
+    "stomach-treatment": "stomach",
+    "child-testicular-treatment": "germ_cell",
+    "testicular-screening": "germ_cell",
+    "child-unknown-primary-treatment": "unknown_primary",
+    "urethral-treatment": "urinary_other",
+    "endometrial-prevention": "uterine",
+    "endometrial-screening": "uterine",
+    "uterine-sarcoma-treatment": "uterine",
+    "vulvar-treatment": "vulvar"
+  },
+  "split": {
+    "method": "whole organ families assigned to splits (closest fit to PDQ_SPLIT by pair count), then near-duplicate val/test targets dropped",
+    "page_to_split": {
+      "breast": "val",
+      "colon": "train",
+      "lung_nsclc": "train",
+      "prostate": "train",
+      "aml_adult": "train",
+      "bladder": "test",
+      "ovarian": "train",
+      "pancreatic": "test",
+      "lymphoma_nhl": "train",
+      "lymphoma_hodgkin": "train",
+      "cervical": "test",
+      "endometrial": "test",
+      "esophageal": "train",
+      "thyroid": "train",
+      "melanoma": "train",
+      "brain_adult": "train",
+      "cll": "train",
+      "cml": "train",
+      "all_adult": "train",
+      "myeloma": "train",
+      "testicular": "train",
+      "lung_sclc": "train",
+      "anal": "test",
+      "osteosarcoma": "train",
+      "wilms": "train",
+      "rectal": "train",
+      "vaginal": "test",
+      "gallbladder": "val",
+      "small-intestine": "train",
+      "skin": "train",
+      "merkel-cell": "train",
+      "intraocular-melanoma": "train",
+      "retinoblastoma": "train",
+      "unknown-primary": "train",
+      "primary-cns-lymphoma": "train",
+      "hairy-cell": "train",
+      "child-all": "train",
+      "child-aml": "train",
+      "child-hodgkin": "train",
+      "child-nhl": "train",
+      "neuroblastoma": "train",
+      "ewing": "train",
+      "child-thyroid": "train",
+      "pheochromocytoma": "train",
+      "parathyroid": "train",
+      "male-breast": "val",
+      "prostate-screening": "train",
+      "colorectal-screening": "train",
+      "lung-screening": "train",
+      "skin-screening": "train",
+      "ovarian-screening": "train",
+      "colorectal-prevention": "train",
+      "lung-prevention": "train",
+      "prostate-prevention": "train",
+      "skin-prevention": "train",
+      "ovarian-prevention": "train",
+      "supportive_pain": "train",
+      "supportive_nausea": "val",
+      "supportive_fatigue": "train",
+      "supportive_lymphedema": "train",
+      "supportive_nutrition": "test",
+      "supportive_gi_complications": "test",
+      "bereavement": "train",
+      "prevention-overview": "test",
+      "quit-smoking": "val",
+      "communication": "val",
+      "spirituality": "test",
+      "family-caregivers": "test",
+      "anxiety-distress": "train",
+      "depression": "train",
+      "ptsd": "train",
+      "financial-toxicity": "train",
+      "screening-overview": "test",
+      "cardiopulmonary": "val",
+      "hot-flashes": "test",
+      "cognitive-impairment": "val",
+      "oral-complications": "val",
+      "pruritus": "val",
+      "sleep-disorders": "train",
+      "adrenocortical-treatment": "train",
+      "child-adrenocortical-treatment": "train",
+      "anal-prevention": "test",
+      "bladder-screening": "test",
+      "child-bladder-treatment": "test",
+      "child-chordoma-treatment": "train",
+      "child-cns-atrt-treatment": "train",
+      "child-cns-embryonal-treatment": "train",
+      "child-cns-germ-cell-treatment": "train",
+      "child-cranio-treatment": "train",
+      "child-ependymoma-treatment": "train",
+      "breast-prevention": "val",
+      "breast-screening": "val",
+      "child-breast-treatment": "val",
+      "pregnancy-breast-treatment": "val",
+      "child-cardiac-treatment": "train",
+      "cervical-prevention": "test",
+      "cervical-screening": "test",
+      "child-cervical-vaginal-treatment": "test",
+      "rare-childhood-cancers": "train",
+      "late-effects": "train",
+      "child-colorectal-treatment": "train",
+      "child-esophageal-treatment": "train",
+      "esophageal-prevention": "train",
+      "esophageal-screening": "train",
+      "germ-cell-treatment": "train",
+      "extragonadal-treatment": "train",
+      "child-intraocular-melanoma-treatment": "train",
+      "gtd-treatment": "val",
+      "gi-neuroendocrine-treatment": "train",
+      "hypopharyngeal-treatment": "train",
+      "laryngeal-treatment": "train",
+      "lip-mouth-treatment": "train",
+      "metastatic-squamous-neck-treatment": "train",
+      "nasopharyngeal-treatment": "train",
+      "oropharyngeal-treatment": "train",
+      "paranasal-sinus-treatment": "train",
+      "salivary-gland-treatment": "train",
+      "esthesioneuroblastoma-treatment": "train",
+      "head-and-neck-laryngeal-treatment": "train",
+      "head-and-neck-nasopharyngeal-treatment": "train",
+      "oral-cavity-treatment": "train",
+      "head-and-neck-salivary-gland-treatment": "train",
+      "oral-prevention": "train",
+      "oral-screening": "train",
+      "kidney-treatment": "train",
+      "transitional-cell-treatment": "train",
+      "langerhans-treatment": "train",
+      "adult-liver-treatment": "val",
+      "bile-duct-treatment": "val",
+      "liver-prevention": "val",
+      "liver-screening": "val",
+      "child-pleuropulmonary-blastoma-treatment": "train",
+      "child-tracheobronchial-treatment": "train",
+      "aids-related-treatment": "train",
+      "mycosis-fungoides-treatment": "train",
+      "child-mesothelioma-treatment": "train",
+      "mesothelioma-treatment": "train",
+      "child-men-syndromes-treatment": "train",
+      "mds-mpd-treatment": "train",
+      "myelodysplastic-treatment": "train",
+      "neuroblastoma-screening": "train",
+      "child-ovarian-treatment": "train",
+      "ovarian-germ-cell-treatment": "train",
+      "child-pancreatic-treatment": "test",
+      "pnet-treatment": "test",
+      "penile-treatment": "val",
+      "child-pheochromocytoma-treatment": "train",
+      "pituitary-treatment": "train",
+      "child-melanoma-treatment": "train",
+      "child-skin-treatment": "train",
+      "adult-soft-tissue-treatment": "train",
+      "child-gist-treatment": "train",
+      "child-soft-tissue-treatment": "train",
+      "child-vascular-tumors-treatment": "train",
+      "gist-treatment": "train",
+      "kaposi-treatment": "train",
+      "rhabdomyosarcoma-treatment": "train",
+      "stomach-prevention": "train",
+      "stomach-screening": "train",
+      "stomach-treatment": "train",
+      "child-testicular-treatment": "train",
+      "testicular-screening": "train",
+      "child-unknown-primary-treatment": "train",
+      "urethral-treatment": "val",
+      "endometrial-prevention": "test",
+      "endometrial-screening": "test",
+      "uterine-sarcoma-treatment": "test",
+      "vulvar-treatment": "train"
+    },
+    "pairs_per_split": {
+      "train": 1333,
+      "val": 161,
+      "test": 155
+    },
+    "fractions": {
+      "train": 0.808,
+      "val": 0.098,
+      "test": 0.094
+    }
+  },
+  "total_pairs": 1649,
+  "multi_source_pairs": 258
+}

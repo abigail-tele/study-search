@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/trials.db
+data/trials.db-*
+data/faiss.index
+data/faiss_rowmap.json
+data/raw/
+checkpoints/
+*.log

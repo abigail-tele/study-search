@@ -1,0 +1,879 @@
+[
+  {
+    "id": "breast",
+    "label": "Breast cancer",
+    "lay_terms": [
+      "breast cancer",
+      "brest cancer",
+      "lump in my breast",
+      "cancer in my breast",
+      "breast tumor"
+    ],
+    "clinical_terms": [
+      "breast neoplasms",
+      "breast carcinoma",
+      "invasive ductal carcinoma",
+      "ductal carcinoma in situ",
+      "invasive lobular carcinoma"
+    ],
+    "ctgov_query": "breast cancer OR breast neoplasm OR breast carcinoma",
+    "match_patterns": [
+      "breast (neoplasm|cancer|carcinoma)s?",
+      "mastectomy",
+      "mammary tumou?r"
+    ],
+    "organ_words": [
+      "breast",
+      "mammary"
+    ]
+  },
+  {
+    "id": "lung_nsclc",
+    "label": "Lung cancer (non-small cell)",
+    "lay_terms": [
+      "non small cell lung cancer",
+      "nsclc",
+      "cancer in my lungs"
+    ],
+    "clinical_terms": [
+      "non-small cell lung carcinoma",
+      "lung adenocarcinoma",
+      "squamous cell lung carcinoma",
+      "non-small cell lung cancer",
+      "large cell lung carcinoma"
+    ],
+    "ctgov_query": "non-small cell lung cancer OR NSCLC OR lung adenocarcinoma OR squamous cell lung carcinoma",
+    "match_patterns": [
+      "\\bnsclc\\b",
+      "non[- ]?small[- ]?cell[- ]?(lung|carcinoma)",
+      "(lung|carcinoma)[^;]{0,15}non[- ]?small",
+      "\\blung (cancer|carcinoma|neoplasm|adenocarcinoma)s?\\b",
+      "squamous cell (lung|carcinoma of the lung)",
+      "lung squamous",
+      "neuroendocrine carcinoma of the lung"
+    ],
+    "organ_words": [
+      "lung"
+    ]
+  },
+  {
+    "id": "lung_sclc",
+    "label": "Lung cancer (small cell)",
+    "lay_terms": [
+      "small cell lung cancer",
+      "sclc",
+      "small cell lung",
+      "oat cell lung cancer"
+    ],
+    "clinical_terms": [
+      "small cell lung carcinoma",
+      "small cell carcinoma of the lung",
+      "small-cell lung cancer",
+      "extensive stage small cell lung cancer"
+    ],
+    "ctgov_query": "small cell lung cancer OR SCLC OR small cell lung carcinoma",
+    "exclude_patterns": [
+      "non[- ]?small",
+      "\\bnsclc\\b"
+    ],
+    "match_patterns": [
+      "\\bsclc\\b",
+      "small[- ]cell (lung|carcinoma)",
+      "lung[^;]{0,15}[, ]small[- ]cell"
+    ]
+  },
+  {
+    "id": "colorectal",
+    "label": "Colon or rectal cancer",
+    "lay_terms": [
+      "colon cancer",
+      "rectal cancer",
+      "colorectal cancer",
+      "bowel cancer",
+      "cancer of the colon"
+    ],
+    "clinical_terms": [
+      "colorectal neoplasms",
+      "colorectal adenocarcinoma",
+      "colon adenocarcinoma",
+      "rectal adenocarcinoma",
+      "metastatic colorectal cancer"
+    ],
+    "ctgov_query": "colorectal cancer OR colon cancer OR rectal cancer OR colorectal neoplasm",
+    "match_patterns": [
+      "anal (cancer|carcinoma|squamous|canal)",
+      "lynch syndrome",
+      "familial adenomatous polyposis",
+      "(rectal|colon\\w*) (cancer|carcinoma|neoplasm|neuroendocrine|adenocarcinoma)",
+      "rectum (cancer|carcinoma)"
+    ],
+    "organ_words": [
+      "colorectal",
+      "colon\\w*",
+      "rectal",
+      "rectum",
+      "bowel",
+      "anal",
+      "anus"
+    ]
+  },
+  {
+    "id": "prostate",
+    "label": "Prostate cancer",
+    "lay_terms": [
+      "prostate cancer",
+      "prostrate cancer",
+      "cancer of the prostate",
+      "prostate tumor",
+      "prostate gland cancer"
+    ],
+    "clinical_terms": [
+      "prostate neoplasms",
+      "prostate adenocarcinoma",
+      "castration resistant prostate cancer",
+      "metastatic prostate cancer",
+      "hormone sensitive prostate cancer"
+    ],
+    "ctgov_query": "prostate cancer OR prostate neoplasm OR prostate adenocarcinoma",
+    "match_patterns": [
+      "prostat\\w* (cancer|neoplasm|carcinoma|adenocarcinoma)s?"
+    ],
+    "organ_words": [
+      "prostat\\w*"
+    ]
+  },
+  {
+    "id": "pancreatic",
+    "label": "Pancreatic cancer",
+    "lay_terms": [
+      "pancreatic cancer",
+      "pancreas cancer",
+      "cancer of the pancreas",
+      "pancreatic tumor"
+    ],
+    "clinical_terms": [
+      "pancreatic neoplasms",
+      "pancreatic adenocarcinoma",
+      "pancreatic ductal adenocarcinoma",
+      "exocrine pancreatic cancer"
+    ],
+    "ctgov_query": "pancreatic cancer OR pancreatic neoplasm OR pancreatic adenocarcinoma",
+    "match_patterns": [
+      "pancrea\\w* (neoplasm|cancer|carcinoma|neuroendocrine)",
+      "gastroenteropancreatic"
+    ],
+    "organ_words": [
+      "pancreatic",
+      "pancreas"
+    ]
+  },
+  {
+    "id": "ovarian",
+    "label": "Ovarian cancer",
+    "lay_terms": [
+      "ovarian cancer",
+      "ovary cancer",
+      "cancer of the ovaries",
+      "ovarian tumor"
+    ],
+    "clinical_terms": [
+      "ovarian neoplasms",
+      "ovarian carcinoma",
+      "ovarian serous adenocarcinoma",
+      "high grade serous ovarian cancer",
+      "fallopian tube cancer"
+    ],
+    "ctgov_query": "ovarian cancer OR ovarian neoplasm OR ovarian carcinoma OR fallopian tube cancer OR primary peritoneal cancer",
+    "match_patterns": [
+      "ovarian\\W+(\\w+\\W+){0,2}(cancer|carcinoma|neoplasm)",
+      "(fallopian tube|primary peritoneal) (cancer|carcinoma)"
+    ],
+    "organ_words": [
+      "ovar\\w*",
+      "fallopian tube"
+    ]
+  },
+  {
+    "id": "cervical",
+    "label": "Cervical cancer",
+    "lay_terms": [
+      "cervical cancer",
+      "cancer of the cervix",
+      "cervix cancer",
+      "cancer of the neck of the womb"
+    ],
+    "clinical_terms": [
+      "cervical neoplasms",
+      "cervical carcinoma",
+      "cervical squamous cell carcinoma",
+      "cervical adenocarcinoma",
+      "uterine cervix carcinoma"
+    ],
+    "ctgov_query": "cervical cancer OR cervical neoplasm OR cervical carcinoma",
+    "exclude_patterns": [
+      "cervical[- ](spine|spinal|lymph|esophag|vertebra|node|dystonia|myelopathy|radiculopathy|neck|cord|fusion|disc|artery|carotid|pain|stenosis|ripening|insufficiency|cerclage|length|pessary|region)"
+    ],
+    "match_patterns": [
+      "cervi(x|cal)\\W+(\\w+\\W+){0,2}(cancer|carcinoma|neoplasm)",
+      "cervical intraepithelial neoplasia"
+    ],
+    "organ_words": [
+      "cervix",
+      "uterine cervix"
+    ]
+  },
+  {
+    "id": "uterine",
+    "label": "Uterine or endometrial cancer",
+    "lay_terms": [
+      "uterine cancer",
+      "endometrial cancer",
+      "womb cancer",
+      "cancer of the uterus"
+    ],
+    "clinical_terms": [
+      "endometrial neoplasms",
+      "endometrial carcinoma",
+      "endometrioid adenocarcinoma",
+      "uterine corpus cancer",
+      "serous endometrial carcinoma"
+    ],
+    "ctgov_query": "endometrial cancer OR endometrial carcinoma OR uterine cancer OR uterine corpus cancer",
+    "exclude_patterns": [
+      "uterine (fibroid|leiomyoma|bleeding|prolapse|atony|rupture)",
+      "endometriosis"
+    ],
+    "match_patterns": [
+      "endometri\\w* (cancer|carcinoma|adenocarcinoma|neoplasm)",
+      "uterine (carcinosarcoma|sarcoma|neoplasm|carcinoma)"
+    ],
+    "organ_words": [
+      "endometri\\w*",
+      "uterine",
+      "uterus"
+    ]
+  },
+  {
+    "id": "bladder",
+    "label": "Bladder cancer",
+    "lay_terms": [
+      "bladder cancer",
+      "cancer of the bladder",
+      "bladder tumor",
+      "urinary bladder cancer"
+    ],
+    "clinical_terms": [
+      "urinary bladder neoplasms",
+      "bladder urothelial carcinoma",
+      "urothelial carcinoma",
+      "non-muscle invasive bladder cancer",
+      "muscle invasive bladder cancer"
+    ],
+    "ctgov_query": "bladder cancer OR bladder neoplasm OR urothelial carcinoma",
+    "match_patterns": [
+      "bladder (carcinoma|cancer|neoplasm)",
+      "\\bnmibc\\b",
+      "\\bmibc\\b",
+      "urothelial"
+    ],
+    "organ_words": [
+      "bladder",
+      "urothelial"
+    ]
+  },
+  {
+    "id": "kidney",
+    "label": "Kidney cancer",
+    "lay_terms": [
+      "kidney cancer",
+      "renal cell cancer",
+      "cancer in my kidney",
+      "kidney tumor"
+    ],
+    "clinical_terms": [
+      "kidney neoplasms",
+      "renal cell carcinoma",
+      "clear cell renal cell carcinoma",
+      "renal carcinoma",
+      "advanced renal cell carcinoma"
+    ],
+    "ctgov_query": "kidney cancer OR renal cell carcinoma OR kidney neoplasm",
+    "match_patterns": [
+      "\\brcc\\b",
+      "renal cell",
+      "(renal|kidney) (cancer|tumou?r|carcinoma|neoplasm|mass)s?",
+      "wilms"
+    ],
+    "organ_words": [
+      "kidney",
+      "renal"
+    ]
+  },
+  {
+    "id": "liver",
+    "label": "Liver cancer",
+    "lay_terms": [
+      "liver cancer",
+      "cancer of the liver",
+      "liver tumor",
+      "cancer that started in the liver"
+    ],
+    "clinical_terms": [
+      "liver neoplasms",
+      "hepatocellular carcinoma",
+      "hepatocellular cancer",
+      "fibrolamellar carcinoma"
+    ],
+    "ctgov_query": "liver cancer OR hepatocellular carcinoma OR liver neoplasm",
+    "match_patterns": [
+      "\\bhcc\\b",
+      "liver malignan",
+      "hepatocellular",
+      "hepatoid"
+    ],
+    "organ_words": [
+      "liver",
+      "hepatic",
+      "hepatocellular"
+    ]
+  },
+  {
+    "id": "biliary",
+    "label": "Bile duct or gallbladder cancer",
+    "lay_terms": [
+      "bile duct cancer",
+      "gallbladder cancer",
+      "cancer of the bile ducts",
+      "bile duct tumor"
+    ],
+    "clinical_terms": [
+      "cholangiocarcinoma",
+      "biliary tract neoplasms",
+      "gallbladder carcinoma",
+      "extrahepatic cholangiocarcinoma",
+      "intrahepatic cholangiocarcinoma"
+    ],
+    "ctgov_query": "biliary tract cancer OR cholangiocarcinoma OR gallbladder cancer OR biliary tract neoplasm",
+    "match_patterns": [
+      "\\bbtc\\b",
+      "cholangio"
+    ],
+    "organ_words": [
+      "biliary",
+      "bile duct",
+      "gallbladder",
+      "cholangio\\w*"
+    ]
+  },
+  {
+    "id": "stomach",
+    "label": "Stomach cancer",
+    "lay_terms": [
+      "stomach cancer",
+      "gastric cancer",
+      "cancer of the stomach",
+      "stomach tumor"
+    ],
+    "clinical_terms": [
+      "stomach neoplasms",
+      "gastric adenocarcinoma",
+      "signet ring cell carcinoma",
+      "diffuse gastric cancer"
+    ],
+    "ctgov_query": "stomach cancer OR gastric cancer OR gastric adenocarcinoma",
+    "match_patterns": [
+      "\\bgej\\b",
+      "gastric (cancer|carcinoma|adenocarcinoma|neoplasm)",
+      "gastro-?oesophageal junction",
+      "gastric neoplas",
+      "esophagogastric",
+      "hepatoid adenocarcinoma of stomach",
+      "stomach (cancer|carcinoma|adenocarcinoma)"
+    ],
+    "organ_words": [
+      "gastric",
+      "stomach"
+    ]
+  },
+  {
+    "id": "esophageal",
+    "label": "Esophageal cancer",
+    "lay_terms": [
+      "esophageal cancer",
+      "cancer of the esophagus",
+      "food pipe cancer",
+      "throat to stomach cancer"
+    ],
+    "clinical_terms": [
+      "esophageal neoplasms",
+      "esophageal squamous cell carcinoma",
+      "esophageal adenocarcinoma",
+      "gastroesophageal junction adenocarcinoma"
+    ],
+    "ctgov_query": "esophageal cancer OR esophageal neoplasm OR esophageal carcinoma OR gastroesophageal junction adenocarcinoma",
+    "match_patterns": [
+      "oesophag\\w* (cancer|carcinoma|adenocarcinoma|neoplasm)",
+      "\\bgej\\b",
+      "gastro-?oesophageal",
+      "esophagogastric",
+      "oesophagogastric"
+    ],
+    "organ_words": [
+      "esophag\\w*",
+      "oesophag\\w*"
+    ]
+  },
+  {
+    "id": "head_and_neck",
+    "label": "Head and neck cancer",
+    "lay_terms": [
+      "head and neck cancer",
+      "throat cancer",
+      "mouth cancer",
+      "voice box cancer",
+      "tongue cancer"
+    ],
+    "clinical_terms": [
+      "head and neck neoplasms",
+      "squamous cell carcinoma of the head and neck",
+      "oropharyngeal cancer",
+      "oral cavity squamous cell carcinoma",
+      "laryngeal cancer"
+    ],
+    "ctgov_query": "head and neck cancer OR head and neck squamous cell carcinoma OR oral cavity cancer OR oropharyngeal cancer OR laryngeal cancer",
+    "exclude_patterns": [
+      "cervical[- ]cancer",
+      "cervical (carcinoma|neoplasm)"
+    ],
+    "match_patterns": [
+      "\\bhnscc\\b",
+      "head (and|&) neck (cancer|carcinoma|squamous|neoplasm|tumou?r)",
+      "(naso|oro|hypo)?pharyn\\w* (cancer|carcinoma|neoplasm)",
+      "laryn\\w* (cancer|carcinoma|neoplasm)",
+      "(oral|mouth|tongue|salivary gland) (cancer|carcinoma|neoplasm)",
+      "(oral|oropharyngeal|pharyn\\w*|laryn\\w*|nasopharyn\\w*) (squamous|cancer|carcinoma)",
+      "parotid",
+      "sinonasal",
+      "nasal cavity",
+      "carcinoma,? of (the )?head and neck",
+      "squamous cell carcinoma,? of (the )?head",
+      "oropharynx",
+      "oral cavity",
+      "oral tongue",
+      "salivary"
+    ],
+    "organ_words": [
+      "head\\W+(and\\W+)?neck",
+      "laryn\\w*",
+      "pharyn\\w*",
+      "mouth",
+      "tongue",
+      "salivary",
+      "sinonasal",
+      "nasal cavity",
+      "parotid",
+      "tonsil"
+    ]
+  },
+  {
+    "id": "thyroid",
+    "label": "Thyroid cancer",
+    "lay_terms": [
+      "thyroid cancer",
+      "cancer of the thyroid",
+      "thyroid gland cancer",
+      "thyroid tumor"
+    ],
+    "clinical_terms": [
+      "thyroid neoplasms",
+      "papillary thyroid carcinoma",
+      "follicular thyroid carcinoma",
+      "medullary thyroid carcinoma",
+      "anaplastic thyroid carcinoma"
+    ],
+    "ctgov_query": "thyroid cancer OR thyroid neoplasm OR papillary thyroid carcinoma",
+    "match_patterns": [
+      "thyroid (carcinoma|neoplasm|nodule[^;]*malignan)",
+      "thyroid gland (carcinoma|cancer)"
+    ],
+    "organ_words": [
+      "thyroid"
+    ]
+  },
+  {
+    "id": "brain",
+    "label": "Brain cancer (adult)",
+    "lay_terms": [
+      "brain cancer",
+      "brain tumor",
+      "cancer in my brain",
+      "malignant brain tumor"
+    ],
+    "clinical_terms": [
+      "brain neoplasms",
+      "glioma",
+      "glioblastoma",
+      "astrocytoma",
+      "oligodendroglioma"
+    ],
+    "ctgov_query": "glioblastoma OR glioma OR brain cancer OR brain neoplasm OR astrocytoma",
+    "match_patterns": [
+      "ependymom",
+      "meningiom",
+      "\\bdipg\\b",
+      "diffuse intrinsic pontine",
+      "craniopharyngiom",
+      "brain\\W+(\\w+\\W+)?metasta",
+      "metasta\\w*[^;]{0,40}\\bbrain\\b",
+      "brain (cancer|tumou?r|neoplasm)s?",
+      "glioma",
+      "glioblastoma",
+      "posterior fossa"
+    ],
+    "exclude_patterns": [
+      "pituitary adenoma"
+    ]
+  },
+  {
+    "id": "melanoma",
+    "label": "Melanoma (skin cancer)",
+    "lay_terms": [
+      "melanoma",
+      "melanoma skin cancer",
+      "mole cancer"
+    ],
+    "clinical_terms": [
+      "cutaneous melanoma",
+      "metastatic melanoma",
+      "melanoma of the skin",
+      "uveal melanoma",
+      "mucosal melanoma"
+    ],
+    "ctgov_query": "melanoma OR cutaneous melanoma OR uveal melanoma"
+  },
+  {
+    "id": "non_melanoma_skin",
+    "label": "Non-melanoma skin cancer",
+    "lay_terms": [
+      "non melanoma skin cancer",
+      "basal cell skin cancer",
+      "squamous cell skin cancer",
+      "bcc skin cancer"
+    ],
+    "clinical_terms": [
+      "basal cell carcinoma",
+      "cutaneous squamous cell carcinoma",
+      "keratinocyte carcinoma",
+      "merkel cell carcinoma"
+    ],
+    "ctgov_query": "basal cell carcinoma OR cutaneous squamous cell carcinoma OR keratinocyte carcinoma OR merkel cell carcinoma"
+  },
+  {
+    "id": "leukemia_all",
+    "label": "Leukemia (acute lymphoblastic)",
+    "lay_terms": [
+      "all leukemia",
+      "acute lymphocytic leukemia",
+      "childhood leukemia",
+      "lymphoblastic leukemia"
+    ],
+    "clinical_terms": [
+      "acute lymphoblastic leukemia",
+      "precursor b-cell acute lymphoblastic leukemia",
+      "t-cell acute lymphoblastic leukemia",
+      "philadelphia chromosome positive acute lymphoblastic leukemia"
+    ],
+    "ctgov_query": "acute lymphoblastic leukemia OR acute lymphocytic leukemia",
+    "match_patterns": [
+      "lymphoblastic leuka?emia",
+      "leuka?emia,? acute lymphoblastic"
+    ]
+  },
+  {
+    "id": "leukemia_aml",
+    "label": "Leukemia (acute myeloid)",
+    "lay_terms": [
+      "aml",
+      "acute myelogenous leukemia",
+      "acute myeloid leukaemia",
+      "bone marrow leukemia"
+    ],
+    "clinical_terms": [
+      "acute myeloid leukemia",
+      "acute myeloblastic leukemia",
+      "acute promyelocytic leukemia",
+      "therapy related acute myeloid leukemia"
+    ],
+    "ctgov_query": "acute myeloid leukemia OR acute myelogenous leukemia OR AML",
+    "match_patterns": [
+      "\\baml\\b",
+      "myelodysplastic",
+      "\\bmds\\b",
+      "myelomonocytic",
+      "myeloid (leukemia|leukaemia|sarcoma)"
+    ],
+    "exclude_patterns": [
+      "leuk\\w+,? myel\\w+,? chronic",
+      "chronic[- ,]*myel(?:oid|ogen\\w*)[- ]+leuk\\w+"
+    ]
+  },
+  {
+    "id": "leukemia_cll",
+    "label": "Leukemia (chronic lymphocytic)",
+    "lay_terms": [
+      "chronic lymphocytic leukemia",
+      "cll",
+      "chronic lymphocytic leukaemia",
+      "small lymphocytic leukemia"
+    ],
+    "clinical_terms": [
+      "small lymphocytic lymphoma",
+      "richter syndrome",
+      "b-cell chronic lymphocytic leukemia",
+      "chronic lymphocytic leukemia/small lymphocytic lymphoma"
+    ],
+    "ctgov_query": "chronic lymphocytic leukemia OR CLL OR small lymphocytic lymphoma",
+    "match_patterns": [
+      "\\bcll\\b",
+      "chronic lymphoid leuk\\w*"
+    ]
+  },
+  {
+    "id": "leukemia_cml",
+    "label": "Leukemia (chronic myeloid)",
+    "lay_terms": [
+      "chronic myeloid leukemia",
+      "cml",
+      "chronic myelogenous leukemia",
+      "philadelphia chromosome leukemia"
+    ],
+    "clinical_terms": [
+      "philadelphia chromosome positive chronic myeloid leukemia",
+      "chronic phase chronic myeloid leukemia",
+      "accelerated phase chronic myeloid leukemia",
+      "bcr-abl1 positive chronic myeloid leukemia"
+    ],
+    "ctgov_query": "chronic myeloid leukemia OR chronic myelogenous leukemia OR CML",
+    "match_patterns": [
+      "\\bcml\\b"
+    ]
+  },
+  {
+    "id": "lymphoma_hodgkin",
+    "label": "Hodgkin lymphoma",
+    "lay_terms": [
+      "hodgkin lymphoma",
+      "hodgkins lymphoma",
+      "hodgkin disease"
+    ],
+    "clinical_terms": [
+      "classical hodgkin lymphoma",
+      "nodular lymphocyte predominant hodgkin lymphoma",
+      "mixed cellularity hodgkin lymphoma",
+      "nodular sclerosis classical hodgkin lymphoma"
+    ],
+    "ctgov_query": "hodgkin lymphoma OR hodgkin disease OR classical hodgkin lymphoma",
+    "exclude_patterns": [
+      "non[- ]?hodgkin"
+    ]
+  },
+  {
+    "id": "lymphoma_nhl",
+    "label": "Non-Hodgkin lymphoma",
+    "lay_terms": [
+      "non hodgkin lymphoma",
+      "non-hodgkin lymphoma",
+      "non hodgkins lymphoma",
+      "nhl"
+    ],
+    "clinical_terms": [
+      "b-cell non-hodgkin lymphoma",
+      "diffuse large b-cell lymphoma",
+      "follicular lymphoma",
+      "mantle cell lymphoma",
+      "peripheral t-cell lymphoma"
+    ],
+    "ctgov_query": "non-hodgkin lymphoma OR diffuse large b-cell lymphoma OR follicular lymphoma OR mantle cell lymphoma OR peripheral t-cell lymphoma",
+    "match_patterns": [
+      "\\bdlbcl\\b",
+      "mycosis fungoides",
+      "s[eé]zary",
+      "cutaneous t[- ]cell",
+      "waldenstr",
+      "burkitt",
+      "marginal zone",
+      "(b|t|nk)[- ]cell\\W+(\\w+\\W+)?lymphoma",
+      "lymphoma,? (b|t|nk)[- ]cell",
+      "anaplastic large[- ]cell",
+      "(?<!hodgkin )(?<!hodgkins )(?<!hodgkin's )(?<!hodgkin’s )(?<!hodgkin-)(?<!hodgkins-)\\blymphomas?\\b"
+    ]
+  },
+  {
+    "id": "multiple_myeloma",
+    "label": "Multiple myeloma",
+    "lay_terms": [
+      "multiple myeloma",
+      "myeloma",
+      "plasma cell cancer"
+    ],
+    "clinical_terms": [
+      "plasma cell myeloma",
+      "smoldering multiple myeloma",
+      "solitary plasmacytoma",
+      "plasma cell neoplasm"
+    ],
+    "ctgov_query": "multiple myeloma OR plasma cell myeloma OR smoldering multiple myeloma",
+    "match_patterns": [
+      "plasma cell leukemia",
+      "plasmacytoma"
+    ]
+  },
+  {
+    "id": "sarcoma",
+    "label": "Sarcoma (bone or soft tissue)",
+    "lay_terms": [
+      "sarcoma",
+      "soft tissue sarcoma",
+      "bone cancer",
+      "cancer of connective tissue"
+    ],
+    "clinical_terms": [
+      "liposarcoma",
+      "leiomyosarcoma",
+      "gastrointestinal stromal tumor",
+      "undifferentiated pleomorphic sarcoma",
+      "osteosarcoma",
+      "ewing sarcoma"
+    ],
+    "ctgov_query": "sarcoma OR soft tissue sarcoma OR liposarcoma OR leiomyosarcoma OR osteosarcoma OR ewing sarcoma",
+    "match_patterns": [
+      "\\w+sarcoma",
+      "soft tissue cancer",
+      "desmoplastic small round"
+    ]
+  },
+  {
+    "id": "testicular",
+    "label": "Testicular cancer",
+    "lay_terms": [
+      "testicular cancer",
+      "testicle cancer",
+      "cancer of the testicles",
+      "testis cancer"
+    ],
+    "clinical_terms": [
+      "testicular neoplasms",
+      "germ cell tumor of the testis",
+      "seminoma",
+      "nonseminomatous germ cell tumor"
+    ],
+    "ctgov_query": "testicular cancer OR testicular neoplasm OR seminoma OR germ cell tumor of the testis",
+    "organ_words": [
+      "testicular",
+      "testis",
+      "testes"
+    ]
+  },
+  {
+    "id": "neuroblastoma",
+    "label": "Neuroblastoma (children)",
+    "lay_terms": [
+      "neuroblastoma",
+      "childhood neuroblastoma",
+      "nerve tissue cancer in children",
+      "adrenal gland cancer in children"
+    ],
+    "clinical_terms": [
+      "neuroblastic tumor",
+      "peripheral neuroblastic tumor",
+      "ganglioneuroblastoma",
+      "neuroblastoma, high risk"
+    ],
+    "ctgov_query": "neuroblastoma OR neuroblastic tumor OR ganglioneuroblastoma"
+  },
+  {
+    "id": "wilms_tumor",
+    "label": "Wilms tumor (children)",
+    "lay_terms": [
+      "wilms",
+      "kidney cancer in children",
+      "childhood kidney tumor",
+      "kidney tumor in children"
+    ],
+    "clinical_terms": [
+      "nephroblastoma",
+      "wilms tumor",
+      "favorable histology wilms tumor",
+      "renal tumor of childhood"
+    ],
+    "ctgov_query": "wilms tumor OR nephroblastoma"
+  },
+  {
+    "id": "retinoblastoma",
+    "label": "Retinoblastoma (children)",
+    "lay_terms": [
+      "retinoblastoma",
+      "eye cancer in children",
+      "childhood eye cancer",
+      "eye tumor in children"
+    ],
+    "clinical_terms": [
+      "retinal neoplasms",
+      "intraocular retinoblastoma",
+      "bilateral retinoblastoma",
+      "heritable retinoblastoma"
+    ],
+    "ctgov_query": "retinoblastoma OR intraocular retinoblastoma"
+  },
+  {
+    "id": "medulloblastoma",
+    "label": "Medulloblastoma (children)",
+    "lay_terms": [
+      "medulloblastoma",
+      "brain cancer in children",
+      "childhood brain tumor",
+      "kids brain tumor"
+    ],
+    "clinical_terms": [
+      "primitive neuroectodermal tumor",
+      "wnt medulloblastoma",
+      "sonic hedgehog medulloblastoma",
+      "group 3 medulloblastoma"
+    ],
+    "ctgov_query": "medulloblastoma OR primitive neuroectodermal tumor"
+  },
+  {
+    "id": "rhabdomyosarcoma",
+    "label": "Rhabdomyosarcoma (children)",
+    "lay_terms": [
+      "rhabdomyosarcoma",
+      "muscle cancer in children",
+      "childhood muscle cancer",
+      "soft tissue cancer in children"
+    ],
+    "clinical_terms": [
+      "embryonal rhabdomyosarcoma",
+      "alveolar rhabdomyosarcoma",
+      "pleomorphic rhabdomyosarcoma",
+      "rhabdomyosarcoma of the head and neck"
+    ],
+    "ctgov_query": "rhabdomyosarcoma OR embryonal rhabdomyosarcoma OR alveolar rhabdomyosarcoma"
+  },
+  {
+    "id": "mesothelioma",
+    "label": "Mesothelioma",
+    "lay_terms": [
+      "mesothelioma",
+      "lung lining cancer",
+      "asbestos cancer",
+      "pleural cancer"
+    ],
+    "clinical_terms": [
+      "malignant mesothelioma",
+      "pleural mesothelioma",
+      "peritoneal mesothelioma",
+      "epithelioid mesothelioma"
+    ],
+    "ctgov_query": "mesothelioma OR pleural mesothelioma OR malignant mesothelioma"
+  }
+]

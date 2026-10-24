@@ -1,0 +1,25 @@
+{
+  "nct_id": "NCT05000001",
+  "what_is_tested": "Researchers are comparing a new targeted medicine added to standard chemotherapy with standard chemotherapy alone in people with HER2-positive breast cancer at Stage II or Stage III. Treatment lasts about 1 year, with scans and blood tests every 3 months.",
+  "who_can_join": {
+    "include": [
+      "Adults aged 18 years or older",
+      "HER2-positive breast cancer, Stage II or Stage III",
+      "ECOG performance status 0 or 1 (able to do most daily activities)"
+    ],
+    "exclude": [
+      "Prior treatment with a HER2-targeted therapy",
+      "Heart function (left ventricular ejection fraction) below 50%",
+      "Pregnant or breastfeeding"
+    ]
+  },
+  "original": {
+    "summary": "This study compares a new targeted medicine added to standard chemotherapy with standard chemotherapy alone. People with HER2-positive breast cancer at Stage II or Stage III may take part. Participants receive treatment for about 1 year and are checked with scans and blood tests every 3 months.",
+    "eligibility": "Inclusion Criteria: Adults aged 18 years or older; Confirmed HER2-positive breast cancer, Stage II or Stage III; ECOG performance status 0 or 1. Exclusion Criteria: Prior treatment with a HER2-targeted therapy; Heart function (left ventricular ejection fraction) below 50%; Pregnant or breastfeeding."
+  },
+  "faithful": true,
+  "fallback_used": false,
+  "reading_level": {"before": 14.2, "after": 8.1},
+  "model_version": "mock-flan-t5-base-0.0",
+  "generated_at": "2026-10-24T12:00:00Z"
+}

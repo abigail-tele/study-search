@@ -1,0 +1,38 @@
+{
+  "nct_id": "NCT05000001",
+  "title": "MOCK: Targeted Medicine Plus Chemotherapy for HER2-Positive Breast Cancer",
+  "official_title": "A Randomized Phase 2 Study (MOCK DATA) of a Targeted Medicine Added to Chemotherapy for HER2-Positive Breast Cancer",
+  "status": "RECRUITING",
+  "phase": "PHASE2",
+  "conditions": ["Breast Cancer", "HER2-Positive Breast Cancer"],
+  "cancer_tags": ["breast"],
+  "min_age": "18 Years",
+  "max_age": null,
+  "sex": "ALL",
+  "sponsor": "Example Cancer Center (MOCK)",
+  "start_date": "2026-03-01",
+  "last_updated": "2026-09-14",
+  "enrollment": 120,
+  "sites": [
+    {
+      "facility": "Example Cancer Center (MOCK) - Main Campus",
+      "city": "Springfield",
+      "state": "IL",
+      "zip": "62701",
+      "lat": 39.7817,
+      "lon": -89.6501
+    },
+    {
+      "facility": "Example Community Oncology (MOCK)",
+      "city": "Peoria",
+      "state": "IL",
+      "zip": "61602",
+      "lat": 40.6936,
+      "lon": -89.5890
+    }
+  ],
+  "url": "https://clinicaltrials.gov/study/NCT05000001",
+  "citation": "Example Cancer Center (MOCK). A Randomized Phase 2 Study (MOCK DATA) of a Targeted Medicine Added to Chemotherapy for HER2-Positive Breast Cancer. ClinicalTrials.gov ID: NCT05000001. Last updated 2026-09-14. Available from: https://clinicaltrials.gov/study/NCT05000001",
+  "brief_summary": "This study compares a new targeted medicine added to standard chemotherapy with standard chemotherapy alone. People with HER2-positive breast cancer at Stage II or Stage III may take part. Participants receive treatment for about 1 year and are checked with scans and blood tests every 3 months. The main goal is to learn whether the new medicine helps more people stay free of cancer for longer. (MOCK DATA: this is fake text for development only.)",
+  "eligibility_text": "Inclusion Criteria:\n* Adults aged 18 years or older\n* Confirmed HER2-positive breast cancer, Stage II or Stage III\n* ECOG performance status 0 or 1\n\nExclusion Criteria:\n* Prior treatment with a HER2-targeted therapy\n* Heart function (left ventricular ejection fraction) below 50%\n* Pregnant or breastfeeding"
+}

@@ -1,0 +1,36 @@
+{
+  "query": "knee pain",
+  "detected_types": [],
+  "off_topic": true,
+  "results": [],
+  "suggested_types": [
+    {
+      "id": "breast",
+      "label": "Breast cancer"
+    },
+    {
+      "id": "lung_nsclc",
+      "label": "Lung cancer (non-small cell)"
+    },
+    {
+      "id": "prostate",
+      "label": "Prostate cancer"
+    },
+    {
+      "id": "colorectal",
+      "label": "Colon or rectal cancer"
+    },
+    {
+      "id": "leukemia_aml",
+      "label": "Leukemia (acute myeloid)"
+    },
+    {
+      "id": "lymphoma_nhl",
+      "label": "Non-Hodgkin lymphoma"
+    },
+    {
+      "id": "melanoma",
+      "label": "Melanoma (skin cancer)"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(pytest:*)",
+      "Bash(uvicorn:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "WebFetch(domain:clinicaltrials.gov)",
+      "WebFetch(domain:www.cancer.gov)",
+      "WebFetch(domain:huggingface.co)"
+    ]
+  }
+}

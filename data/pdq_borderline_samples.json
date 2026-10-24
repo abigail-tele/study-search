@@ -1,0 +1,54 @@
+{
+  "0.60-0.65": [
+    {
+      "id": "urethral-treatment-0002",
+      "similarity": 0.611,
+      "source_paragraphs": 1,
+      "section": "General Information About Urethral Cancer",
+      "source": "Superficial tumors in the distal urethra in both women and men are generally curable. However, deeply invasive lesions are rarely curable by any combination of therapies. In men, the prognosis of tumors in the distal (pendulous) urethra is better than for tumors of the proximal (bulbomembranous) and prostatic urethra, which tend to present at more advanced stages. Likewise, distal urethral tumors tend to occur at earlier stages in women and to have a better prognosis than proximal tumors.",
+      "target": "Urethral cancer can metastasize (spread) quickly to tissues around the urethra and is often found in nearby lymph nodes by the time it is diagnosed."
+    },
+    {
+      "id": "brain_adult-0016",
+      "similarity": 0.6378,
+      "source_paragraphs": 1,
+      "section": "Treatment of Primary Adult Brain Tumor by Type of Tumor",
+      "source": "Heavy-particle radiation, such as proton-beam therapy, carries the theoretical advantage of delivering high doses of ionizing radiation to the tumor bed while sparing surrounding brain tissue. The data are preliminary for this investigational technique and are not widely available.",
+      "target": "Treatment of brain stem gliomas may include radiation therapy."
+    },
+    {
+      "id": "prostate-0003",
+      "similarity": 0.649,
+      "source_paragraphs": 1,
+      "section": "General Information About Prostate Cancer",
+      "source": "More than 95% of primary prostate cancers are adenocarcinomas. Prostate adenocarcinomas are frequently multifocal and heterogeneous in patterns of differentiation. Prostatic intraepithelial neoplasia (PIN) (noninvasive atypical epithelial cells within benign-appearing acini) is often present in association with prostatic adenocarcinoma. PIN is subdivided into low grade and high grade. The high-grade form may be a precursor of adenocarcinoma.",
+      "target": "Prostate cancer is a type of cancer that forms in the tissues of the prostate."
+    }
+  ],
+  "0.65-0.70": [
+    {
+      "id": "communication-0006",
+      "similarity": 0.6936,
+      "source_paragraphs": 1,
+      "section": "Communication in Pediatric Cancer Care",
+      "source": "One study confirmed these findings in a longitudinal, prospective, questionnaire-based cohort study. In a survey of 156 parents of children with cancer who were treated at two academic pediatric hospitals, the vast majority wanted to hear about prognosis in as much detail as possible, and 85% considered a numeric estimate to be important. This desire for detailed information did not change with time. At the time of diagnosis and at 4 months and 12 months later, 87%, 85%, and 84% of parents, respectively, preferred to hear about prognosis in as much detail as possible. Furthermore, parents were more likely to be satisfied with prognostic disclosure if it had been discussed at diagnosis and then again before the 4-month point. However, the same study population also reported receiving high-quality physician communication and had a trusting relationship with their child’s oncologist, despite reporting overly optimistic prognostic estimates.",
+      "target": "Many parents want to know their child's prognosis."
+    },
+    {
+      "id": "prostate-screening-0001",
+      "similarity": 0.6672,
+      "source_paragraphs": 1,
+      "section": "General Information About Prostate Cancer",
+      "source": "Using all-cause mortality as the benchmark, the study calculated cumulative incidence mortality for the three treatment groups of the entire cohort and the low-risk subgroup. Surveillance was more common among men with high comorbidity and among men with low-risk tumors. The 10-year cumulative risk of death from prostate cancer for the entire 6,849-person cohort was 3.6% in the surveillance group and 2.7% in the curative-intent group, compared with the low-risk surveillance group (2.4%) and the low-risk curative-intent group (0.7%). Biases inherent in treatment assignment could not be accounted for adequately in the analysis, which prevented conclusions about the relative effectiveness of alternative treatments. However, a 10-year prostate cancer-specific mortality of 2.4% among patients with low-risk prostate cancer in the surveillance group suggested that surveillance may be a suitable treatment for many patients with low-risk disease compared, with the 19.2% 10-year risk of death from competing causes observed in the surveillance group and 10.2% in the curative-intent group of the total 6,849 person cohort.",
+      "target": "Different factors increase or decrease the risk of developing prostate cancer."
+    },
+    {
+      "id": "parathyroid-0000",
+      "similarity": 0.6966,
+      "source_paragraphs": 1,
+      "section": "General Information About Parathyroid Cancer",
+      "source": "Parathyroid adenomas represent a common endocrine problem, whereas parathyroid carcinomas are very rare tumors. With an estimated incidence of 0.015 per 100,000 population and an estimated prevalence of 0.005% in the United States, parathyroid cancer is one of the rarest of all human cancers. In Europe, the United States, and Japan, parathyroid carcinoma has been estimated to cause hyperparathyroidism (HPT) in 0.017% to 5.2% of cases; however, many series report this entity to account for less than 1% of patients with primary HPT. The median age in most series is between 45 and 51 years. The ratio of affected women to men is 1:1 in contrast to primary HPT in which there is a significant female predominance (ratio of 3–4:1).",
+      "target": "Having certain inherited disorders can increase the risk of developing parathyroid cancer."
+    }
+  ]
+}

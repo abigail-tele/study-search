@@ -1,0 +1,1012 @@
+[
+ {
+  "cancer_type": "breast",
+  "hp_url": "https://www.cancer.gov/types/breast/hp/breast-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/breast/patient/breast-treatment-pdq",
+  "patient_fetch_url": "http://web.archive.org/web/20251122021816id_/https://www.cancer.gov/types/breast/patient/breast-treatment-pdq",
+  "note": "live patient URL redirect-loops on cancer.gov as of 2026-10-24; fetched from an Internet Archive snapshot of the same NCI page",
+  "family": "breast"
+ },
+ {
+  "cancer_type": "colon",
+  "hp_url": "https://www.cancer.gov/types/colorectal/hp/colon-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/colorectal/patient/colon-treatment-pdq",
+  "family": "colorectal"
+ },
+ {
+  "cancer_type": "lung_nsclc",
+  "hp_url": "https://www.cancer.gov/types/lung/hp/non-small-cell-lung-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "prostate",
+  "hp_url": "https://www.cancer.gov/types/prostate/hp/prostate-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/prostate/patient/prostate-treatment-pdq",
+  "family": "prostate"
+ },
+ {
+  "cancer_type": "aml_adult",
+  "hp_url": "https://www.cancer.gov/types/leukemia/hp/adult-aml-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/leukemia/patient/adult-aml-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "bladder",
+  "hp_url": "https://www.cancer.gov/types/bladder/hp/bladder-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/bladder/patient/bladder-treatment-pdq",
+  "family": "bladder"
+ },
+ {
+  "cancer_type": "ovarian",
+  "hp_url": "https://www.cancer.gov/types/ovarian/hp/ovarian-epithelial-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/ovarian/patient/ovarian-epithelial-treatment-pdq",
+  "family": "ovarian"
+ },
+ {
+  "cancer_type": "pancreatic",
+  "hp_url": "https://www.cancer.gov/types/pancreatic/hp/pancreatic-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/pancreatic/patient/pancreatic-treatment-pdq",
+  "family": "pancreatic"
+ },
+ {
+  "cancer_type": "lymphoma_nhl",
+  "hp_url": "https://www.cancer.gov/types/lymphoma/hp/adult-nhl-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lymphoma/patient/adult-nhl-treatment-pdq",
+  "family": "lymphoma"
+ },
+ {
+  "cancer_type": "lymphoma_hodgkin",
+  "hp_url": "https://www.cancer.gov/types/lymphoma/hp/adult-hodgkin-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lymphoma/patient/adult-hodgkin-treatment-pdq",
+  "family": "lymphoma"
+ },
+ {
+  "cancer_type": "cervical",
+  "hp_url": "https://www.cancer.gov/types/cervical/hp/cervical-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/cervical/patient/cervical-treatment-pdq",
+  "family": "cervical_vaginal"
+ },
+ {
+  "cancer_type": "endometrial",
+  "hp_url": "https://www.cancer.gov/types/uterine/hp/endometrial-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/uterine/patient/endometrial-treatment-pdq",
+  "family": "uterine"
+ },
+ {
+  "cancer_type": "esophageal",
+  "hp_url": "https://www.cancer.gov/types/esophageal/hp/esophageal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/esophageal/patient/esophageal-treatment-pdq",
+  "family": "esophageal"
+ },
+ {
+  "cancer_type": "thyroid",
+  "hp_url": "https://www.cancer.gov/types/thyroid/hp/thyroid-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/thyroid/patient/thyroid-treatment-pdq",
+  "family": "thyroid"
+ },
+ {
+  "cancer_type": "melanoma",
+  "hp_url": "https://www.cancer.gov/types/skin/hp/melanoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/skin/patient/melanoma-treatment-pdq",
+  "family": "skin"
+ },
+ {
+  "cancer_type": "brain_adult",
+  "hp_url": "https://www.cancer.gov/types/brain/hp/adult-brain-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/brain/patient/adult-brain-treatment-pdq",
+  "family": "brain"
+ },
+ {
+  "cancer_type": "cll",
+  "hp_url": "https://www.cancer.gov/types/leukemia/hp/cll-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/leukemia/patient/cll-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "cml",
+  "hp_url": "https://www.cancer.gov/types/leukemia/hp/cml-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/leukemia/patient/cml-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "all_adult",
+  "hp_url": "https://www.cancer.gov/types/leukemia/hp/adult-all-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/leukemia/patient/adult-all-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "myeloma",
+  "hp_url": "https://www.cancer.gov/types/myeloma/hp/myeloma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/myeloma/patient/myeloma-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "testicular",
+  "hp_url": "https://www.cancer.gov/types/testicular/hp/testicular-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/testicular/patient/testicular-treatment-pdq",
+  "family": "germ_cell"
+ },
+ {
+  "cancer_type": "lung_sclc",
+  "hp_url": "https://www.cancer.gov/types/lung/hp/small-cell-lung-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lung/patient/small-cell-lung-treatment-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "anal",
+  "hp_url": "https://www.cancer.gov/types/anal/hp/anal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/anal/patient/anal-treatment-pdq",
+  "family": "anal"
+ },
+ {
+  "cancer_type": "osteosarcoma",
+  "hp_url": "https://www.cancer.gov/types/bone/hp/osteosarcoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/bone/patient/osteosarcoma-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "wilms",
+  "hp_url": "https://www.cancer.gov/types/kidney/hp/wilms-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/kidney/patient/wilms-treatment-pdq",
+  "family": "kidney"
+ },
+ {
+  "cancer_type": "rectal",
+  "hp_url": "https://www.cancer.gov/types/colorectal/hp/rectal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/colorectal/patient/rectal-treatment-pdq",
+  "family": "colorectal"
+ },
+ {
+  "cancer_type": "vaginal",
+  "hp_url": "https://www.cancer.gov/types/vaginal/hp/vaginal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/vaginal/patient/vaginal-treatment-pdq",
+  "family": "cervical_vaginal"
+ },
+ {
+  "cancer_type": "gallbladder",
+  "hp_url": "https://www.cancer.gov/types/gallbladder/hp/gallbladder-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/gallbladder/patient/gallbladder-treatment-pdq",
+  "family": "liver_biliary"
+ },
+ {
+  "cancer_type": "small-intestine",
+  "hp_url": "https://www.cancer.gov/types/small-intestine/hp/small-intestine-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/small-intestine/patient/small-intestine-treatment-pdq",
+  "family": "gi_neuroendocrine"
+ },
+ {
+  "cancer_type": "skin",
+  "hp_url": "https://www.cancer.gov/types/skin/hp/skin-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/skin/patient/skin-treatment-pdq",
+  "family": "skin"
+ },
+ {
+  "cancer_type": "merkel-cell",
+  "hp_url": "https://www.cancer.gov/types/skin/hp/merkel-cell-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/skin/patient/merkel-cell-treatment-pdq",
+  "family": "skin"
+ },
+ {
+  "cancer_type": "intraocular-melanoma",
+  "hp_url": "https://www.cancer.gov/types/eye/hp/intraocular-melanoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/eye/patient/intraocular-melanoma-treatment-pdq",
+  "family": "eye"
+ },
+ {
+  "cancer_type": "retinoblastoma",
+  "hp_url": "https://www.cancer.gov/types/retinoblastoma/hp/retinoblastoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/retinoblastoma/patient/retinoblastoma-treatment-pdq",
+  "family": "eye"
+ },
+ {
+  "cancer_type": "unknown-primary",
+  "hp_url": "https://www.cancer.gov/types/unknown-primary/hp/unknown-primary-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/unknown-primary/patient/unknown-primary-treatment-pdq",
+  "family": "unknown_primary"
+ },
+ {
+  "cancer_type": "primary-cns-lymphoma",
+  "hp_url": "https://www.cancer.gov/types/lymphoma/hp/primary-cns-lymphoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lymphoma/patient/primary-cns-lymphoma-treatment-pdq",
+  "family": "lymphoma"
+ },
+ {
+  "cancer_type": "hairy-cell",
+  "hp_url": "https://www.cancer.gov/types/leukemia/hp/hairy-cell-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/leukemia/patient/hairy-cell-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "child-all",
+  "hp_url": "https://www.cancer.gov/types/leukemia/hp/child-all-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/leukemia/patient/child-all-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "child-aml",
+  "hp_url": "https://www.cancer.gov/types/leukemia/hp/child-aml-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/leukemia/patient/child-aml-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "child-hodgkin",
+  "hp_url": "https://www.cancer.gov/types/lymphoma/hp/child-hodgkin-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lymphoma/patient/child-hodgkin-treatment-pdq",
+  "family": "lymphoma"
+ },
+ {
+  "cancer_type": "child-nhl",
+  "hp_url": "https://www.cancer.gov/types/lymphoma/hp/child-nhl-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lymphoma/patient/child-nhl-treatment-pdq",
+  "family": "lymphoma"
+ },
+ {
+  "cancer_type": "neuroblastoma",
+  "hp_url": "https://www.cancer.gov/types/neuroblastoma/hp/neuroblastoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/neuroblastoma/patient/neuroblastoma-treatment-pdq",
+  "family": "neuroblastoma"
+ },
+ {
+  "cancer_type": "ewing",
+  "hp_url": "https://www.cancer.gov/types/bone/hp/ewing-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/bone/patient/ewing-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "child-thyroid",
+  "hp_url": "https://www.cancer.gov/types/thyroid/hp/child-thyroid-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/thyroid/patient/child-thyroid-treatment-pdq",
+  "family": "thyroid"
+ },
+ {
+  "cancer_type": "pheochromocytoma",
+  "hp_url": "https://www.cancer.gov/types/pheochromocytoma/hp/pheochromocytoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/pheochromocytoma/patient/pheochromocytoma-treatment-pdq",
+  "family": "endocrine"
+ },
+ {
+  "cancer_type": "parathyroid",
+  "hp_url": "https://www.cancer.gov/types/parathyroid/hp/parathyroid-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/parathyroid/patient/parathyroid-treatment-pdq",
+  "family": "endocrine"
+ },
+ {
+  "cancer_type": "male-breast",
+  "hp_url": "https://www.cancer.gov/types/breast/hp/male-breast-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/breast/patient/male-breast-treatment-pdq",
+  "family": "breast"
+ },
+ {
+  "cancer_type": "prostate-screening",
+  "hp_url": "https://www.cancer.gov/types/prostate/hp/prostate-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/prostate/patient/prostate-screening-pdq",
+  "family": "prostate"
+ },
+ {
+  "cancer_type": "colorectal-screening",
+  "hp_url": "https://www.cancer.gov/types/colorectal/hp/colorectal-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/colorectal/patient/colorectal-screening-pdq",
+  "family": "colorectal"
+ },
+ {
+  "cancer_type": "lung-screening",
+  "hp_url": "https://www.cancer.gov/types/lung/hp/lung-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/lung/patient/lung-screening-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "skin-screening",
+  "hp_url": "https://www.cancer.gov/types/skin/hp/skin-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/skin/patient/skin-screening-pdq",
+  "family": "skin"
+ },
+ {
+  "cancer_type": "ovarian-screening",
+  "hp_url": "https://www.cancer.gov/types/ovarian/hp/ovarian-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/ovarian/patient/ovarian-screening-pdq",
+  "family": "ovarian"
+ },
+ {
+  "cancer_type": "colorectal-prevention",
+  "hp_url": "https://www.cancer.gov/types/colorectal/hp/colorectal-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/colorectal/patient/colorectal-prevention-pdq",
+  "family": "colorectal"
+ },
+ {
+  "cancer_type": "lung-prevention",
+  "hp_url": "https://www.cancer.gov/types/lung/hp/lung-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/lung/patient/lung-prevention-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "prostate-prevention",
+  "hp_url": "https://www.cancer.gov/types/prostate/hp/prostate-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/prostate/patient/prostate-prevention-pdq",
+  "family": "prostate"
+ },
+ {
+  "cancer_type": "skin-prevention",
+  "hp_url": "https://www.cancer.gov/types/skin/hp/skin-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/skin/patient/skin-prevention-pdq",
+  "family": "skin"
+ },
+ {
+  "cancer_type": "ovarian-prevention",
+  "hp_url": "https://www.cancer.gov/types/ovarian/hp/ovarian-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/ovarian/patient/ovarian-prevention-pdq",
+  "family": "ovarian"
+ },
+ {
+  "cancer_type": "supportive_pain",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/pain/pain-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/pain/pain-pdq",
+  "family": "supportive_pain"
+ },
+ {
+  "cancer_type": "supportive_nausea",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/nausea/nausea-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/nausea/nausea-pdq",
+  "family": "supportive_nausea"
+ },
+ {
+  "cancer_type": "supportive_fatigue",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/fatigue/fatigue-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/fatigue/fatigue-pdq",
+  "family": "supportive_fatigue"
+ },
+ {
+  "cancer_type": "supportive_lymphedema",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/lymphedema/lymphedema-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/lymphedema/lymphedema-pdq",
+  "family": "supportive_lymphedema"
+ },
+ {
+  "cancer_type": "supportive_nutrition",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/appetite-loss/nutrition-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/appetite-loss/nutrition-pdq",
+  "family": "supportive_nutrition"
+ },
+ {
+  "cancer_type": "supportive_gi_complications",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/constipation/gi-complications-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/constipation/gi-complications-pdq",
+  "family": "supportive_gi_complications"
+ },
+ {
+  "cancer_type": "bereavement",
+  "hp_url": "https://www.cancer.gov/about-cancer/advanced-cancer/caregivers/planning/bereavement-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/advanced-cancer/caregivers/planning/bereavement-pdq",
+  "family": "supportive_bereavement"
+ },
+ {
+  "cancer_type": "prevention-overview",
+  "hp_url": "https://www.cancer.gov/about-cancer/causes-prevention/hp-prevention-overview-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/causes-prevention/patient-prevention-overview-pdq",
+  "family": "overview"
+ },
+ {
+  "cancer_type": "quit-smoking",
+  "hp_url": "https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/quit-smoking-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/quit-smoking-pdq",
+  "family": "supportive_quit-smoking"
+ },
+ {
+  "cancer_type": "communication",
+  "hp_url": "https://www.cancer.gov/about-cancer/coping/adjusting-to-cancer/communication-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/coping/adjusting-to-cancer/communication-pdq",
+  "family": "supportive_communication"
+ },
+ {
+  "cancer_type": "spirituality",
+  "hp_url": "https://www.cancer.gov/about-cancer/coping/day-to-day/faith-and-spirituality/spirituality-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/coping/day-to-day/faith-and-spirituality/spirituality-pdq",
+  "family": "supportive_spirituality"
+ },
+ {
+  "cancer_type": "family-caregivers",
+  "hp_url": "https://www.cancer.gov/about-cancer/coping/family-friends/family-caregivers-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/coping/family-friends/family-caregivers-pdq",
+  "family": "supportive_family-caregivers"
+ },
+ {
+  "cancer_type": "anxiety-distress",
+  "hp_url": "https://www.cancer.gov/about-cancer/coping/feelings/anxiety-distress-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/coping/feelings/anxiety-distress-pdq",
+  "family": "supportive_mental"
+ },
+ {
+  "cancer_type": "depression",
+  "hp_url": "https://www.cancer.gov/about-cancer/coping/feelings/depression-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/coping/feelings/depression-pdq",
+  "family": "supportive_mental"
+ },
+ {
+  "cancer_type": "ptsd",
+  "hp_url": "https://www.cancer.gov/about-cancer/coping/survivorship/new-normal/ptsd-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/coping/survivorship/new-normal/ptsd-pdq",
+  "family": "supportive_mental"
+ },
+ {
+  "cancer_type": "financial-toxicity",
+  "hp_url": "https://www.cancer.gov/about-cancer/managing-care/track-care-costs/financial-toxicity-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/managing-care/track-care-costs/financial-toxicity-pdq",
+  "family": "supportive_financial-toxicity"
+ },
+ {
+  "cancer_type": "screening-overview",
+  "hp_url": "https://www.cancer.gov/about-cancer/screening/hp-screening-overview-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/screening/patient-screening-overview-pdq",
+  "family": "overview"
+ },
+ {
+  "cancer_type": "cardiopulmonary",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/cardiopulmonary-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/cardiopulmonary-pdq",
+  "family": "supportive_cardiopulmonary"
+ },
+ {
+  "cancer_type": "hot-flashes",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/hot-flashes-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/hot-flashes-pdq",
+  "family": "supportive_hot-flashes"
+ },
+ {
+  "cancer_type": "cognitive-impairment",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/memory/cognitive-impairment-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/memory/cognitive-impairment-pdq",
+  "family": "supportive_cognitive-impairment"
+ },
+ {
+  "cancer_type": "oral-complications",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/mouth-throat/oral-complications-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/mouth-throat/oral-complications-pdq",
+  "family": "supportive_oral-complications"
+ },
+ {
+  "cancer_type": "pruritus",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/skin-nail-changes/pruritus-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/skin-nail-changes/pruritus-pdq",
+  "family": "supportive_pruritus"
+ },
+ {
+  "cancer_type": "sleep-disorders",
+  "hp_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/sleep-disorders-hp-pdq",
+  "patient_url": "https://www.cancer.gov/about-cancer/treatment/side-effects/sleep-disorders-pdq",
+  "family": "supportive_sleep-disorders"
+ },
+ {
+  "cancer_type": "adrenocortical-treatment",
+  "hp_url": "https://www.cancer.gov/types/adrenocortical/hp/adrenocortical-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/adrenocortical/patient/adrenocortical-treatment-pdq",
+  "family": "endocrine"
+ },
+ {
+  "cancer_type": "child-adrenocortical-treatment",
+  "hp_url": "https://www.cancer.gov/types/adrenocortical/hp/child-adrenocortical-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/adrenocortical/patient/child-adrenocortical-treatment-pdq",
+  "family": "endocrine"
+ },
+ {
+  "cancer_type": "anal-prevention",
+  "hp_url": "https://www.cancer.gov/types/anal/hp/anal-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/anal/patient/anal-prevention-pdq",
+  "family": "anal"
+ },
+ {
+  "cancer_type": "bladder-screening",
+  "hp_url": "https://www.cancer.gov/types/bladder/hp/bladder-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/bladder/patient/bladder-screening-pdq",
+  "family": "bladder"
+ },
+ {
+  "cancer_type": "child-bladder-treatment",
+  "hp_url": "https://www.cancer.gov/types/bladder/hp/child-bladder-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/bladder/patient/child-bladder-treatment-pdq",
+  "family": "bladder"
+ },
+ {
+  "cancer_type": "child-chordoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/bone/hp/child-chordoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/bone/patient/child-chordoma-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "child-cns-atrt-treatment",
+  "hp_url": "https://www.cancer.gov/types/brain/hp/child-cns-atrt-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/brain/patient/child-cns-atrt-treatment-pdq",
+  "family": "brain"
+ },
+ {
+  "cancer_type": "child-cns-embryonal-treatment",
+  "hp_url": "https://www.cancer.gov/types/brain/hp/child-cns-embryonal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/brain/patient/child-cns-embryonal-treatment-pdq",
+  "family": "brain"
+ },
+ {
+  "cancer_type": "child-cns-germ-cell-treatment",
+  "hp_url": "https://www.cancer.gov/types/brain/hp/child-cns-germ-cell-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/brain/patient/child-cns-germ-cell-treatment-pdq",
+  "family": "brain"
+ },
+ {
+  "cancer_type": "child-cranio-treatment",
+  "hp_url": "https://www.cancer.gov/types/brain/hp/child-cranio-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/brain/patient/child-cranio-treatment-pdq",
+  "family": "brain"
+ },
+ {
+  "cancer_type": "child-ependymoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/brain/hp/child-ependymoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/brain/patient/child-ependymoma-treatment-pdq",
+  "family": "brain"
+ },
+ {
+  "cancer_type": "breast-prevention",
+  "hp_url": "https://www.cancer.gov/types/breast/hp/breast-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/breast/patient/breast-prevention-pdq",
+  "family": "breast"
+ },
+ {
+  "cancer_type": "breast-screening",
+  "hp_url": "https://www.cancer.gov/types/breast/hp/breast-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/breast/patient/breast-screening-pdq",
+  "family": "breast"
+ },
+ {
+  "cancer_type": "child-breast-treatment",
+  "hp_url": "https://www.cancer.gov/types/breast/hp/child-breast-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/breast/patient/child-breast-treatment-pdq",
+  "family": "breast"
+ },
+ {
+  "cancer_type": "pregnancy-breast-treatment",
+  "hp_url": "https://www.cancer.gov/types/breast/hp/pregnancy-breast-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/breast/patient/pregnancy-breast-treatment-pdq",
+  "family": "breast"
+ },
+ {
+  "cancer_type": "child-cardiac-treatment",
+  "hp_url": "https://www.cancer.gov/types/cardiac/hp-child-cardiac-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/cardiac/patient-child-cardiac-treatment-pdq",
+  "family": "childhood_misc"
+ },
+ {
+  "cancer_type": "cervical-prevention",
+  "hp_url": "https://www.cancer.gov/types/cervical/hp/cervical-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/cervical/patient/cervical-prevention-pdq",
+  "family": "cervical_vaginal"
+ },
+ {
+  "cancer_type": "cervical-screening",
+  "hp_url": "https://www.cancer.gov/types/cervical/hp/cervical-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/cervical/patient/cervical-screening-pdq",
+  "family": "cervical_vaginal"
+ },
+ {
+  "cancer_type": "child-cervical-vaginal-treatment",
+  "hp_url": "https://www.cancer.gov/types/cervical/hp/child-cervical-vaginal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/cervical/patient/child-cervical-vaginal-treatment-pdq",
+  "family": "cervical_vaginal"
+ },
+ {
+  "cancer_type": "rare-childhood-cancers",
+  "hp_url": "https://www.cancer.gov/types/childhood-cancers/hp/rare-childhood-cancers-pdq",
+  "patient_url": "https://www.cancer.gov/types/childhood-cancers/patient/rare-childhood-cancers-pdq",
+  "family": "childhood_misc"
+ },
+ {
+  "cancer_type": "late-effects",
+  "hp_url": "https://www.cancer.gov/types/childhood-cancers/late-effects-hp-pdq",
+  "patient_url": "https://www.cancer.gov/types/childhood-cancers/late-effects-pdq",
+  "family": "childhood_misc"
+ },
+ {
+  "cancer_type": "child-colorectal-treatment",
+  "hp_url": "https://www.cancer.gov/types/colorectal/hp/child-colorectal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/colorectal/patient/child-colorectal-treatment-pdq",
+  "family": "colorectal"
+ },
+ {
+  "cancer_type": "child-esophageal-treatment",
+  "hp_url": "https://www.cancer.gov/types/esophageal/hp/child-esophageal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/esophageal/patient/child-esophageal-treatment-pdq",
+  "family": "esophageal"
+ },
+ {
+  "cancer_type": "esophageal-prevention",
+  "hp_url": "https://www.cancer.gov/types/esophageal/hp/esophageal-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/esophageal/patient/esophageal-prevention-pdq",
+  "family": "esophageal"
+ },
+ {
+  "cancer_type": "esophageal-screening",
+  "hp_url": "https://www.cancer.gov/types/esophageal/hp/esophageal-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/esophageal/patient/esophageal-screening-pdq",
+  "family": "esophageal"
+ },
+ {
+  "cancer_type": "germ-cell-treatment",
+  "hp_url": "https://www.cancer.gov/types/extracranial-germ-cell/hp/germ-cell-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/extracranial-germ-cell/patient/germ-cell-treatment-pdq",
+  "family": "germ_cell"
+ },
+ {
+  "cancer_type": "extragonadal-treatment",
+  "hp_url": "https://www.cancer.gov/types/extragonadal-germ-cell/hp/extragonadal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/extragonadal-germ-cell/patient/extragonadal-treatment-pdq",
+  "family": "germ_cell"
+ },
+ {
+  "cancer_type": "child-intraocular-melanoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/eye/hp/child-intraocular-melanoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/eye/patient/child-intraocular-melanoma-treatment-pdq",
+  "family": "eye"
+ },
+ {
+  "cancer_type": "gtd-treatment",
+  "hp_url": "https://www.cancer.gov/types/gestational-trophoblastic/hp/gtd-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/gestational-trophoblastic/patient/gtd-treatment-pdq",
+  "family": "gtd"
+ },
+ {
+  "cancer_type": "gi-neuroendocrine-treatment",
+  "hp_url": "https://www.cancer.gov/types/gi-neuroendocrine-tumors/hp/gi-neuroendocrine-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/gi-neuroendocrine-tumors/patient/gi-neuroendocrine-treatment-pdq",
+  "family": "gi_neuroendocrine"
+ },
+ {
+  "cancer_type": "hypopharyngeal-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/hypopharyngeal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/hypopharyngeal-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "laryngeal-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/laryngeal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/laryngeal-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "lip-mouth-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/lip-mouth-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/lip-mouth-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "metastatic-squamous-neck-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/metastatic-squamous-neck-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/metastatic-squamous-neck-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "nasopharyngeal-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/nasopharyngeal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/nasopharyngeal-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "oropharyngeal-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/oropharyngeal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/oropharyngeal-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "paranasal-sinus-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/paranasal-sinus-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/paranasal-sinus-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "salivary-gland-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/adult/salivary-gland-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/adult/salivary-gland-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "esthesioneuroblastoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/child/esthesioneuroblastoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/child/esthesioneuroblastoma-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "head-and-neck-laryngeal-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/child/laryngeal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/child/laryngeal-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "head-and-neck-nasopharyngeal-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/child/nasopharyngeal-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/child/nasopharyngeal-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "oral-cavity-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/child/oral-cavity-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/child/oral-cavity-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "head-and-neck-salivary-gland-treatment",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/child/salivary-gland-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/child/salivary-gland-treatment-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "oral-prevention",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/oral-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/oral-prevention-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "oral-screening",
+  "hp_url": "https://www.cancer.gov/types/head-and-neck/hp/oral-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/head-and-neck/patient/oral-screening-pdq",
+  "family": "head_neck"
+ },
+ {
+  "cancer_type": "kidney-treatment",
+  "hp_url": "https://www.cancer.gov/types/kidney/hp/kidney-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/kidney/patient/kidney-treatment-pdq",
+  "family": "kidney"
+ },
+ {
+  "cancer_type": "transitional-cell-treatment",
+  "hp_url": "https://www.cancer.gov/types/kidney/hp/transitional-cell-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/kidney/patient/transitional-cell-treatment-pdq",
+  "family": "kidney"
+ },
+ {
+  "cancer_type": "langerhans-treatment",
+  "hp_url": "https://www.cancer.gov/types/langerhans/hp/langerhans-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/langerhans/patient/langerhans-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "adult-liver-treatment",
+  "hp_url": "https://www.cancer.gov/types/liver/hp/adult-liver-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/liver/patient/adult-liver-treatment-pdq",
+  "family": "liver_biliary"
+ },
+ {
+  "cancer_type": "bile-duct-treatment",
+  "hp_url": "https://www.cancer.gov/types/liver/hp/bile-duct-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/liver/patient/bile-duct-treatment-pdq",
+  "family": "liver_biliary"
+ },
+ {
+  "cancer_type": "liver-prevention",
+  "hp_url": "https://www.cancer.gov/types/liver/hp/liver-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/liver/patient/liver-prevention-pdq",
+  "family": "liver_biliary"
+ },
+ {
+  "cancer_type": "liver-screening",
+  "hp_url": "https://www.cancer.gov/types/liver/hp/liver-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/liver/patient/liver-screening-pdq",
+  "family": "liver_biliary"
+ },
+ {
+  "cancer_type": "child-pleuropulmonary-blastoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/lung/hp/child-pleuropulmonary-blastoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lung/patient/child-pleuropulmonary-blastoma-treatment-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "child-tracheobronchial-treatment",
+  "hp_url": "https://www.cancer.gov/types/lung/hp/child-tracheobronchial-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lung/patient/child-tracheobronchial-treatment-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "aids-related-treatment",
+  "hp_url": "https://www.cancer.gov/types/lymphoma/hp/aids-related-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lymphoma/patient/aids-related-treatment-pdq",
+  "family": "lymphoma"
+ },
+ {
+  "cancer_type": "mycosis-fungoides-treatment",
+  "hp_url": "https://www.cancer.gov/types/lymphoma/hp/mycosis-fungoides-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/lymphoma/patient/mycosis-fungoides-treatment-pdq",
+  "family": "lymphoma"
+ },
+ {
+  "cancer_type": "child-mesothelioma-treatment",
+  "hp_url": "https://www.cancer.gov/types/mesothelioma/hp/child-mesothelioma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/mesothelioma/patient/child-mesothelioma-treatment-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "mesothelioma-treatment",
+  "hp_url": "https://www.cancer.gov/types/mesothelioma/hp/mesothelioma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/mesothelioma/patient/mesothelioma-treatment-pdq",
+  "family": "lung"
+ },
+ {
+  "cancer_type": "child-men-syndromes-treatment",
+  "hp_url": "https://www.cancer.gov/types/multiple-endocrine-neoplasia/hp-child-men-syndromes-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/multiple-endocrine-neoplasia/patient-child-men-syndromes-treatment-pdq",
+  "family": "endocrine"
+ },
+ {
+  "cancer_type": "mds-mpd-treatment",
+  "hp_url": "https://www.cancer.gov/types/myeloproliferative/hp/mds-mpd-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/myeloproliferative/patient/mds-mpd-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "myelodysplastic-treatment",
+  "hp_url": "https://www.cancer.gov/types/myeloproliferative/hp/myelodysplastic-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/myeloproliferative/patient/myelodysplastic-treatment-pdq",
+  "family": "blood"
+ },
+ {
+  "cancer_type": "neuroblastoma-screening",
+  "hp_url": "https://www.cancer.gov/types/neuroblastoma/hp/neuroblastoma-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/neuroblastoma/patient/neuroblastoma-screening-pdq",
+  "family": "neuroblastoma"
+ },
+ {
+  "cancer_type": "child-ovarian-treatment",
+  "hp_url": "https://www.cancer.gov/types/ovarian/hp/child-ovarian-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/ovarian/patient/child-ovarian-treatment-pdq",
+  "family": "ovarian"
+ },
+ {
+  "cancer_type": "ovarian-germ-cell-treatment",
+  "hp_url": "https://www.cancer.gov/types/ovarian/hp/ovarian-germ-cell-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/ovarian/patient/ovarian-germ-cell-treatment-pdq",
+  "family": "ovarian"
+ },
+ {
+  "cancer_type": "child-pancreatic-treatment",
+  "hp_url": "https://www.cancer.gov/types/pancreatic/hp/child-pancreatic-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/pancreatic/patient/child-pancreatic-treatment-pdq",
+  "family": "pancreatic"
+ },
+ {
+  "cancer_type": "pnet-treatment",
+  "hp_url": "https://www.cancer.gov/types/pancreatic/hp/pnet-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/pancreatic/patient/pnet-treatment-pdq",
+  "family": "pancreatic"
+ },
+ {
+  "cancer_type": "penile-treatment",
+  "hp_url": "https://www.cancer.gov/types/penile/hp/penile-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/penile/patient/penile-treatment-pdq",
+  "family": "urinary_other"
+ },
+ {
+  "cancer_type": "child-pheochromocytoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/pheochromocytoma/hp/child-pheochromocytoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/pheochromocytoma/patient/child-pheochromocytoma-treatment-pdq",
+  "family": "endocrine"
+ },
+ {
+  "cancer_type": "pituitary-treatment",
+  "hp_url": "https://www.cancer.gov/types/pituitary/hp/pituitary-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/pituitary/patient/pituitary-treatment-pdq",
+  "family": "brain"
+ },
+ {
+  "cancer_type": "child-melanoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/skin/hp/child-melanoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/skin/patient/child-melanoma-treatment-pdq",
+  "family": "skin"
+ },
+ {
+  "cancer_type": "child-skin-treatment",
+  "hp_url": "https://www.cancer.gov/types/skin/hp/child-skin-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/skin/patient/child-skin-treatment-pdq",
+  "family": "skin"
+ },
+ {
+  "cancer_type": "adult-soft-tissue-treatment",
+  "hp_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/adult-soft-tissue-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/patient/adult-soft-tissue-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "child-gist-treatment",
+  "hp_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/child-gist-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/patient/child-gist-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "child-soft-tissue-treatment",
+  "hp_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/child-soft-tissue-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/patient/child-soft-tissue-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "child-vascular-tumors-treatment",
+  "hp_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/child-vascular-tumors-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/patient/child-vascular-tumors-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "gist-treatment",
+  "hp_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/gist-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/patient/gist-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "kaposi-treatment",
+  "hp_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/kaposi-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/patient/kaposi-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "rhabdomyosarcoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/rhabdomyosarcoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/soft-tissue-sarcoma/patient/rhabdomyosarcoma-treatment-pdq",
+  "family": "sarcoma"
+ },
+ {
+  "cancer_type": "stomach-prevention",
+  "hp_url": "https://www.cancer.gov/types/stomach/hp/stomach-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/stomach/patient/stomach-prevention-pdq",
+  "family": "stomach"
+ },
+ {
+  "cancer_type": "stomach-screening",
+  "hp_url": "https://www.cancer.gov/types/stomach/hp/stomach-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/stomach/patient/stomach-screening-pdq",
+  "family": "stomach"
+ },
+ {
+  "cancer_type": "stomach-treatment",
+  "hp_url": "https://www.cancer.gov/types/stomach/hp/stomach-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/stomach/patient/stomach-treatment-pdq",
+  "family": "stomach"
+ },
+ {
+  "cancer_type": "child-testicular-treatment",
+  "hp_url": "https://www.cancer.gov/types/testicular/hp/child-testicular-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/testicular/patient/child-testicular-treatment-pdq",
+  "family": "germ_cell"
+ },
+ {
+  "cancer_type": "testicular-screening",
+  "hp_url": "https://www.cancer.gov/types/testicular/hp/testicular-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/testicular/patient/testicular-screening-pdq",
+  "family": "germ_cell"
+ },
+ {
+  "cancer_type": "child-unknown-primary-treatment",
+  "hp_url": "https://www.cancer.gov/types/unknown-primary/hp/child-unknown-primary-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/unknown-primary/patient/child-unknown-primary-treatment-pdq",
+  "family": "unknown_primary"
+ },
+ {
+  "cancer_type": "urethral-treatment",
+  "hp_url": "https://www.cancer.gov/types/urethral/hp/urethral-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/urethral/patient/urethral-treatment-pdq",
+  "family": "urinary_other"
+ },
+ {
+  "cancer_type": "endometrial-prevention",
+  "hp_url": "https://www.cancer.gov/types/uterine/hp/endometrial-prevention-pdq",
+  "patient_url": "https://www.cancer.gov/types/uterine/patient/endometrial-prevention-pdq",
+  "family": "uterine"
+ },
+ {
+  "cancer_type": "endometrial-screening",
+  "hp_url": "https://www.cancer.gov/types/uterine/hp/endometrial-screening-pdq",
+  "patient_url": "https://www.cancer.gov/types/uterine/patient/endometrial-screening-pdq",
+  "family": "uterine"
+ },
+ {
+  "cancer_type": "uterine-sarcoma-treatment",
+  "hp_url": "https://www.cancer.gov/types/uterine/hp/uterine-sarcoma-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/uterine/patient/uterine-sarcoma-treatment-pdq",
+  "family": "uterine"
+ },
+ {
+  "cancer_type": "vulvar-treatment",
+  "hp_url": "https://www.cancer.gov/types/vulvar/hp/vulvar-treatment-pdq",
+  "patient_url": "https://www.cancer.gov/types/vulvar/patient/vulvar-treatment-pdq",
+  "family": "vulvar"
+ }
+]

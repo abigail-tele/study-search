@@ -1,0 +1,9 @@
+[
+  {"id": "breast", "label": "Breast cancer", "lay_terms": ["breast cancer", "breast tumor", "cancer in the breast", "chest cancer"]},
+  {"id": "lung_nsclc", "label": "Lung cancer (non-small cell)", "lay_terms": ["lung cancer", "cancer of the lung", "lung tumor", "chest cancer"]},
+  {"id": "prostate", "label": "Prostate cancer", "lay_terms": ["prostate cancer", "cancer of the prostate", "prostate tumor", "men's cancer"]},
+  {"id": "colorectal", "label": "Colon or rectal cancer", "lay_terms": ["colon cancer", "rectal cancer", "bowel cancer", "colorectal cancer"]},
+  {"id": "leukemia_aml", "label": "Leukemia (acute myeloid)", "lay_terms": ["leukemia", "blood cancer", "cancer of the blood", "bone marrow cancer"]},
+  {"id": "lymphoma_nhl", "label": "Non-Hodgkin lymphoma", "lay_terms": ["lymphoma", "lymph node cancer", "Hodgkin lymphoma", "non-Hodgkin lymphoma"]},
+  {"id": "melanoma", "label": "Melanoma (skin cancer)", "lay_terms": ["melanoma", "skin cancer", "mole cancer", "cancer of the skin"]}
+]

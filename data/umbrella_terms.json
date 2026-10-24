@@ -1,0 +1,83 @@
+{
+  "lung cancer": [
+    "lung_nsclc",
+    "lung_sclc"
+  ],
+  "blood cancer": [
+    "leukemia_all",
+    "leukemia_aml",
+    "leukemia_cll",
+    "leukemia_cml",
+    "lymphoma_hodgkin",
+    "lymphoma_nhl",
+    "multiple_myeloma"
+  ],
+  "leukemia": [
+    "leukemia_all",
+    "leukemia_aml",
+    "leukemia_cll",
+    "leukemia_cml"
+  ],
+  "lymphoma": [
+    "lymphoma_hodgkin",
+    "lymphoma_nhl"
+  ],
+  "lymph gland cancer": [
+    "lymphoma_hodgkin",
+    "lymphoma_nhl"
+  ],
+  "lymph system cancer": [
+    "lymphoma_hodgkin",
+    "lymphoma_nhl"
+  ],
+  "lymphatic system cancer": [
+    "lymphoma_hodgkin",
+    "lymphoma_nhl"
+  ],
+  "bone marrow cancer": [
+    "leukemia_all",
+    "leukemia_aml",
+    "leukemia_cll",
+    "leukemia_cml",
+    "multiple_myeloma"
+  ],
+  "skin cancer": [
+    "melanoma",
+    "non_melanoma_skin"
+  ],
+  "gynecologic cancer": [
+    "ovarian",
+    "cervical",
+    "uterine"
+  ],
+  "womens cancer": [
+    "breast",
+    "ovarian",
+    "cervical",
+    "uterine"
+  ],
+  "digestive cancer": [
+    "colorectal",
+    "pancreatic",
+    "liver",
+    "biliary",
+    "stomach",
+    "esophageal"
+  ],
+  "childhood cancer": [
+    "leukemia_all",
+    "neuroblastoma",
+    "wilms_tumor",
+    "retinoblastoma",
+    "medulloblastoma",
+    "rhabdomyosarcoma"
+  ],
+  "cancer in children": [
+    "leukemia_all",
+    "neuroblastoma",
+    "wilms_tumor",
+    "retinoblastoma",
+    "medulloblastoma",
+    "rhabdomyosarcoma"
+  ]
+}

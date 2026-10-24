@@ -1,0 +1,17 @@
+{
+  "nct_id": "NCT05000002",
+  "what_is_tested": "This study looks at when to start hormone therapy in early breast cancer. (MOCK DATA: original wording shown because the checked rewrite did not pass.)",
+  "who_can_join": {
+    "include": ["Women with early breast cancer"],
+    "exclude": ["Prior hormone therapy"]
+  },
+  "original": {
+    "summary": "This study looks at when to start hormone therapy in early breast cancer.",
+    "eligibility": "Inclusion Criteria: Women with early breast cancer. Exclusion Criteria: Prior hormone therapy."
+  },
+  "faithful": false,
+  "fallback_used": true,
+  "reading_level": {"before": 12.0, "after": 12.0},
+  "model_version": "mock-flan-t5-base-0.0",
+  "generated_at": "2026-10-24T12:00:00Z"
+}
