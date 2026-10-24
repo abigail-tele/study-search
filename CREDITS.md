@@ -18,7 +18,7 @@ Every dependency and data source used by this project. The Version column shows 
 | datasets | (not yet installed); min >=2.19.0 | Apache-2.0 (verify) | https://pypi.org/project/datasets/ | Dataset handling for model training |
 | torch | 2.14.1+cpu (min >=2.3.0) | BSD-3-Clause (verify: pip metadata lists a combined expression of Apache-2.0, BSD-2-Clause, BSD-3-Clause, BSL-1.0, MIT and others) | https://pypi.org/project/torch/ | Deep learning backend for embeddings and T5 training/inference |
 | accelerate | (not yet installed); min >=0.30.0 | Apache-2.0 (verify) | https://pypi.org/project/accelerate/ | Training loop support for the Hugging Face stack |
-| sentencepiece | (not yet installed); min >=0.2.0 | Apache-2.0 (verify) | https://pypi.org/project/sentencepiece/ | Tokenizer required by flan-t5 |
+| sentencepiece | 0.2.2 (min >=0.2.0) | Apache-2.0 | https://pypi.org/project/sentencepiece/ | Tokenizer required by flan-t5 |
 | textstat | (not yet installed); min >=0.7.3 | MIT (verify) | https://pypi.org/project/textstat/ | Reading-level scores (Flesch-Kincaid grade) before and after rewriting |
 | rapidfuzz | (not yet installed); min >=3.9.0 | MIT (verify) | https://pypi.org/project/rapidfuzz/ | Fuzzy string matching for cancer-type detection |
 | rouge-score | (not yet installed); min >=0.1.2 | Apache-2.0 (verify) | https://pypi.org/project/rouge-score/ | ROUGE-L evaluation of generated summaries |
@@ -51,6 +51,19 @@ These are not listed in `requirements.txt` but are installed as dependencies of 
 |---|---|---|---|---|
 | google/flan-t5-base | Hugging Face hub, base checkpoint | Apache-2.0 | https://huggingface.co/google/flan-t5-base | Base model that we fine-tune to rewrite trial text in plain language |
 | sentence-transformers/all-MiniLM-L6-v2 | Hugging Face hub | Apache-2.0 | https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2 | Sentence embeddings for semantic search and PDQ paragraph alignment |
+
+## Training environment (.venv-train)
+
+A separate virtual environment used only for fine-tuning flan-t5-base on the GPU (`pipeline/train.py`). Kept apart from `.venv` so the CUDA build of torch does not replace the CPU build the server uses. Versions and licenses were read with `.venv-train/Scripts/python -m pip show` and `importlib.metadata`.
+
+| Name | Version | License | URL | What we use it for |
+|---|---|---|---|---|
+| torch | 2.14.1+cu130 | BSD-3-Clause (pip metadata gives a combined expression: Apache-2.0, Apache-2.0 WITH LLVM-exception, BSD-2-Clause, BSD-3-Clause, BSL-1.0, MIT) | https://pypi.org/project/torch/ | GPU training of flan-t5-base (CUDA 13.0 build) |
+| transformers | 5.20.2 | Apache-2.0 | https://pypi.org/project/transformers/ | Loads flan-t5-base and runs the seq2seq training loop |
+| numpy | 2.4.6 | BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0 | https://pypi.org/project/numpy/ | Array handling used by transformers and torch |
+| sentencepiece | 0.2.2 | Apache-2.0 | https://pypi.org/project/sentencepiece/ | T5 tokenizer |
+| tokenizers | 0.23.3 | Apache-2.0 (pip classifier: Apache Software License) | https://pypi.org/project/tokenizers/ | Fast tokenizer backend used by transformers |
+| safetensors | 0.8.0 | Apache-2.0 (pip classifier: Apache Software License) | https://pypi.org/project/safetensors/ | Saving and loading model checkpoints |
 
 ## Full installed dependency list (auto-generated 2026-10-24)
 
@@ -97,6 +110,7 @@ Generated from the installed distributions in  (importlib.metadata), excluding p
 | scikit-learn | 1.9.1 | BSD-3-Clause |
 | scipy | 1.17.1 | BSD License |
 | sentence-transformers | 6.2.0 | Apache-2.0 |
+| sentencepiece | 0.2.2 | Apache-2.0 |
 | shellingham | 1.5.4 | ISC License |
 | soupsieve | 3.0.4 | MIT |
 | sympy | 1.14.0 | BSD |

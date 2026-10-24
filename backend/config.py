@@ -135,5 +135,17 @@ MAX_OUTPUT_TOKENS = 256
 NUM_BEAMS = 4
 NO_REPEAT_NGRAM_SIZE = 3
 
+# --- Training (pipeline/train.py) --------------------------------------------
+TRAIN_MIN_SIMILARITY = 0.60     # only pairs at least this well aligned are used for train/val
+TRAIN_LEARNING_RATE = 3e-4      # standard for fine-tuning T5-family models with AdamW
+TRAIN_BATCH_SIZE = 8            # examples per forward pass (lower if the GPU runs out of memory)
+TRAIN_GRAD_ACCUM = 2            # batches added up before each weight update (effective batch = 16)
+TRAIN_EPOCHS = 5                # max passes over the training pairs
+TRAIN_EARLY_STOP_PATIENCE = 2   # stop after this many epochs with no val-loss improvement
+TRAIN_WARMUP_RATIO = 0.06       # fraction of steps spent ramping the learning rate up
+TRAIN_WEIGHT_DECAY = 0.01       # mild regularisation against memorising the pairs
+TRAIN_MAX_GRAD_NORM = 1.0       # clip gradients so one odd batch cannot wreck the weights
+TRAIN_CHECKPOINT_NAME = "flan-t5-pdq"  # folder under CHECKPOINT_DIR for the best model
+
 # --- UI text ---------------------------------------------------------------
 DISCLAIMER = "For education, not medical advice."

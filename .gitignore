@@ -9,3 +9,4 @@ data/faiss_rowmap.json
 data/raw/
 checkpoints/
 *.log
+.venv-train/

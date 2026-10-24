@@ -50,7 +50,7 @@ The National Cancer Institute publishes many cancer summaries twice: once for do
 
 ## train.py
 
-TODO: 3–5 plain-English sentences.
+This script teaches a small existing language model (Google's flan-t5-base) to do one job: take a paragraph written for doctors and rewrite it the way the National Cancer Institute writes it for patients. It learns from the before-and-after pairs that `pdq_pairs.py` made, keeping only pairs whose similarity score is high enough (0.60 by default) so it is not taught to say things the original never said. Training repeats the same loop many times: show the model a batch of doctor paragraphs, measure how far its rewrite is from the real patient version (the "loss"), and nudge its numbers to shrink that error. After each full pass it checks the loss on separate validation pairs, saves the best version so far, and stops early if the model has stopped improving, which prevents it from just memorising the training pairs. The test pairs are never touched, so the final evaluation stays fair.
 
 ## batch_summarize.py
 

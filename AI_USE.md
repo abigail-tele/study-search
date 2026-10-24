@@ -23,3 +23,5 @@ The Congressional App Challenge requires full disclosure of AI assistance. Every
 | 2026-10-24 | Claude Code orchestrator (Claude Opus 5.5) | Ran full indexer (35 cancer types); added Gate 1 carry-over notes to PLAN §3 | `docs/PLAN.md` (§3) | pending |
 | 2026-10-24 | test-runner subagent (Claude Haiku) | Gate 1 re-run of test suite | none (no files changed) | pending |
 | 2026-10-24 | reviewer subagent (Claude Opus) | Gate 1 re-review | none (no files changed) | pending |
+| 2026-10-24 | ml-engineer subagent (Claude Sonnet) | Plain PyTorch fine-tuning loop for flan-t5-base; created `.venv-train`; CPU and GPU smoke tests only (the real training run is done by a human); config Training section; HOW_IT_WORKS train.py section; TRAINING guide; .gitignore entry for training outputs | `pipeline/train.py`, `tests/test_train.py`, `docs/TRAINING.md`, `backend/config.py` (Training section), `docs/HOW_IT_WORKS.md` (train.py section), `.gitignore`, `.venv-train/` | pending |
+| 2026-10-24 | Claude Code orchestrator (Claude Opus 5.5) | Wrote TODO.md and the frontend launcher script | `TODO.md`, `run_frontend.ps1` | pending |
