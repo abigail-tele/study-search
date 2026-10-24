@@ -76,6 +76,18 @@ def connect(path: str | Path = config.DB_PATH) -> sqlite3.Connection:
     return conn
 
 
+def connect_ro(path: str | Path = config.DB_PATH) -> sqlite3.Connection:
+    """Open the database read-only (rule 8: the live server can never write or create files).
+
+    Why a URI: mode=ro makes SQLite itself refuse writes, and it errors instead of creating a
+    missing file or directory.
+    """
+    uri = Path(path).resolve().as_uri() + "?mode=ro"
+    conn = sqlite3.connect(uri, uri=True)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
 def init_schema(conn: sqlite3.Connection) -> None:
     conn.executescript(SCHEMA)
     conn.commit()
@@ -160,3 +172,58 @@ def delete_trial(conn: sqlite3.Connection, nct_id: str) -> None:
     """
     for table in ("trials", "trial_cancer_types", "locations", "fts", "summaries"):
         conn.execute(f"DELETE FROM {table} WHERE nct_id=?", (nct_id,))
+
+
+# --- Read helpers for the API (read-only; shapes match frontend/mock) --------
+def format_age(years: float | None) -> str | None:
+    """4.0 -> '4 Years'; 0.5 -> '6 Months'; None -> None (display form of the stored number)."""
+    if years is None:
+        return None
+    if years >= 1:
+        n, unit = round(years), "Year"
+    elif years * 12 >= 1:
+        n, unit = round(years * 12), "Month"
+    else:
+        n, unit = max(round(years * 52.1775), 1), "Week"
+    return f"{n} {unit}{'' if n == 1 else 's'}"
+
+
+def get_study(conn: sqlite3.Connection, nct: str) -> dict | None:
+    """Key-facts object for /api/study/{nct}; every field comes straight from stored API data."""
+    from backend.search import build_citation, normalize_phase  # lazy: avoids an import cycle
+    t = conn.execute("SELECT * FROM trials WHERE nct_id=?", (nct,)).fetchone()
+    if t is None:
+        return None
+    tags = [r[0] for r in conn.execute(
+        "SELECT cancer_type_id FROM trial_cancer_types WHERE nct_id=? ORDER BY cancer_type_id", (nct,))]
+    sites = [dict(r) for r in conn.execute(
+        "SELECT facility, city, state, zip, lat, lon FROM locations WHERE nct_id=?", (nct,))]
+    return {
+        "nct_id": nct, "title": t["brief_title"], "official_title": t["official_title"],
+        "status": t["status"], "phase": normalize_phase(t["phases"]),
+        "conditions": json.loads(t["conditions"] or "[]"), "cancer_tags": tags,
+        "min_age": format_age(t["min_age_years"]), "max_age": format_age(t["max_age_years"]),
+        "sex": t["sex"], "sponsor": t["sponsor"], "start_date": t["start_date"],
+        "last_updated": t["last_updated"], "enrollment": t["enrollment"], "sites": sites,
+        "url": config.STUDY_URL_TEMPLATE.format(nct=nct), "citation": build_citation(dict(t)),
+        "brief_summary": t["brief_summary"], "eligibility_text": t["eligibility_text"],
+    }
+
+
+def get_summary(conn: sqlite3.Connection, nct: str) -> dict | None:
+    """Stored plain-language summary in the PLAN section 2 shape, or None if not generated yet."""
+    s = conn.execute("SELECT * FROM summaries WHERE nct_id=?", (nct,)).fetchone()
+    if s is None:
+        return None
+    t = conn.execute("SELECT brief_summary, eligibility_text FROM trials WHERE nct_id=?",
+                     (nct,)).fetchone()
+    return {
+        "nct_id": nct, "what_is_tested": s["what_is_tested"],
+        "who_can_join": {"include": json.loads(s["include_json"] or "[]"),
+                         "exclude": json.loads(s["exclude_json"] or "[]")},
+        "original": {"summary": t["brief_summary"] if t else None,
+                     "eligibility": t["eligibility_text"] if t else None},
+        "faithful": bool(s["faithful"]), "fallback_used": bool(s["fallback_used"]),
+        "reading_level": {"before": s["reading_before"], "after": s["reading_after"]},
+        "model_version": s["model_version"], "generated_at": s["generated_at"],
+    }

@@ -16,11 +16,11 @@ db.py defines our database, a single SQLite file that holds every trial, the can
 
 ## taxonomy.py
 
-TODO: 3–5 plain-English sentences.
+This file holds the list of cancer types (breast, lung, leukemia and so on) and broad phrases like "blood cancer" that stand for several types at once. Its main job is `detect_cancer_types`, which reads what a patient typed and decides which cancer type they mean, trying exact wording first, then broad phrases, then close spellings ("brest"), and last a meaning comparison. If nothing matches, the question is not about cancer and the app shows cancer buttons instead of searching, which is how we keep to the cancer-only rule. The detection function is written by a team member, so this section is still theirs to fill in.
 
 ## search.py
 
-TODO: 3–5 plain-English sentences.
+Search first narrows the database to trials tagged with the cancer type(s) found, and to the status, age and distance the patient chose, so every ranked result is usable. Inside that group it makes two ranked lists: one from keyword matching (SQLite FTS5) and one from meaning matching (FAISS over MiniLM vectors, which finds trials that say the same thing in different words). Reciprocal rank fusion then merges the two lists by giving each trial 1/(60 + position) points from each list, so trials that both methods like rise to the top. Finally the top 10 become cards, each with a citation built only from stored ClinicalTrials.gov fields and, if a ZIP was given, the distance to the nearest site. Nothing here calls the internet, and the query and ZIP are never saved or logged.
 
 ## summarize.py
 
@@ -42,7 +42,7 @@ ClinicalTrials.gov's search is loose ("small cell" also finds "non-small cell", 
 
 ## embed.py
 
-TODO: 3–5 plain-English sentences.
+This offline script turns every trial into a list of 384 numbers that captures its meaning, using the small open model all-MiniLM-L6-v2. The text we feed it is the title, conditions, keywords and brief summary, because those say what the trial is about while the long eligibility list would add noise. The vectors go into a FAISS index (a fast lookup file) and a companion file that says which trial each row belongs to; the script checks the two counts match. Run it again whenever the indexer adds trials: `python -m pipeline.embed`.
 
 ## pdq_pairs.py
 

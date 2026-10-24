@@ -20,6 +20,9 @@ ZIP_CENTROIDS_PATH = DATA_DIR / "zip_centroids.csv"
 TEST_QUERIES_PATH = DATA_DIR / "test_queries.json"
 PDQ_PAIRS_PATH = DATA_DIR / "pdq_pairs.jsonl"
 PDQ_STATS_PATH = DATA_DIR / "pdq_stats.json"
+PDQ_SENT_PAIRS_PATH = DATA_DIR / "pdq_pairs_sent.jsonl"   # sentence-level pairs (extra training data)
+PDQ_COMBINED_PAIRS_PATH = DATA_DIR / "pdq_pairs_combined.jsonl"  # paragraph + sentence pairs, deduped together
+PDQ_VAL_FIXED_PATH = DATA_DIR / "pdq_val_fixed.jsonl"     # frozen val set used to compare checkpoints
 CHECKPOINT_DIR = ROOT_DIR / "checkpoints"
 FRONTEND_DIR = ROOT_DIR / "frontend"
 MOCK_DIR = FRONTEND_DIR / "mock"
@@ -125,6 +128,11 @@ PDQ_SKIP_HEADINGS = (           # sections with no teachable content (boilerplat
     "reviewers and updates", "clinical trial information", "permission to use this summary",
     "disclaimer", "contact us", "levels of evidence", "changes to this summary",
 )
+PDQ_SENT_SIM_THRESHOLD = 0.70   # min cosine similarity to keep a SENTENCE-level pair
+PDQ_SENT_MIN_WORDS = 6          # sentences are short; lower floor than PDQ_MIN_WORDS
+PDQ_SENT_MAX_WINDOW = 3         # professional side may be 1-3 consecutive sentences
+PDQ_COMBINED_MIN_PARA_SIM = 0.70  # paragraph pairs at least this similar are what the combined run trains on
+PDQ_SENT_PATIENT_WINDOW = 2     # patient side: single sentence or 2-sentence window
 RANDOM_SEED = 42
 
 # --- Model -----------------------------------------------------------------
@@ -146,6 +154,17 @@ TRAIN_WARMUP_RATIO = 0.06       # fraction of steps spent ramping the learning r
 TRAIN_WEIGHT_DECAY = 0.01       # mild regularisation against memorising the pairs
 TRAIN_MAX_GRAD_NORM = 1.0       # clip gradients so one odd batch cannot wreck the weights
 TRAIN_CHECKPOINT_NAME = "flan-t5-pdq"  # folder under CHECKPOINT_DIR for the best model
+TRAIN_BEST_CHECKPOINT_NAME = "flan-t5-pdq-best"  # winner of the experiments in docs/EVAL.md
+
+# --- Summarizer (backend/summarize.py) ---------------------------------------
+SUMMARY_MODEL_DIR = CHECKPOINT_DIR / TRAIN_BEST_CHECKPOINT_NAME      # preferred checkpoint
+SUMMARY_FALLBACK_MODEL_DIR = CHECKPOINT_DIR / TRAIN_CHECKPOINT_NAME  # used until the "best" one exists
+GLOSSARY_PATH = DATA_DIR / "glossary.json"   # NCI Dictionary of Cancer Terms paraphrases (fallback wording)
+SUMMARY_BATCH_SIZE = 8              # chunks sent through the model at once (CPU-friendly)
+SUMMARY_FALLBACK_TOKENS_PER_WORD = 1.4  # token estimate when no tokenizer is loaded (tests only)
+SUMMARY_MAX_CRITERIA_PER_SIDE = 25  # criteria beyond this are shown in original (glossary-swapped) wording
+SUMMARY_MIN_CRITERION_WORDS = 3     # shorter fragments ("None") are not worth a model call
+READING_LEVEL_DECIMALS = 1
 
 # --- UI text ---------------------------------------------------------------
 DISCLAIMER = "For education, not medical advice."

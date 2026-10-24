@@ -12,7 +12,7 @@ Every dependency and data source used by this project. The Version column shows 
 | beautifulsoup4 | 4.15.0 (min >=4.12.0) | MIT | https://pypi.org/project/beautifulsoup4/ | Parsing cancer.gov PDQ HTML |
 | lxml | 6.1.3 (min >=5.2.0) | BSD-3-Clause | https://pypi.org/project/lxml/ | Fast HTML/XML parser used by BeautifulSoup |
 | numpy | 2.4.6 (min >=1.26.0) | BSD-3-Clause (pip metadata also lists 0BSD, MIT, Zlib, CC0-1.0 for bundled parts) | https://pypi.org/project/numpy/ | Vector math for embeddings and RRF helpers |
-| faiss-cpu | (not yet installed); min >=1.8.0 | MIT (verify) | https://pypi.org/project/faiss-cpu/ | Vector similarity index (flat inner-product search) |
+| faiss-cpu | 1.15.1 | MIT | https://pypi.org/project/faiss-cpu/ | Vector similarity index (flat inner-product search) |
 | sentence-transformers | 6.2.0 (min >=3.0.0) | Apache-2.0 | https://pypi.org/project/sentence-transformers/ | Loads all-MiniLM-L6-v2 to embed trials and queries |
 | transformers | 5.20.2 (min >=4.41.0) | Apache-2.0 | https://pypi.org/project/transformers/ | Loads and runs flan-t5-base for plain-language rewriting |
 | datasets | (not yet installed); min >=2.19.0 | Apache-2.0 (verify) | https://pypi.org/project/datasets/ | Dataset handling for model training |
@@ -20,7 +20,7 @@ Every dependency and data source used by this project. The Version column shows 
 | accelerate | (not yet installed); min >=0.30.0 | Apache-2.0 (verify) | https://pypi.org/project/accelerate/ | Training loop support for the Hugging Face stack |
 | sentencepiece | 0.2.2 (min >=0.2.0) | Apache-2.0 | https://pypi.org/project/sentencepiece/ | Tokenizer required by flan-t5 |
 | textstat | (not yet installed); min >=0.7.3 | MIT (verify) | https://pypi.org/project/textstat/ | Reading-level scores (Flesch-Kincaid grade) before and after rewriting |
-| rapidfuzz | (not yet installed); min >=3.9.0 | MIT (verify) | https://pypi.org/project/rapidfuzz/ | Fuzzy string matching for cancer-type detection |
+| rapidfuzz | 3.14.6 | MIT | https://pypi.org/project/rapidfuzz/ | Fuzzy string matching for cancer-type detection |
 | rouge-score | (not yet installed); min >=0.1.2 | Apache-2.0 (verify) | https://pypi.org/project/rouge-score/ | ROUGE-L evaluation of generated summaries |
 | pytest | 9.1.1 (min >=8.0.0) | MIT | https://pypi.org/project/pytest/ | Test suite |
 

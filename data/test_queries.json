@@ -1,0 +1,42 @@
+{
+  "note": "Drafted by grunt (AI). Humans must fill relevant_ncts by searching ClinicalTrials.gov / our DB and confirming each trial is actually relevant.",
+  "lay_queries": [
+    {"id": "q01", "query": "my mom has breast cancer that spread to her bones", "expected_types": ["breast"], "relevant_ncts": [], "notes": "metastatic breast, bone spread"},
+    {"id": "q02", "query": "brest cancer, my aunt just found a lump", "expected_types": ["breast"], "relevant_ncts": [], "notes": "misspelling of breast"},
+    {"id": "q03", "query": "my dad has prostrate cancer, what trials are there", "expected_types": ["prostate"], "relevant_ncts": [], "notes": "misspelling of prostate"},
+    {"id": "q04", "query": "my son has a brain tumor called medulloblastoma", "expected_types": ["medulloblastoma"], "relevant_ncts": [], "notes": "pediatric brain tumor"},
+    {"id": "q05", "query": "my 6 year old daughter has leukemea", "expected_types": ["leukemia_all"], "relevant_ncts": [], "notes": "pediatric, misspelling of leukemia; ALL is the common childhood type, AML/others also possible"},
+    {"id": "q06", "query": "blood cancer, grandpa is 80", "expected_types": ["leukemia_all", "leukemia_aml", "leukemia_cll", "leukemia_cml", "lymphoma_hodgkin", "lymphoma_nhl", "multiple_myeloma"], "relevant_ncts": [], "notes": "umbrella term: blood cancer"},
+    {"id": "q07", "query": "skin cancer on my face", "expected_types": ["melanoma", "non_melanoma_skin"], "relevant_ncts": [], "notes": "umbrella term: skin cancer"},
+    {"id": "q08", "query": "lung cancer", "expected_types": ["lung_nsclc", "lung_sclc"], "relevant_ncts": [], "notes": "umbrella term: lung cancer"},
+    {"id": "q09", "query": "HER2 positive breast cancer, stage 2", "expected_types": ["breast"], "relevant_ncts": [], "notes": "marker plus stage word"},
+    {"id": "q10", "query": "stage 4 colon cancer", "expected_types": ["colorectal"], "relevant_ncts": [], "notes": "stage word"},
+    {"id": "q11", "query": "EGFR lung", "expected_types": ["lung_nsclc"], "relevant_ncts": [], "notes": "marker only; EGFR usually non-small cell"},
+    {"id": "q12", "query": "my uncle was just told he has pancreas cancer", "expected_types": ["pancreatic"], "relevant_ncts": [], "notes": "lay wording: pancreas"},
+    {"id": "q13", "query": "cancer that started in the liver", "expected_types": ["liver"], "relevant_ncts": [], "notes": "lay phrasing of primary liver cancer"},
+    {"id": "q14", "query": "blood in my urine and they think it is bladder cancer", "expected_types": ["bladder"], "relevant_ncts": [], "notes": "symptom plus diagnosis"},
+    {"id": "q15", "query": "renal cell cancer, I had my kidney removed last year", "expected_types": ["kidney"], "relevant_ncts": [], "notes": "renal cell is kidney cancer"},
+    {"id": "q16", "query": "my 2 year old has neuroblastoma", "expected_types": ["neuroblastoma"], "relevant_ncts": [], "notes": "pediatric"},
+    {"id": "q17", "query": "baby's eye has a white glow, doctors say retinoblastoma", "expected_types": ["retinoblastoma"], "relevant_ncts": [], "notes": "pediatric, symptom plus diagnosis"},
+    {"id": "q18", "query": "teen with bone cancer in her leg, osteosarcoma", "expected_types": ["sarcoma"], "relevant_ncts": [], "notes": "bone sarcoma, adolescent"},
+    {"id": "q19", "query": "my 19 year old son has testicular cancer", "expected_types": ["testicular"], "relevant_ncts": [], "notes": "young adult"},
+    {"id": "q20", "query": "hodgkins lymphoma in a young woman", "expected_types": ["lymphoma_hodgkin"], "relevant_ncts": [], "notes": "misspelling of Hodgkin's"},
+    {"id": "q21", "query": "grandma has multiple myeloma", "expected_types": ["multiple_myeloma"], "relevant_ncts": [], "notes": "older adult"},
+    {"id": "q22", "query": "ovarian cancer, my sister is 40", "expected_types": ["ovarian"], "relevant_ncts": [], "notes": "gynecologic"},
+    {"id": "q23", "query": "cancer on my tongue and throat, I smoked for years", "expected_types": ["head_and_neck"], "relevant_ncts": [], "notes": "oral/throat, symptom plus risk"},
+    {"id": "q24", "query": "thyroid cancer, I have a lump in my neck", "expected_types": ["thyroid"], "relevant_ncts": [], "notes": "lay symptom plus diagnosis"},
+    {"id": "q25", "query": "mesothelioma from working around asbestos", "expected_types": ["mesothelioma"], "relevant_ncts": [], "notes": "exposure-linked"}
+  ],
+  "off_topic": [
+    {"id": "o01", "query": "all of my family has diabetes", "expected_types": []},
+    {"id": "o02", "query": "cervical spine pain", "expected_types": []},
+    {"id": "o03", "query": "benign fibroids", "expected_types": []},
+    {"id": "o04", "query": "tumor necrosis factor arthritis drug", "expected_types": []},
+    {"id": "o05", "query": "flu shot near me", "expected_types": []},
+    {"id": "o06", "query": "knee pain after running", "expected_types": []},
+    {"id": "o07", "query": "best pizza", "expected_types": []},
+    {"id": "o08", "query": "heart failure trial", "expected_types": []},
+    {"id": "o09", "query": "depression study", "expected_types": []},
+    {"id": "o10", "query": "COVID vaccine", "expected_types": []}
+  ]
+}

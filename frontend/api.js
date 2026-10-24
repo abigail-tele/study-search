@@ -1,7 +1,14 @@
-/* api.js - data access. Flip USE_MOCK to false to call the real /api/... endpoints.
+/* api.js - data access. USE_MOCK is auto-detected (see below).
    WHY one flag: the UI never knows where data came from, so mock and live behave the same. */
 "use strict";
-const USE_MOCK = true;
+/* Auto: the mock server (run_frontend.ps1, port 8765) uses mocks; the FastAPI app (run_api.ps1) uses live.
+   Manual override: open the page with ?mock=1 or ?mock=0. */
+const USE_MOCK = (() => {
+  const m = new URLSearchParams(location.search).get("mock");
+  if (m === "1") return true;
+  if (m === "0") return false;
+  return location.port === "8765";
+})();
 const MOCK_BASE = "mock/";
 
 async function getJSON(url) {
@@ -55,5 +62,10 @@ async function fetchStudy(nct) {
 async function fetchSummary(nct) {
   /* Mock: NCT05000002 demos the fallback_used=true look; every other id gets the normal mock. */
   if (USE_MOCK) return getJSON(MOCK_BASE + (nct === "NCT05000002" ? "summary-NCT05000002-fallback.json" : "summary-NCT05000001.json"));
-  return getJSON("/api/summary/" + encodeURIComponent(nct));
+  try { return await getJSON("/api/summary/" + encodeURIComponent(nct)); }
+  catch (e) {
+    /* 404 = no summary generated yet: say so kindly; the key facts above still show. */
+    if (/not available/i.test(e.message)) throw new Error("A plain-language summary is not ready for this study yet. The key facts above and the link to ClinicalTrials.gov still work.");
+    throw e;
+  }
 }
