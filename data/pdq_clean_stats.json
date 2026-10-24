@@ -1,0 +1,28 @@
+{
+  "input": 2358,
+  "sentences_removed_generic": 101,
+  "sentences_removed_unsupported": 252,
+  "pairs_changed": 289,
+  "dropped_too_short": 89,
+  "dropped_ratio": 0,
+  "after_clean": 2269,
+  "dedupe_dropped": {
+    "exact_pair": 0,
+    "duplicate_target": 1,
+    "duplicate_source": 0,
+    "sentence_inside_paragraph_pair": 75,
+    "near_duplicate_in_train": 31,
+    "total": 107
+  },
+  "final": 2162,
+  "per_split": {
+    "train": 1626,
+    "val": 273,
+    "test": 263
+  },
+  "paragraph_only_per_split": {
+    "train": 1038,
+    "val": 156,
+    "test": 154
+  }
+}

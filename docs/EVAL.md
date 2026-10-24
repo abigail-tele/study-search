@@ -93,3 +93,22 @@ What the numbers also say, plainly:
 - Zero-shot flan-t5-base mostly copies, so it looks faithful but barely simplifies (FK 14.7-15.2). Few-shot is similar.
 - Key-term precision is about 1.0 for all models because the number check is easy; the remaining risk is meaning drift, which the support metric catches. 10-18% of outputs still contain a PDQ-style opener that the source lacks.
 - Mitigations to consider (not done): remove generic PDQ intro sentences ("There are different types of ...", "X is a type of cancer that forms ...") from training targets; train on sentence-level pairs only; use the model for brief summaries and `glossary_swap` for eligibility criteria; use `backend.support.sentence_support` as an extra automatic fallback trigger in summarize.py (fall back to the glossary-swapped original when any sentence is unsupported).
+
+## Cleaned-target experiment (added later; supersedes the winner above)
+
+Targets were cleaned by `pipeline/clean_pairs.py` (stats: `data/pdq_clean_stats.json`): generic PDQ intro/definition sentences were removed unless the source has them (101 sentences), and target sentences with MiniLM similarity < 0.45 to every source sentence window were removed (252 sentences; the run-time support thresholds 0.60 + 70% word overlap would have removed about two thirds of PDQ target sentences because patient wording differs from professional wording, so they were relaxed for cleaning). 89 pairs left too short were dropped, then everything was re-deduplicated (107 more). Result: 2,358 -> 2,162 pairs (train 1,626 / val 273 / test 263; paragraph-only 1,038 / 156 / 154). Runs: lr 1e-4, min sim 0.70; E = cleaned paragraphs only (846 train pairs, best epoch 3, own val loss 1.955), F = cleaned paragraphs + sentences (1,434 train pairs, best epoch 3, own val loss 1.941).
+
+Note: the boilerplate pattern list was broadened by another change after the first comparison, and all systems were re-scored with it, so boilerplate values below are higher than in the tables above for the same checkpoints (e.g. lr1e4-s70 on trials: 10.4% -> 21.3%). Other metrics are unchanged.
+
+Trial set (240 texts), re-scored with the current patterns:
+
+| system | key-term P / R / F1 | support | fully supported | boilerplate | FK out (src 15.4) |
+|---|---|---|---|---|---|
+| fine-tuned lr1e4-s70 (previous winner) | 0.996 / 0.582 / 0.735 | 0.826 | 81.7% | 21.3% | 11.6 |
+| **clean-sent (F, new winner)** | 0.992 / 0.534 / 0.694 | 0.843 | 82.9% | 13.8% | 11.3 |
+| clean-s70 (E) | 0.988 / 0.516 / 0.678 | 0.822 | 81.7% | 15.8% | 11.4 |
+
+Fixed val (125 pairs): s70 ROUGE-L F1 0.221, token 0.337/0.217/0.264, key-term 1.000/0.249/0.399, support 0.851, boilerplate 28.8%, FK 12.9; clean-sent 0.219, 0.307/0.238/0.268, 1.000/0.288/0.448, 0.901, 20.8%, 12.9; clean-s70 0.214, 0.317/0.214/0.256, 1.000/0.233/0.378, 0.913, 13.6%, 13.4.
+Test (136, run once for the new winner only): clean-sent ROUGE-L F1 0.240, token 0.331/0.251/0.285, key-term 1.000/0.237/0.384, support 0.919, boilerplate 14.0%, FK 12.4 (s70 on the same patterns: 0.231, 0.337/0.218/0.265, 1.000/0.197/0.328, 0.804, 27.2%, 12.1).
+
+Decision: key-term precision differs by 0.004 (about one term; treated as a tie, as before), then clean-sent has better support (0.843 vs 0.826) and much lower boilerplate (13.8% vs 21.3%), at the cost of lower key-term recall (0.534 vs 0.582). A strict reading of the rule (key-term precision first, no tolerance) would keep s70. `checkpoints/flan-t5-pdq-best` is now a copy of `flan-t5-pdq-clean-sent`. Cleaning helped on support and boilerplate but did not fix content dropping (recall about 0.5) or the remaining 14-16% of outputs with a generic opener.

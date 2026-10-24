@@ -65,12 +65,18 @@ Train loss kept falling while val loss rose after epoch 1 → **overfitting** (s
 | copy source (no change) | 1.00 / 1.00 / 1.00 | 1.00 | 0% | 15.4 |
 | zero-shot flan-t5 | 0.985 / 0.726 / 0.836 | 0.96 | 0% | 14.7 |
 | few-shot flan-t5 (3 examples) | 0.960 / 0.786 / 0.865 | 0.89 | 0% | 15.6 |
-| fine-tuned baseline | 1.00 / 0.477 / 0.646 | 0.73 | 37.9% | 10.7 |
-| **fine-tuned s70 (winner)** | 0.996 / 0.582 / 0.735 | 0.83 | 10.4% | 11.6 |
-| fine-tuned s60 | 0.996 / 0.488 / 0.655 | 0.80 | 13.3% | 11.3 |
-| fine-tuned sent | 0.996 / 0.532 / 0.693 | 0.78 | 10.4% | 11.0 |
+| fine-tuned baseline | 1.00 / 0.477 / 0.646 | 0.73 | 43.8%* | 10.7 |
+| fine-tuned s70 (previous winner) | 0.996 / 0.582 / 0.735 | 0.83 | 21.3%* | 11.6 |
+| fine-tuned s60 | 0.996 / 0.488 / 0.655 | 0.80 | 23.8%* | 11.3 |
+| fine-tuned sent | 0.996 / 0.532 / 0.693 | 0.78 | 22.1%* | 11.0 |
+| fine-tuned clean-s70 (cleaned targets, paragraphs) | 0.988 / 0.516 / 0.678 | 0.82 | 15.8% | 11.4 |
+| **fine-tuned clean-sent (cleaned targets, paragraphs + sentences; current best)** | 0.992 / 0.534 / 0.694 | 0.84 | 13.8% | 11.3 |
 
-ROUGE-L F1 vs NCI patient text: val (fixed 125) s70 0.221 vs baseline 0.187 vs copy 0.198; test (136, run once) s70 0.231, copy 0.205.
+ROUGE-L F1 vs NCI patient text: val (fixed 125) s70 0.221, clean-sent 0.219, baseline 0.187, copy 0.198; test (136, run once per winner) s70 0.231, clean-sent 0.240, copy 0.205.
+
+\* Boilerplate was re-scored with a broader pattern list added after the first comparison, so these values are higher than first reported (s70 was 10.4%, sent 10.4%, s60 13.3%, baseline 37.9%); rows without * were scored with the current list.
+
+**Cleaned-target experiment:** generic PDQ intro sentences (101) and target sentences unsupported by their source (252) were removed from the training targets (`pipeline/clean_pairs.py`, 2,358 -> 2,162 pairs after re-dedupe). Runs: clean-s70 (paragraphs, 846 train pairs) and clean-sent (paragraphs + sentences, 1,434 train pairs). clean-sent has the best support (0.84) and lowest boilerplate (13.8%) of the fine-tuned runs but lower key-term recall than s70 (0.534 vs 0.582); key-term precision differs by only 0.004, so it replaced s70 as `checkpoints/flan-t5-pdq-best`. Details: `docs/EVAL.md`.
 
 **What this means (honest read):** retraining improved the model a lot (support 0.73 → 0.83, boilerplate 38% → 10%, key-term F1 0.65 → 0.74). Fine-tuning is the only thing that actually lowers reading level (~15 → ~11.6); zero/few-shot mostly copy the source. But the fine-tuned model still drops content (key-term recall 0.58) and ~17% of its sentences aren't backed by the source, so it can't be shown to patients unchecked. Plan: every model sentence must pass the support check *and* the human-written `faithfulness_check`; anything that fails is replaced by the glossary-swapped original for that piece.
 
