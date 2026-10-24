@@ -24,7 +24,7 @@ Search first narrows the database to trials tagged with the cancer type(s) found
 
 ## summarize.py
 
-TODO: 3–5 plain-English sentences.
+summarize.py turns a trial's brief summary and eligibility text into plain language. It first splits the eligibility text into "can join" and "cannot join" lists (so the two are never mixed up), then cuts long text into whole-sentence chunks that fit the small model's input limit. The fine-tuned flan-t5 model rewrites each chunk, and every rewritten chunk must pass a faithfulness check: any number, age, unit, drug, gene or stage term in the rewrite has to appear in the original. A chunk that fails is replaced by the original wording with hard words explained from a short glossary based on the NCI Dictionary of Cancer Terms, and the summary is marked as using the fallback. Until the team writes the faithfulness check, every chunk fails on purpose, so patients only ever see checked or original text. Only the summary and eligibility text are rewritten; titles, ages, sites and dates always come straight from ClinicalTrials.gov, and nothing about the visitor is stored.
 
 ## geo.py
 

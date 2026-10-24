@@ -1,0 +1,310 @@
+{
+ "source": "NCI Dictionary of Cancer Terms (National Cancer Institute, US government, public domain); definitions paraphrased and shortened",
+ "source_url": "https://www.cancer.gov/publications/dictionaries/cancer-terms",
+ "terms": {
+  "metastatic": {
+   "plain": "has spread from where it started to other parts of the body",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/metastatic"
+  },
+  "metastasis": {
+   "plain": "the spread of cancer from where it started to other parts of the body",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/metastasis"
+  },
+  "metastases": {
+   "plain": "places the cancer has spread to in the body",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/metastases"
+  },
+  "adjuvant": {
+   "plain": "treatment given after the main treatment to lower the chance the cancer comes back",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/adjuvant"
+  },
+  "neoadjuvant": {
+   "plain": "treatment given before the main treatment, often to shrink a tumor first",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/neoadjuvant"
+  },
+  "randomized": {
+   "plain": "people are put into groups by chance, like flipping a coin",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/randomized"
+  },
+  "placebo": {
+   "plain": "a pill or treatment with no active medicine in it",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/placebo"
+  },
+  "double-blind": {
+   "plain": "neither the patients nor the doctors know who gets which treatment",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/double-blind"
+  },
+  "open-label": {
+   "plain": "everyone knows which treatment is being given",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/open-label"
+  },
+  "refractory": {
+   "plain": "has not responded to treatment",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/refractory"
+  },
+  "relapsed": {
+   "plain": "has come back after getting better",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/relapsed"
+  },
+  "recurrent": {
+   "plain": "has come back after treatment",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/recurrent"
+  },
+  "remission": {
+   "plain": "signs of cancer have gone down or gone away",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/remission"
+  },
+  "measurable disease": {
+   "plain": "a tumor that can be seen and measured on a scan or exam",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/measurable-disease"
+  },
+  "contraception": {
+   "plain": "birth control, to prevent pregnancy",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/contraception"
+  },
+  "hepatic": {
+   "plain": "related to the liver",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/hepatic"
+  },
+  "renal": {
+   "plain": "related to the kidneys",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/renal"
+  },
+  "cardiac": {
+   "plain": "related to the heart",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/cardiac"
+  },
+  "pulmonary": {
+   "plain": "related to the lungs",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/pulmonary"
+  },
+  "gastrointestinal": {
+   "plain": "related to the stomach and intestines",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/gastrointestinal"
+  },
+  "hematologic": {
+   "plain": "related to the blood",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/hematologic"
+  },
+  "neurologic": {
+   "plain": "related to the brain and nerves",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/neurologic"
+  },
+  "ECOG performance status": {
+   "plain": "a score of how well a person can do daily activities; lower scores mean more active",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/ecog-performance-status"
+  },
+  "Karnofsky performance status": {
+   "plain": "a score of how well a person can do daily activities; higher scores mean more active",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/karnofsky-performance-status"
+  },
+  "performance status": {
+   "plain": "a measure of how well a person can do daily activities",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/performance-status"
+  },
+  "informed consent": {
+   "plain": "a person's written agreement to join a study after learning the risks and benefits",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/informed-consent"
+  },
+  "protocol": {
+   "plain": "the written plan that explains how a study is done",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/protocol"
+  },
+  "eligibility": {
+   "plain": "whether a person meets the rules to join a study",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/eligibility"
+  },
+  "inclusion criteria": {
+   "plain": "the rules a person must meet to join a study",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/inclusion-criteria"
+  },
+  "exclusion criteria": {
+   "plain": "the reasons a person cannot join a study",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/exclusion-criteria"
+  },
+  "chemotherapy": {
+   "plain": "drug treatment that kills cancer cells",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/chemotherapy"
+  },
+  "radiotherapy": {
+   "plain": "treatment that uses high-energy rays to kill cancer cells",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/radiotherapy"
+  },
+  "radiation therapy": {
+   "plain": "treatment that uses high-energy rays to kill cancer cells",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/radiation-therapy"
+  },
+  "immunotherapy": {
+   "plain": "treatment that helps the body's immune system fight cancer",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/immunotherapy"
+  },
+  "targeted therapy": {
+   "plain": "treatment that attacks specific features of cancer cells",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/targeted-therapy"
+  },
+  "hormone therapy": {
+   "plain": "treatment that blocks or lowers hormones that help some cancers grow",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/hormone-therapy"
+  },
+  "systemic therapy": {
+   "plain": "treatment that travels through the blood to reach cancer cells all over the body",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/systemic-therapy"
+  },
+  "biopsy": {
+   "plain": "removal of a small piece of tissue to check for cancer",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/biopsy"
+  },
+  "histologically confirmed": {
+   "plain": "checked under a microscope and shown to be cancer",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/histologically-confirmed"
+  },
+  "histologic": {
+   "plain": "related to how tissue looks under a microscope",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/histologic"
+  },
+  "cytologically": {
+   "plain": "by checking cells under a microscope",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/cytologically"
+  },
+  "malignancy": {
+   "plain": "cancer",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/malignancy"
+  },
+  "malignant": {
+   "plain": "cancerous",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/malignant"
+  },
+  "benign": {
+   "plain": "not cancer",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/benign"
+  },
+  "carcinoma": {
+   "plain": "cancer that begins in the skin or in tissue that covers organs",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/carcinoma"
+  },
+  "sarcoma": {
+   "plain": "cancer that begins in bone or soft tissue",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/sarcoma"
+  },
+  "lymphoma": {
+   "plain": "cancer that begins in cells of the immune system",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/lymphoma"
+  },
+  "leukemia": {
+   "plain": "cancer of the blood-forming tissue, such as the bone marrow",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/leukemia"
+  },
+  "tumor": {
+   "plain": "a lump or mass of abnormal cells",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/tumor"
+  },
+  "lesion": {
+   "plain": "an area of abnormal tissue",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/lesion"
+  },
+  "progression": {
+   "plain": "cancer that is growing or spreading",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/progression"
+  },
+  "progression-free survival": {
+   "plain": "the length of time during and after treatment that the cancer does not grow",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/progression-free-survival"
+  },
+  "overall survival": {
+   "plain": "the length of time from the start of treatment that a person is still alive",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/overall-survival"
+  },
+  "response rate": {
+   "plain": "the share of people whose cancer shrinks or goes away with treatment",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/response-rate"
+  },
+  "toxicity": {
+   "plain": "harmful side effects of a treatment",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/toxicity"
+  },
+  "adverse event": {
+   "plain": "an unwanted or harmful effect during a study",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/adverse-event"
+  },
+  "comorbidity": {
+   "plain": "another health condition a person has at the same time",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/comorbidity"
+  },
+  "prior therapy": {
+   "plain": "treatment a person already had before joining",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/prior-therapy"
+  },
+  "first-line": {
+   "plain": "the first treatment given for a disease",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/first-line"
+  },
+  "locally advanced": {
+   "plain": "cancer that has grown near where it started but has not spread far",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/locally-advanced"
+  },
+  "unresectable": {
+   "plain": "cannot be removed by surgery",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/unresectable"
+  },
+  "resection": {
+   "plain": "surgery to remove part or all of an organ or tissue",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/resection"
+  },
+  "mutation": {
+   "plain": "a change in a gene",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/mutation"
+  },
+  "biomarker": {
+   "plain": "a measurable sign in the body that shows what a disease or treatment is doing",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/biomarker"
+  },
+  "antibody": {
+   "plain": "a protein made by the immune system that attaches to a specific target",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/antibody"
+  },
+  "oral": {
+   "plain": "taken by mouth",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/oral"
+  },
+  "intravenous": {
+   "plain": "given through a vein",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/intravenous"
+  },
+  "subcutaneous": {
+   "plain": "given under the skin",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/subcutaneous"
+  },
+  "palliative": {
+   "plain": "treatment meant to ease symptoms rather than cure the disease",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/palliative"
+  },
+  "curative": {
+   "plain": "treatment meant to cure the disease",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/curative"
+  },
+  "life expectancy": {
+   "plain": "how long a person is expected to live",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/life-expectancy"
+  },
+  "bone marrow": {
+   "plain": "the soft tissue inside bones where blood cells are made",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/bone-marrow"
+  },
+  "stem cell transplant": {
+   "plain": "a procedure that replaces diseased blood-forming cells with healthy ones",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/stem-cell-transplant"
+  },
+  "central nervous system": {
+   "plain": "the brain and spinal cord",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/central-nervous-system"
+  },
+  "pregnant": {
+   "plain": "expecting a baby",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/pregnant"
+  },
+  "breastfeeding": {
+   "plain": "feeding a baby with breast milk",
+   "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/breastfeeding"
+  }
+ }
+}
