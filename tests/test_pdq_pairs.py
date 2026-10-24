@@ -369,3 +369,114 @@ def test_cached_encoder_embeds_each_text_once(tmp_path):
     enc.save()
     enc2 = P.cached_encoder(counting, cache)                # reload from disk
     assert np.allclose(enc2(["gamma delta"]), a[1:2], atol=1e-6) and len(calls) == 2
+
+
+# --- sentence-level pairs ------------------------------------------------------
+def test_split_sentences_and_target_windows():
+    para = "Surgery removes the tumor. It is often the first step. Rest is needed afterwards."
+    assert len(P.split_sentences(para)) == 3
+    wins = P._sentence_targets([para], 2)
+    assert len(wins) == 5                       # 3 singles + 2 two-sentence windows
+    assert max(len(ix) for ix, _ in wins) == 2
+    # already-used sentences are excluded from every window that contains them
+    ex = P._sentence_targets([para], 2, {"It is often the first step."})
+    assert all("first step" not in t for _, t in ex)
+
+
+def test_align_sentence_windows_one_to_one_and_ratio(monkeypatch):
+    src = [("Surgery removes the tumor from the body of the patient.", 0, 0),
+           ("Radiation uses high energy rays to kill cancer cells in the area.", 0, 1)]
+    tgt = P._sentence_targets(["Surgery takes the tumor out of the body. Radiation uses strong rays to kill cancer cells."], 2)
+    out = P.align_sentence_windows(src, tgt, fake_encoder, 0.5)
+    used_t = [i for _, ti, *_ in out for i in ti]
+    assert len(used_t) == len(set(used_t))      # no patient sentence used twice
+    assert out and all(len(t.split()) <= cfg.PDQ_MAX_LEN_RATIO * len(s.split()) for *_, s, t in out)
+
+
+def test_pair_drop_reason_sentence_min_words():
+    src, tgt = "Patients had 6 cycles of care.", "People got 6 cycles of care."
+    assert P.pair_drop_reason(src, tgt, 0.8) == "too_short"                     # paragraph floor (8)
+    assert P.pair_drop_reason(src, tgt, 0.8, cfg.PDQ_SENT_MIN_WORDS) is None    # sentence floor (6)
+    assert P.pair_drop_reason(src, "People got 7 cycles of care.", 0.8, 6) == "number_not_in_source"
+
+
+def test_drop_sentence_duplicates_same_split_only():
+    para = [{"source": "Surgery removes the tumor from the body. Radiation kills cells.", "split": "train"}]
+    sent = [
+        {"source": "Surgery removes the tumor from the body.", "target": "a", "split": "train"},   # contained
+        {"source": "Surgery removes the tumor from the body.", "target": "b", "split": "val"},     # other split: kept
+        {"source": "Chemo is a drug treatment given by vein.", "target": "c", "split": "train"},
+        {"source": "Chemo is a drug treatment given by vein.", "target": "c", "split": "train"},   # repeat
+    ]
+    dropped = P.drop_sentence_duplicates(sent, para)
+    assert [r["target"] for r in sent] == ["b", "c"]
+    assert dropped == {"contained_in_paragraph_pair": 1, "repeated": 1}
+
+
+def test_sentence_pairs_inherit_split_and_leave_paragraph_file_alone(tmp_path, monkeypatch):
+    monkeypatch.setattr(cfg, "PDQ_SENT_SIM_THRESHOLD", 0.3)
+    monkeypatch.setattr(cfg, "PDQ_FALLBACK_SIM_THRESHOLD", 0.3)
+    pages = tmp_path / "pages.json"
+    pages.write_text(json.dumps([{"cancer_type": "t", "hp_url": "https://x/hp", "patient_url": "https://x/pt"}]))
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    P.cache_path("https://x/hp", cache).write_text(HP, encoding="utf-8")
+    P.cache_path("https://x/pt", cache).write_text(PT, encoding="utf-8")
+    para = tmp_path / "pairs.jsonl"
+    para.write_text("")
+    stats = tmp_path / "stats.json"
+    stats.write_text(json.dumps({"split": {"page_to_split": {"t": "val"}}}))
+    out = tmp_path / "sent.jsonl"
+    P.run_sentences(fake_encoder, pages, para, stats, out, cache)
+    rows = [json.loads(l) for l in out.read_text().splitlines()]
+    assert para.read_text() == ""
+    assert rows and all(r["split"] == "val" and r["granularity"] == "sentence" for r in rows)
+    assert all(P.pair_drop_reason(r["source"], r["target"], r["similarity"], cfg.PDQ_SENT_MIN_WORDS) is None for r in rows)
+
+
+# --- dedupe rules --------------------------------------------------------------
+def _d(src, tgt, sim=0.8, split="train", gran="paragraph"):
+    return {"source": src, "target": tgt, "similarity": sim, "split": split, "granularity": gran}
+
+
+def test_norm_key_ignores_case_space_and_end_punct():
+    assert P.norm_key("  Hello   World. ") == P.norm_key("hello world")
+
+
+def test_dedupe_exact_pair_keeps_highest_similarity():
+    recs = [_d("Source one text here.", "Target one.", 0.75), _d("source one  text here", "target one", 0.9)]
+    c = P.dedupe_records(recs)
+    assert c["exact_pair"] == 1 and len(recs) == 1 and recs[0]["similarity"] == 0.9
+
+
+def test_dedupe_duplicate_target_and_source():
+    recs = [_d("alpha beta gamma delta", "same target words here", 0.7), _d("totally other source words", "Same target words here.", 0.9),
+            _d("dup source text now", "first distinct tgt aaa bbb", 0.8), _d("Dup source text now.", "second different qqq zzz", 0.6)]
+    c = P.dedupe_records(recs)
+    assert c["duplicate_target"] == 1 and c["duplicate_source"] == 1 and len(recs) == 2
+    assert {r["similarity"] for r in recs} == {0.9, 0.8}
+
+
+def test_dedupe_same_text_in_different_splits_is_not_merged():
+    recs = [_d("a b c d e f", "x y z w v u", split="train"), _d("a b c d e f", "x y z w v u", split="val")]
+    c = P.dedupe_records(recs)
+    assert c["total"] == 0 and len(recs) == 2   # cross-split leakage is handled by drop_near_duplicates
+
+
+def test_dedupe_sentence_inside_paragraph_by_source_or_target():
+    para = _d("Surgery removes the tumor from the body. Radiation kills cells.", "Doctors cut out the tumor. Rays kill cells.")
+    in_src = _d("Surgery removes the tumor from the body.", "Cutting is done.", 0.9, gran="sentence")
+    in_tgt = _d("Another unrelated source sentence here.", "Rays kill cells.", 0.9, gran="sentence")
+    other_split = _d("Surgery removes the tumor from the body.", "Cut.", 0.9, split="val", gran="sentence")
+    recs = [para, in_src, in_tgt, other_split]
+    c = P.dedupe_records(recs)
+    assert c["sentence_inside_paragraph_pair"] == 2 and len(recs) == 2
+
+
+def test_dedupe_near_duplicate_targets_within_train_only():
+    t1 = "Doctors may remove the tumor with surgery and check nearby lymph nodes."
+    t2 = "Doctors may remove the tumor with surgery and check the nearby lymph nodes."
+    recs = [_d("src one aaa bbb ccc", t1, 0.9), _d("src two ddd eee fff", t2, 0.8), _d("src three ggg hhh", t2, 0.7, split="val")]
+    c = P.dedupe_records(recs)
+    assert c["near_duplicate_in_train"] == 1
+    assert [r["split"] for r in recs].count("val") == 1 and [r for r in recs if r["split"] == "train"][0]["similarity"] == 0.9

@@ -22,7 +22,7 @@ Expect `2.14.1+cu130 True NVIDIA GeForce RTX 5090`. If it prints `False`, see th
 .\.venv-train\Scripts\python -m pipeline.train
 ```
 Defaults (all in `backend/config.py`, "Training" section): min similarity 0.60, batch 8 x accumulation 2, lr 3e-4, up to 5 epochs, early stop after 2 epochs without val-loss improvement, bf16.
-Options: `--min-similarity 0.70`, `--epochs N`, `--batch-size N`, `--out PATH`, `--max-steps N` (quick test), `--cpu`.
+Options: `--lr 1e-4`, `--pairs data/pdq_pairs_combined.jsonl` (default `data/pdq_pairs.jsonl`), `--min-similarity 0.70`, `--epochs N`, `--batch-size N`, `--out PATH`, `--max-steps N` (quick test), `--cpu`.
 
 Pairs used: min similarity 0.60 -> 1333 train / 161 val; 0.70 -> 1072 train / 125 val. The "test" split is never loaded.
 Measured speed on the 5090: about 4.3 weight updates/s (16 pairs each). Full run (about 420 updates at 0.60) is roughly 2-4 minutes plus model download (~1 GB, first run only). The script prints an ETA every 10 steps.
@@ -44,3 +44,12 @@ pip install numpy transformers==5.20.2 sentencepiece
 python -m pipeline.train
 ```
 WSL2 uses the Windows NVIDIA driver; do not install a Linux driver inside WSL. Check with `nvidia-smi` inside WSL first.
+
+## Experiments and the winning command
+Data prep (CPU, `.venv`, uses cached HTML): `python -m pipeline.pdq_pairs --sentences` builds `data/pdq_pairs_sent.jsonl`; `python -m pipeline.pdq_pairs --dedupe` removes duplicates in place (originals kept as `*.predup.jsonl`) and writes `data/pdq_pairs_combined.jsonl` (paragraph + sentence pairs). Counts per rule are in `data/pdq_stats.json` under "dedupe".
+Winner (see docs/EVAL.md, "Model comparison"), copied to `checkpoints/flan-t5-pdq-best`:
+```powershell
+.\.venv-train\Scripts\python -m pipeline.train --lr 1e-4 --min-similarity 0.70 --out checkpoints/flan-t5-pdq-lr1e4-s70
+```
+Compare checkpoints on the frozen val set: `.\.venv-train\Scripts\python -m pipeline.compare_checkpoints checkpoints/<name>`.
+Full baseline comparison with precision/recall/F1: `.\.venv-train\Scripts\python -m pipeline.baselines generate --splits val,trials` (GPU), then `.\.venv\Scripts\python -m pipeline.baselines score --splits val,trials` (needs sentence-transformers, so use `.venv`). `--splits test --allow-test` is for the single final run. `python -m pipeline.baselines build-trials` rebuilds `data/trial_eval_set.jsonl`.

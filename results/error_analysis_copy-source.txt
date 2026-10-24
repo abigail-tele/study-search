@@ -1,0 +1,338 @@
+=== split: test ===
+[bladder-0000] key-term precision 1.00
+SOURCE: Segmental cystectomy is rarely indicated. It is indicated for relatively few patients because of the tendency of bladder carcinoma to involve multiple regions of the bladder mucosa and to occur in areas that cannot be segmentally resected. Moreover, cystectomy (whether segmental or radical) is generally not indicated for patients with T0 bladder cancer.
+TARGET: Partial cystectomy is surgery to remove part of the bladder. This may be done for patients who have a low-grade tumor that has invaded the wall of the bladder but is limited to one area of the bladder. Because only a part of the bladder is removed, patients are able to urinate normally after recovering from this surgery. This is also called segmental cystectomy.
+OUTPUT: Segmental cystectomy is rarely indicated. It is indicated for relatively few patients because of the tendency of bladder carcinoma to involve multiple regions of the bladder mucosa and to occur in areas that cannot be segmentally resected. Moreover, cystectomy (whether segmental or radical) is generally not indicated for patients with T0 bladder cancer.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[bladder-0001] key-term precision 1.00
+SOURCE: Most patients included in these studies received cisplatin, methotrexate, and vinblastine with or without doxorubicin. It is not known whether the doublet regimen of cisplatin plus gemcitabine offers any benefit when given in the preoperative setting, nor is there any evidence of benefit for carboplatin-based chemotherapy regimens. Based on these findings, preoperative cisplatin-based combination chemotherapy followed by radical cystectomy represents a standard therapeutic option for patients with muscle-invasive bladder cancer who are fit for chemotherapy and for whom the priority is to maximize survival.
+TARGET: Mitomycin and gemcitabine are two chemotherapy drugs given as intravesical chemotherapy to treat bladder cancer. These drugs can also be given systemically.
+OUTPUT: Most patients included in these studies received cisplatin, methotrexate, and vinblastine with or without doxorubicin. It is not known whether the doublet regimen of cisplatin plus gemcitabine offers any benefit when given in the preoperative setting, nor is there any evidence of benefit for carboplatin-based chemotherapy regimens. Based on these findings, preoperative cisplatin-based combination chemotherapy followed by radical cystectomy represents a standard therapeutic option for patients with muscle-invasive bladder cancer who are fit for chemotherapy and for whom the priority is to maximize survival.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[bladder-0002] key-term precision 1.00
+SOURCE: Few patients with stage IV bladder cancer can be cured, and for many patients, the emphasis is on palliation of symptoms. The potential for cure is restricted to patients with stage IV disease with involvement of pelvic organs by direct extension or metastases to regional lymph nodes.
+TARGET: Sometimes, when the cancer has spread outside the bladder and can't be completely removed, surgery to remove only the bladder may be done to reduce urinary symptoms caused by the cancer.
+OUTPUT: Few patients with stage IV bladder cancer can be cured, and for many patients, the emphasis is on palliation of symptoms. The potential for cure is restricted to patients with stage IV disease with involvement of pelvic organs by direct extension or metastases to regional lymph nodes.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[pancreatic-0000] key-term precision 1.00
+SOURCE: The incidence of pancreatic cancer has markedly increased over the past several decades. In the United States, it ranks as the fourth leading cause of cancer death in men and the third leading cause of cancer death in women. Despite the high mortality rate associated with pancreatic cancer, its etiology is poorly understood. Cancers of the pancreas are commonly identified by the site of involvement within the pancreas. Surgical approaches differ for masses in the head, body, tail, or uncinate process of the pancreas.
+TARGET: Surgery for pancreatic cancer is complex and carries risks. Your doctor will speak with you about the risks and benefits of surgery and help you decide if surgery is right for you.
+OUTPUT: The incidence of pancreatic cancer has markedly increased over the past several decades. In the United States, it ranks as the fourth leading cause of cancer death in men and the third leading cause of cancer death in women. Despite the high mortality rate associated with pancreatic cancer, its etiology is poorly understood. Cancers of the pancreas are commonly identified by the site of involvement within the pancreas. Surgical approaches differ for masses in the head, body, tail, or uncinate process of the pancreas.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[pancreatic-0001] key-term precision 1.00
+SOURCE: Surgical resection is the mainstay of curative treatment and provides a survival benefit in patients with small, localized pancreatic tumors, but it should be considered only alongside systemic therapy. Patients with unresectable, metastatic, or recurrent disease are unlikely to benefit from surgical resection.
+TARGET: Distal pancreatectomy is a surgery used for tumors in the body and tail of the pancreas. It involves removing the body and tail of the pancreas and sometimes the spleen.
+OUTPUT: Surgical resection is the mainstay of curative treatment and provides a survival benefit in patients with small, localized pancreatic tumors, but it should be considered only alongside systemic therapy. Patients with unresectable, metastatic, or recurrent disease are unlikely to benefit from surgical resection.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[pancreatic-0002] key-term precision 1.00
+SOURCE: Palliative therapies can be considered in patients with any stage of disease. For more information, see the Palliative Therapy section. Neoadjuvant therapy is chemotherapy with or without chemoradiation therapy given before surgery. The role of neoadjuvant therapy has been evaluated in retrospective studies (Surveillance, Epidemiology, and End Results [SEER] Program database and National Cancer Database) and is recommended by multiple consensus guidelines for the management of patients with borderline resectable pancreatic cancer. It is being evaluated in patients with resectable or borderline resectable pancreatic cancer in several ongoing trials.
+TARGET: Palliative care is an important part of pancreatic cancer treatment. Pancreatic cancer, especially in its later stages, often leads to symptoms like weight loss, weakness, pain, nausea, vomiting, or the inability to eat, which can be made worse by side effects of chemotherapy. Palliative care aims to improve quality of life and comfort by treating cancer-related symptoms, pain, and anxiety. Your care team will include palliative care specialists who focus on managing this aspect of your treatment.
+OUTPUT: Palliative therapies can be considered in patients with any stage of disease. For more information, see the Palliative Therapy section. Neoadjuvant therapy is chemotherapy with or without chemoradiation therapy given before surgery. The role of neoadjuvant therapy has been evaluated in retrospective studies (Surveillance, Epidemiology, and End Results [SEER] Program database and National Cancer Database) and is recommended by multiple consensus guidelines for the management of patients with borderline resectable pancreatic cancer. It is being evaluated in patients with resectable or borderline resectable pancreatic cancer in several ongoing trials.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[pancreatic-0003] key-term precision 1.00
+SOURCE: Chemotherapy is the primary treatment modality for patients with locally advanced pancreatic cancers and uses the same regimens as those used to treat patients with metastatic disease.
+TARGET: Chemotherapy to treat pancreatic cancer can have serious side effects, and your doctor will help you choose a regimen that best fits your individual circumstances.
+OUTPUT: Chemotherapy is the primary treatment modality for patients with locally advanced pancreatic cancers and uses the same regimens as those used to treat patients with metastatic disease.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[cervical-0000] key-term precision 1.00
+SOURCE: High-quality studies are lacking, and the optimal follow-up for patients after treatment for cervical cancer is unknown. Retrospective studies have shown that cancer recurrence is most likely within the first 2 years. As a result, most guidelines suggest routine follow-up every 3 to 4 months for the first 2 years, followed by evaluations every 6 months. Most recurrences are diagnosed secondary to new patient symptoms and signs, and the usefulness of routine testing, including a Pap smear and chest x-ray, is unclear.
+TARGET: For cervical cancer, follow-up tests are usually done every 3 to 4 months for the first 2 years, followed by checkups every 6 months. The checkup includes a current health history and exam of the body to check for signs and symptoms of recurrent cervical cancer and for late effects of treatment. A Pap test may or may not be done during your visits.
+OUTPUT: High-quality studies are lacking, and the optimal follow-up for patients after treatment for cervical cancer is unknown. Retrospective studies have shown that cancer recurrence is most likely within the first 2 years. As a result, most guidelines suggest routine follow-up every 3 to 4 months for the first 2 years, followed by evaluations every 6 months. Most recurrences are diagnosed secondary to new patient symptoms and signs, and the usefulness of routine testing, including a Pap smear and chest x-ray, is unclear.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[cervical-0001] key-term precision 1.00
+SOURCE: When the endocervical canal is involved, laser or cold-knife conization may be used for selected patients to preserve the uterus, avoid radiation therapy, and more extensive surgery.
+TARGET: Cold knife conization uses a scalpel to remove a cone-shaped piece of tissue from the cervix and cervical canal. Sometimes all the cancer can be removed during this procedure. Cold knife conization is done in the hospital under general anesthesia.
+OUTPUT: When the endocervical canal is involved, laser or cold-knife conization may be used for selected patients to preserve the uterus, avoid radiation therapy, and more extensive surgery.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[cervical-0002] key-term precision 1.00
+SOURCE: With the exception of immunotherapy, which has provided prolonged disease-free survival, other options are unlikely to result in curative outcomes and are mostly applied for palliative purposes. Based on the results of the phase II KEYNOTE-158 trial (NCT02628067), the U.S. Food and Drug Administration (FDA) approved the anti–programmed cell death-1 (PD-1) immune checkpoint inhibitor, pembrolizumab, for women with recurrent or metastatic cervical cancer whose tumors express programmed death-ligand 1 (PD-L1) (combined positive score [CPS], ≥1). Additional data on the benefits of pembrolizumab have been gathered from several trials.
+TARGET: Pembrolizumab is an immunotherapy drug used to treat certain patients whose cervical cancer has the biomarker PD-L1.
+OUTPUT: With the exception of immunotherapy, which has provided prolonged disease-free survival, other options are unlikely to result in curative outcomes and are mostly applied for palliative purposes. Based on the results of the phase II KEYNOTE-158 trial (NCT02628067), the U.S. Food and Drug Administration (FDA) approved the anti–programmed cell death-1 (PD-1) immune checkpoint inhibitor, pembrolizumab, for women with recurrent or metastatic cervical cancer whose tumors express programmed death-ligand 1 (PD-L1) (combined positive score [CPS], ≥1). Additional data on the benefits of pembrolizumab have been gathered from several trials.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[cervical-0003] key-term precision 1.00
+SOURCE: Chemotherapy can be used for palliation. Drugs used for palliative chemotherapy are shown in Table 6.
+TARGET: Combinations of these drugs may be used. Other chemotherapy drugs not listed here may also be used.
+OUTPUT: Chemotherapy can be used for palliation. Drugs used for palliative chemotherapy are shown in Table 6.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[endometrial-0000] key-term precision 1.00
+SOURCE: Given the toxicity and limited efficacy of these regimens, other treatment options have been widely sought. Several observational studies and phase II studies suggest clinical activity with the combination of platinum chemotherapy and paclitaxel in patients with endometrial cancer and measurable disease either after primary surgery or at recurrence. Patients with inoperable disease caused by tumor that extends to the pelvic wall may be treated with a combination of chemotherapy and radiation therapy. The usual approach for radiation therapy is a combination of intracavitary and external-beam radiation therapy (EBRT). For patients with localized recurrences (pelvic and para-aortic lymph nodes) or distant metastases in selected sites, radiation therapy may be an effective palliative therapy. Pelvic radiation therapy may be curative in patients with pure vaginal recurrence when no previous radiation therapy has been used.
+TARGET: The way the radiation therapy is given depends on the type and stage of the cancer being treated. External and internal radiation therapy are used to treat endometrial cancer, and may also be used as palliative therapy to relieve symptoms and improve quality of life.
+OUTPUT: Given the toxicity and limited efficacy of these regimens, other treatment options have been widely sought. Several observational studies and phase II studies suggest clinical activity with the combination of platinum chemotherapy and paclitaxel in patients with endometrial cancer and measurable disease either after primary surgery or at recurrence. Patients with inoperable disease caused by tumor that extends to the pelvic wall may be treated with a combination of chemotherapy and radiation therapy. The usual approach for radiation therapy is a combination of intracavitary and external-beam radiation therapy (EBRT). For patients with localized recurrences (pelvic and para-aortic lymph nodes) or distant metastases in selected sites, radiation therapy may be an effective palliative therapy. Pelvic radiation therapy may be curative in patients with pure vaginal recurrence when no previous radiation therapy has been used.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[anal-0000] key-term precision 1.00
+SOURCE: Continued surveillance with rectal examination every 3 months for the first 2 years and endoscopy with biopsy when indicated after completion of sphincter-preserving therapy is important to monitor for recurrence.
+TARGET: Those who have had treatment that saves the sphincter muscles may receive follow-up exams every 3 months for the first 2 years, including rectal exams with endoscopy and biopsy, as needed to check for recurrence.
+OUTPUT: Continued surveillance with rectal examination every 3 months for the first 2 years and endoscopy with biopsy when indicated after completion of sphincter-preserving therapy is important to monitor for recurrence.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[vaginal-0000] key-term precision 1.00
+SOURCE: The American Joint Committee on Cancer staging system classifies tumors in the vagina that involve the cervix of women with an intact uterus as cervical cancers. Therefore, tumors that originated in the apical vagina but extend to the cervix are classified as cervical cancers. For more information, see Cervical Cancer Treatment.
+TARGET: Vaginal cancer is a disease in which malignant (cancer) cells form in the vagina.
+OUTPUT: The American Joint Committee on Cancer staging system classifies tumors in the vagina that involve the cervix of women with an intact uterus as cervical cancers. Therefore, tumors that originated in the apical vagina but extend to the cervix are classified as cervical cancers. For more information, see Cervical Cancer Treatment.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[vaginal-0005] key-term precision 1.00
+SOURCE: For patients with stage IVb disease, current therapy is inadequate. No established anticancer drugs have demonstrated clinical benefit, although patients are often treated with regimens used to treat cervical cancer.
+TARGET: Although no anticancer drugs have been shown to help patients with stage IVB vaginal cancer live longer, they are often treated with regimens used for cervical cancer.
+OUTPUT: For patients with stage IVb disease, current therapy is inadequate. No established anticancer drugs have demonstrated clinical benefit, although patients are often treated with regimens used to treat cervical cancer.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+=== split: trials ===
+[NCT06991920-summary] key-term precision 1.00
+SOURCE: Acute leukemia of ambiguous lineage (ALAL), which refers to acute leukemia without definite evidence indicating cell differentiation along a specific lineage, mainly encompasses two major categories: acute undifferentiated leukemia (AUL) lacking the expression of lineage-specific antigens and mixed phenotype acute leukemia (MPAL) expressing antigens of two or more lineages. Despite certain advancements in basic research on ALAL, there is currently no unified treatment protocol for this disease. The majority of clinical studies are based on retrospective data, lacking prospective cohort studies. In terms of the overall treatment strategy, given the low chemotherapy remission rate, frequent relapses, and poor prognosis of ALAL, it should be treated as high-risk acute leukemia. Patients achieving complete remission should undergo allogeneic hematopoietic stem cell transplantation as soon as possible if conditions permit. Regarding chemotherapy regimens, the current main regimens utilized in clinical practice include ALL-like regimens, AML-like regimens, and hybrid therapies that incorporate both lymphoid and myeloid lineages. Based on existing research, international consensus guidelines recommend ALL-like regimens as the preferred induction treatment option for ALAL patients. In recent years, novel immunotherapy antibody drugs, such as Blinatumomab (a CD19-targeted drug), have achieved remarkable success in the treatment of B-ALL. However, for CD19+ ALAL, there is a lack of effective data regarding whether the first-line application of immunotherapy can further enhance therapeutic efficacy.
+TARGET: None
+OUTPUT: Acute leukemia of ambiguous lineage (ALAL), which refers to acute leukemia without definite evidence indicating cell differentiation along a specific lineage, mainly encompasses two major categories: acute undifferentiated leukemia (AUL) lacking the expression of lineage-specific antigens and mixed phenotype acute leukemia (MPAL) expressing antigens of two or more lineages. Despite certain advancements in basic research on ALAL, there is currently no unified treatment protocol for this disease. The majority of clinical studies are based on retrospective data, lacking prospective cohort studies. In terms of the overall treatment strategy, given the low chemotherapy remission rate, frequent relapses, and poor prognosis of ALAL, it should be treated as high-risk acute leukemia. Patients achieving complete remission should undergo allogeneic hematopoietic stem cell transplantation as soon as possible if conditions permit. Regarding chemotherapy regimens, the current main regimens utilized in clinical practice include ALL-like regimens, AML-like regimens, and hybrid therapies that incorporate both lymphoid and myeloid lineages. Based on existing research, international consensus guidelines recommend ALL-like regimens as the preferred induction treatment option for ALAL patients. In recent years, novel immunotherapy antibody drugs, such as Blinatumomab (a CD19-targeted drug), have achieved remarkable success in the treatment of B-ALL. However, for CD19+ ALAL, there is a lack of effective data regarding whether the first-line application of immunotherapy can further enhance therapeutic efficacy.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06991920-c0] key-term precision 1.00
+SOURCE: A series of acute leukemia of unknown origin diagnosed in accordance with the 5th edition of the WHO or ICC classification standards.
+TARGET: None
+OUTPUT: A series of acute leukemia of unknown origin diagnosed in accordance with the 5th edition of the WHO or ICC classification standards.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06991920-c1] key-term precision 1.00
+SOURCE: Age ≥ 14 years old, regardless of gender.
+TARGET: None
+OUTPUT: Age ≥ 14 years old, regardless of gender.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06991920-c2] key-term precision 1.00
+SOURCE: The ECOG performance status score is ≤ 2.
+TARGET: None
+OUTPUT: The ECOG performance status score is ≤ 2.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06991920-c3] key-term precision 1.00
+SOURCE: Conform to the following organ functional status: total bilirubin < 1.5×ULN, AST and ALT ≤ 2.5×ULN; blood Cr < 1.5×ULN; myocardial enzymes < 2×ULN; serum amylase ≤ 1.5×ULN; echocardiography indicates that the left ventricular ejection fraction (LEF) > 50%. (In the case of patients without a previous history of liver or kidney basic disease, if liver and kidney function abnormalities exceed the aforementioned inclusion criteria and the researcher determines that the liver and kidney function abnormalities are caused by acute leukemia itself, they may be included in the group at the researcher's discretion).
+TARGET: None
+OUTPUT: Conform to the following organ functional status: total bilirubin < 1.5×ULN, AST and ALT ≤ 2.5×ULN; blood Cr < 1.5×ULN; myocardial enzymes < 2×ULN; serum amylase ≤ 1.5×ULN; echocardiography indicates that the left ventricular ejection fraction (LEF) > 50%. (In the case of patients without a previous history of liver or kidney basic disease, if liver and kidney function abnormalities exceed the aforementioned inclusion criteria and the researcher determines that the liver and kidney function abnormalities are caused by acute leukemia itself, they may be included in the group at the researcher's discretion).
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06991920-c4] key-term precision 1.00
+SOURCE: Understand and sign the informed consent form and agree to abide by the research requirements.
+TARGET: None
+OUTPUT: Understand and sign the informed consent form and agree to abide by the research requirements.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06757855-summary] key-term precision 1.00
+SOURCE: Even in the TKI era, the outcoms of patients with blast phase is still poor.The response rate to conventional intensive chemotherapy is only 12.5% and the 5-year survival rate is 0 for patients with myeloid blast crsis. The response rate of TKI monotherapy is about 50% and the response rate is further improved when combined TKI and chemotherapy for patients with lymphoid blast crsis. The induction remission rate of chemotherapy alone for patients with Ph-positive acute lymphoblastic leukemia is 50-60%, and the remission rate increases to more than 95% when combined with TKI. Therefore, the application of TKI for patients in the blast crisis phase is of great significance. Olverembatinib is the only third-generation TKI drug approved in the Chinese mainland at present. Preclinical research data show that olverembatinib has a significant inhibitory effect on wild-type and mutant ABL resistant to the first and second-generation TKIs, as well as some complex mutations resistant to ponatinib. Phase I and II clinical studies have shown that for CML patients in the chronic and accelerated phases with resistance or intolerance to various TKIs, with or without T315I mutations, there are significant hematological and molecular responses and survival benefits. Olverembatinib can also inhibit many other kinases related to tumors.
+TARGET: None
+OUTPUT: Even in the TKI era, the outcoms of patients with blast phase is still poor.The response rate to conventional intensive chemotherapy is only 12.5% and the 5-year survival rate is 0 for patients with myeloid blast crsis. The response rate of TKI monotherapy is about 50% and the response rate is further improved when combined TKI and chemotherapy for patients with lymphoid blast crsis. The induction remission rate of chemotherapy alone for patients with Ph-positive acute lymphoblastic leukemia is 50-60%, and the remission rate increases to more than 95% when combined with TKI. Therefore, the application of TKI for patients in the blast crisis phase is of great significance. Olverembatinib is the only third-generation TKI drug approved in the Chinese mainland at present. Preclinical research data show that olverembatinib has a significant inhibitory effect on wild-type and mutant ABL resistant to the first and second-generation TKIs, as well as some complex mutations resistant to ponatinib. Phase I and II clinical studies have shown that for CML patients in the chronic and accelerated phases with resistance or intolerance to various TKIs, with or without T315I mutations, there are significant hematological and molecular responses and survival benefits. Olverembatinib can also inhibit many other kinases related to tumors.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06757855-c0] key-term precision 1.00
+SOURCE: Patients with t(9;22)(q34;q11)/BCR::ABL1 positive blast-phase CML who are aged 15 years or older, whether initially in the blast phase or progressing from the chronic phase, with no gender restriction.
+TARGET: None
+OUTPUT: Patients with t(9;22)(q34;q11)/BCR::ABL1 positive blast-phase CML who are aged 15 years or older, whether initially in the blast phase or progressing from the chronic phase, with no gender restriction.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06757855-c1] key-term precision 1.00
+SOURCE: Blast phase criteria: Conforming to the 2022 WHO criteria for CML Blast phase: bone marrow or peripheral blood blast cells ≥ 20%; for diagnosis of acute lymphoblastic transformation, if the immature lymphoblasts (determined by immunophenotype) ≥ 5% according to the ICC 2022 criteria; blast cell aggregation in bone marrow or extramedullary tissues.
+TARGET: None
+OUTPUT: Blast phase criteria: Conforming to the 2022 WHO criteria for CML Blast phase: bone marrow or peripheral blood blast cells ≥ 20%; for diagnosis of acute lymphoblastic transformation, if the immature lymphoblasts (determined by immunophenotype) ≥ 5% according to the ICC 2022 criteria; blast cell aggregation in bone marrow or extramedullary tissues.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06757855-c2] key-term precision 1.00
+SOURCE: ECOG performance status score ≤ 2.
+TARGET: None
+OUTPUT: ECOG performance status score ≤ 2.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06757855-c3] key-term precision 1.00
+SOURCE: Major organ function assessment criteria: Total bilirubin < 1.5×upper limit of normal (ULN), aspartate aminotransferase (AST) and alanine aminotransferase (ALT) ≤ 2.5×ULN; serum creatinine < 2×ULN; myocardial enzymes < 2×ULN; serum amylase ≤ 1.5×ULN; left ventricular ejection fraction (LEF) within the normal range on echocardiography.
+TARGET: None
+OUTPUT: Major organ function assessment criteria: Total bilirubin < 1.5×upper limit of normal (ULN), aspartate aminotransferase (AST) and alanine aminotransferase (ALT) ≤ 2.5×ULN; serum creatinine < 2×ULN; myocardial enzymes < 2×ULN; serum amylase ≤ 1.5×ULN; left ventricular ejection fraction (LEF) within the normal range on echocardiography.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT06757855-c4] key-term precision 1.00
+SOURCE: Men and women of reproductive potential agree and adopt effective contraceptive measures.
+TARGET: None
+OUTPUT: Men and women of reproductive potential agree and adopt effective contraceptive measures.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT07668284-summary] key-term precision 1.00
+SOURCE: The goal of this supportive care study is to learn if high-dose Vitamin E and CoQ10 in combination can reduce the negative sub-acute and chronic side effects of radiation to the pelvis in adults treated for prostate, uterine, cervical, or anal cancer. The main questions it aims to answer are:
+
+* Is taking high doses of Vitamin E (dl-α-tocopherol acetate, 900mg) and CoQ10 (ubidecarenone, 200 mg) each day safe and tolerable?
+* Does a 90-day course of vitamin supplementation with high-dose Vitamin E and CoQ10 reduce the incidence and severity of late radiation-associated toxicities?
+* Does high-dose vitamin supplementation with Vitamin E and CoQ10 improve patient reported measure of quality of life?
+* Does high-dose vitamin supplementation with Vitamin E and CoQ10 change the trajectory of recovery after radiation therapy?
+* Is there evidence that suggests high-dose vitamin supplementation with Vitamin E and CoQ10 impairs oncologic outcomes?
+* Can longitudinal biomarkers of oxidative stress be correlated with Vitamin E and CoQ10 concentrations or radiation-associated toxicity?
+* Will subjects adhere to the vitamin administration schedule?
+* Are there demographic differences in systemic exposure to the vitamins?
+* Are there differences in toxicity outcomes across tumor types or radiation dose fractionation schemes?
+TARGET: None
+OUTPUT: The goal of this supportive care study is to learn if high-dose Vitamin E and CoQ10 in combination can reduce the negative sub-acute and chronic side effects of radiation to the pelvis in adults treated for prostate, uterine, cervical, or anal cancer. The main questions it aims to answer are:
+
+* Is taking high doses of Vitamin E (dl-α-tocopherol acetate, 900mg) and CoQ10 (ubidecarenone, 200 mg) each day safe and tolerable?
+* Does a 90-day course of vitamin supplementation with high-dose Vitamin E and CoQ10 reduce the incidence and severity of late radiation-associated toxicities?
+* Does high-dose vitamin supplementation with Vitamin E and CoQ10 improve patient reported measure of quality of life?
+* Does high-dose vitamin supplementation with Vitamin E and CoQ10 change the trajectory of recovery after radiation therapy?
+* Is there evidence that suggests high-dose vitamin supplementation with Vitamin E and CoQ10 impairs oncologic outcomes?
+* Can longitudinal biomarkers of oxidative stress be correlated with Vitamin E and CoQ10 concentrations or radiation-associated toxicity?
+* Will subjects adhere to the vitamin administration schedule?
+* Are there demographic differences in systemic exposure to the vitamins?
+* Are there differences in toxicity outcomes across tumor types or radiation dose fractionation schemes?
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT07668284-c0] key-term precision 1.00
+SOURCE: Pathologically confirmed post-prostatectomy prostate, uterine (endometrial and cervical), or anal cancer.
+TARGET: None
+OUTPUT: Pathologically confirmed post-prostatectomy prostate, uterine (endometrial and cervical), or anal cancer.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[NCT07668284-c1] key-term precision 1.00
+SOURCE: Scheduled for curative-intent, multi-fraction (at least 15 fractions) external-beam radiotherapy +/- chemotherapy at the study site which does not involve re-irradiation to the same field.
+TARGET: None
+OUTPUT: Scheduled for curative-intent, multi-fraction (at least 15 fractions) external-beam radiotherapy +/- chemotherapy at the study site which does not involve re-irradiation to the same field.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+=== split: val ===
+[breast-0000] key-term precision 1.00
+SOURCE: BRCA1 and BRCA2 pathogenic variants also increase risk of ovarian cancer and other primary cancers. Once a BRCA1 or BRCA2 variant has been identified, other family members can be referred for genetic counseling and testing. For more information, see Genetics of Breast and Gynecologic Cancers, Breast Cancer Prevention, and Breast Cancer Screening.
+TARGET: Women who have certain gene mutations, such as a BRCA1 or BRCA2 mutation, have an increased risk of breast cancer. These women also have an increased risk of ovarian cancer, and may have an increased risk of other cancers. Men who have a mutated gene related to breast cancer also have an increased risk of breast cancer.
+OUTPUT: BRCA1 and BRCA2 pathogenic variants also increase risk of ovarian cancer and other primary cancers. Once a BRCA1 or BRCA2 variant has been identified, other family members can be referred for genetic counseling and testing. For more information, see Genetics of Breast and Gynecologic Cancers, Breast Cancer Prevention, and Breast Cancer Screening.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0001] key-term precision 1.00
+SOURCE: For more information about factors that decrease the risk of breast cancer, see Breast Cancer Prevention.
+TARGET: The use of certain medicines and other factors decrease the risk of breast cancer.
+OUTPUT: For more information about factors that decrease the risk of breast cancer, see Breast Cancer Prevention.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0005] key-term precision 1.00
+SOURCE: The Clinical Prognostic Stage is used for clinical classification and staging of patients in the United States with invasive breast cancer. It uses TNM information based on the patient’s history, physical examination, imaging results (not required for clinical staging), and biopsies.
+TARGET: The TNM system, the grading system, and biomarker status are combined to find out the breast cancer stage.
+OUTPUT: The Clinical Prognostic Stage is used for clinical classification and staging of patients in the United States with invasive breast cancer. It uses TNM information based on the patient’s history, physical examination, imaging results (not required for clinical staging), and biopsies.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0006] key-term precision 1.00
+SOURCE: The Pathological Prognostic Stage applies to patients with invasive breast cancer initially treated with surgery. It includes all information used for clinical staging, surgical findings, and pathological findings following surgery to remove the tumor. Pathological Prognostic Stage is not used for patients treated with neoadjuvant therapy before surgery to remove the tumor.
+TARGET: To plan the best treatment and understand your prognosis, it is important to know the breast cancer stage.
+OUTPUT: The Pathological Prognostic Stage applies to patients with invasive breast cancer initially treated with surgery. It includes all information used for clinical staging, surgical findings, and pathological findings following surgery to remove the tumor. Pathological Prognostic Stage is not used for patients treated with neoadjuvant therapy before surgery to remove the tumor.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0007] key-term precision 1.00
+SOURCE: Sentinel lymph node (SLN) biopsy is the initial standard axillary staging procedure performed in women with invasive breast cancer. The SLN is defined as any node that receives drainage directly from the primary tumor, allowing for more than one SLN, which is often the case. Studies have shown that the injection of technetium Tc 99m-labeled sulfur colloid, vital blue dye, or both around the tumor or biopsy cavity, or in the subareolar area, and subsequent drainage of these compounds to the axilla results in the identification of the SLN in 92% to 98% of patients. These reports demonstrate a 97.5% to 100% concordance between SLN biopsy and complete axillary lymph node dissection (ALND). SLN biopsy alone is associated with less morbidity than axillary lymphadenectomy.
+TARGET: Sentinel lymph node biopsy is the removal of the sentinel lymph node during surgery. The sentinel lymph node is the first lymph node in a group of lymph nodes to receive lymphatic drainage from the primary tumor. It is the first lymph node the cancer is likely to spread to from the primary tumor. A radioactive substance and/or blue dye is injected near the tumor. The substance or dye flows through the lymph ducts to the lymph nodes. The first lymph node to receive the substance or dye is removed. A pathologist views the tissue under a microscope to look for cancer cells. If cancer cells are not found, it may not be necessary to remove more lymph nodes. Sometimes, a sentinel lymph node is found in more than one group of nodes. After the sentinel lymph node biopsy, the surgeon removes the tumor using breast-conserving surgery or mastectomy. If cancer cells were found, more lymph nodes will be removed through a separate incision (cut). This is called a lymph node dissection.
+OUTPUT: Sentinel lymph node (SLN) biopsy is the initial standard axillary staging procedure performed in women with invasive breast cancer. The SLN is defined as any node that receives drainage directly from the primary tumor, allowing for more than one SLN, which is often the case. Studies have shown that the injection of technetium Tc 99m-labeled sulfur colloid, vital blue dye, or both around the tumor or biopsy cavity, or in the subareolar area, and subsequent drainage of these compounds to the axilla results in the identification of the SLN in 92% to 98% of patients. These reports demonstrate a 97.5% to 100% concordance between SLN biopsy and complete axillary lymph node dissection (ALND). SLN biopsy alone is associated with less morbidity than axillary lymphadenectomy.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0009] key-term precision 1.00
+SOURCE: Chemotherapy may be appropriate for patients with HER2-negative hormone receptor–positive breast cancer. For more information, see the Chemotherapy for Metastatic Breast Cancer section.
+TARGET: In women with metastatic breast cancer that has not responded to hormone therapy, has spread to other organs, or has caused symptoms, treatment may include chemotherapy with one or more drugs.
+OUTPUT: Chemotherapy may be appropriate for patients with HER2-negative hormone receptor–positive breast cancer. For more information, see the Chemotherapy for Metastatic Breast Cancer section.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0010] key-term precision 1.00
+SOURCE: Radiation therapy is standard after breast-conserving surgery as part of breast-conserving therapy. Radiation therapy is also considered for high-risk postmastectomy patients. The main goal of adjuvant radiation therapy is to eradicate residual disease, reducing local recurrence and increasing breast cancer–specific survival.
+TARGET: For women who had breast-conserving surgery, radiation therapy is given to the whole breast to lessen the chance the cancer will come back. Radiation therapy may also be given to lymph nodes in the area.
+OUTPUT: Radiation therapy is standard after breast-conserving surgery as part of breast-conserving therapy. Radiation therapy is also considered for high-risk postmastectomy patients. The main goal of adjuvant radiation therapy is to eradicate residual disease, reducing local recurrence and increasing breast cancer–specific survival.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0011] key-term precision 1.00
+SOURCE: The first decision about the use of systemic therapy in patients with stages I, II and III breast cancer is whether it should be given before or after surgery. This section outlines factors to consider when making this decision. Information about the treatment of locally advanced or inflammatory breast cancer is also included in this section.
+TARGET: For treatment options for stage IIIB, inoperable stage IIIC, and inflammatory breast cancer, see Treatment of Locally Advanced Inflammatory Breast Cancer.
+OUTPUT: The first decision about the use of systemic therapy in patients with stages I, II and III breast cancer is whether it should be given before or after surgery. This section outlines factors to consider when making this decision. Information about the treatment of locally advanced or inflammatory breast cancer is also included in this section.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0012] key-term precision 1.00
+SOURCE: Preoperative chemotherapy, also known as primary or neoadjuvant chemotherapy, has traditionally been given to patients with locally advanced breast cancer to reduce tumor volume and allow for definitive surgery. Treatment with preoperative chemotherapy can also allow for breast conservation therapy in patients who are not candidates for breast conservation at initial presentation. Preoperative chemotherapy may also reduce the need for an axillary lymph node dissection (ALND) in patients presenting with node-positive disease.
+TARGET: Preoperative chemotherapy may make breast-sparing surgery possible in patients who are not eligible otherwise. Preoperative chemotherapy may also lessen the need for lymph node dissection in patients with disease that has spread to the lymph nodes.
+OUTPUT: Preoperative chemotherapy, also known as primary or neoadjuvant chemotherapy, has traditionally been given to patients with locally advanced breast cancer to reduce tumor volume and allow for definitive surgery. Treatment with preoperative chemotherapy can also allow for breast conservation therapy in patients who are not candidates for breast conservation at initial presentation. Preoperative chemotherapy may also reduce the need for an axillary lymph node dissection (ALND) in patients presenting with node-positive disease.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0013] key-term precision 1.00
+SOURCE: The tumor histology, grade, and hormone receptor status are carefully evaluated before preoperative therapy is initiated. Patients whose tumors have a pure lobular histology, low grade, or high hormone receptor expression and HER2-negative status are less likely to respond to chemotherapy and should consider primary surgery, especially if the nodes are clinically negative. Even if adjuvant chemotherapy is given after surgery in these cases, a third-generation regimen (anthracycline/taxane based) may be avoided.
+TARGET: In women with HER2-negative tumors or triple-negative tumors, preoperative therapy may include chemotherapy.
+OUTPUT: The tumor histology, grade, and hormone receptor status are carefully evaluated before preoperative therapy is initiated. Patients whose tumors have a pure lobular histology, low grade, or high hormone receptor expression and HER2-negative status are less likely to respond to chemotherapy and should consider primary surgery, especially if the nodes are clinically negative. Even if adjuvant chemotherapy is given after surgery in these cases, a third-generation regimen (anthracycline/taxane based) may be avoided.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0014] key-term precision 1.00
+SOURCE: Most studies that support the use of chemotherapy were conducted after patients had surgery and prior to the widespread use of preoperative therapy. In general, their results are still applicable to preoperative treatment, and these regimens are the ones most commonly used in the neoadjuvant space for this subtype. The following section describes studies that examined the use of chemotherapy in the preoperative setting.
+TARGET: Chemotherapy may be given before surgery to remove the tumor. When given before surgery, chemotherapy will shrink the tumor and reduce the amount of tissue that needs to be removed during surgery. Treatment given before surgery is called preoperative therapy or neoadjuvant therapy.
+OUTPUT: Most studies that support the use of chemotherapy were conducted after patients had surgery and prior to the widespread use of preoperative therapy. In general, their results are still applicable to preoperative treatment, and these regimens are the ones most commonly used in the neoadjuvant space for this subtype. The following section describes studies that examined the use of chemotherapy in the preoperative setting.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0015] key-term precision 1.00
+SOURCE: Several studies sought to determine whether decreasing the duration between chemotherapy cycles could improve clinical outcomes. The overall results of these studies support the use of dose-dense chemotherapy for women with HER2-negative breast cancer.
+TARGET: In women with HER2 negative tumors, postoperative therapy may include chemotherapy.
+OUTPUT: Several studies sought to determine whether decreasing the duration between chemotherapy cycles could improve clinical outcomes. The overall results of these studies support the use of dose-dense chemotherapy for women with HER2-negative breast cancer.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0016] key-term precision 1.00
+SOURCE: Much of the evidence presented in the following sections on therapy for women with hormone receptor–positive disease has been considered in an American Society of Clinical Oncology guideline that describes several options for the management of these patients. Five years of adjuvant endocrine therapy has been shown to substantially reduce the risks of locoregional and distant recurrence, contralateral breast cancer, and death from breast cancer.
+TARGET: In women with hormone receptor negative tumors, no more treatment may be needed, or postoperative therapy may include chemotherapy.
+OUTPUT: Much of the evidence presented in the following sections on therapy for women with hormone receptor–positive disease has been considered in an American Society of Clinical Oncology guideline that describes several options for the management of these patients. Five years of adjuvant endocrine therapy has been shown to substantially reduce the risks of locoregional and distant recurrence, contralateral breast cancer, and death from breast cancer.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0017] key-term precision 1.00
+SOURCE: Recurrent breast cancer often responds to therapy, although treatment is rarely curative at this stage of disease. Patients with locoregional breast cancer recurrence may become long-term survivors with appropriate therapy.
+TARGET: For treatment options for cancer that has recurred near the area where it first formed (such as in the breast, in the skin of the breast, in the chest wall, or in nearby lymph nodes), see Treatment of Locoregional Recurrent Breast Cancer.
+OUTPUT: Recurrent breast cancer often responds to therapy, although treatment is rarely curative at this stage of disease. Patients with locoregional breast cancer recurrence may become long-term survivors with appropriate therapy.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+
+[breast-0018] key-term precision 1.00
+SOURCE: Ductal carcinoma in situ (DCIS) is a noninvasive condition. DCIS can progress to invasive cancer, but estimates of the probability of this vary widely. Some reports include DCIS in breast cancer statistics. In 2025, DCIS is expected to account for about 16% of all newly diagnosed invasive plus noninvasive breast tumors in the United States. For invasive and noninvasive tumors detected by screening, DCIS accounts for approximately 25% of all cases.
+TARGET: For ductal carcinoma in situ (DCIS) treatment options, see Treatment of Ductal Carcinoma in Situ.
+OUTPUT: Ductal carcinoma in situ (DCIS) is a noninvasive condition. DCIS can progress to invasive cancer, but estimates of the probability of this vary widely. Some reports include DCIS in breast cancer statistics. In 2025, DCIS is expected to account for about 16% of all newly diagnosed invasive plus noninvasive breast tumors in the United States. For invasive and noninvasive tumors detected by screening, DCIS accounts for approximately 25% of all cases.
+INVENTED KEY TERMS: []
+UNSUPPORTED SENTENCES: []
+

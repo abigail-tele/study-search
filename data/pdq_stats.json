@@ -5303,5 +5303,60 @@
     }
   },
   "total_pairs": 1649,
-  "multi_source_pairs": 258
+  "multi_source_pairs": 258,
+  "dedupe": {
+    "paragraph": {
+      "paragraph_before": {
+        "train": 1333,
+        "val": 161,
+        "test": 155
+      },
+      "paragraph_dropped": {
+        "exact_pair": 47,
+        "duplicate_target": 29,
+        "duplicate_source": 11,
+        "sentence_inside_paragraph_pair": 0,
+        "near_duplicate_in_train": 122,
+        "total": 209
+      },
+      "paragraph_after": {
+        "train": 1124,
+        "val": 161,
+        "test": 155
+      }
+    },
+    "sentence": {
+      "before": {
+        "train": 1186,
+        "val": 177,
+        "test": 193
+      },
+      "dropped": {
+        "exact_pair": 0,
+        "duplicate_target": 39,
+        "duplicate_source": 79,
+        "sentence_inside_paragraph_pair": 419,
+        "near_duplicate_in_train": 101,
+        "total": 638
+      },
+      "after": {
+        "train": 680,
+        "val": 125,
+        "test": 113
+      }
+    },
+    "combined_extra_dropped": {
+      "exact_pair": 0,
+      "duplicate_target": 0,
+      "duplicate_source": 0,
+      "sentence_inside_paragraph_pair": 84,
+      "near_duplicate_in_train": 33,
+      "total": 117
+    },
+    "combined": {
+      "train": 1698,
+      "val": 278,
+      "test": 265
+    }
+  }
 }

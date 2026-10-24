@@ -166,5 +166,23 @@ SUMMARY_MAX_CRITERIA_PER_SIDE = 25  # criteria beyond this are shown in original
 SUMMARY_MIN_CRITERION_WORDS = 3     # shorter fragments ("None") are not worth a model call
 READING_LEVEL_DECIMALS = 1
 
+# --- Semantic support check (backend/support.py, pipeline/baselines.py) -------
+SUPPORT_SIM_THRESHOLD = 0.60        # min MiniLM cosine between an output sentence and a source sentence/window
+SUPPORT_WORD_FRACTION = 0.70        # min share of an output sentence's content words found in source or glossary
+SUPPORT_MIN_CONTENT_WORDS = 2       # shorter sentences are judged on similarity alone
+SUPPORT_WINDOW = 2                  # source windows of 1..N consecutive sentences
+BOILERPLATE_OPENERS = (             # generic PDQ phrases the model may invent (flagged only when absent from source)
+    "there are different types of", "is a disease in which", "is a type of cancer that forms",
+    "is a cancer that forms", "are different types of",
+)
+RESULTS_DIR = ROOT_DIR / "results"
+TRIAL_EVAL_PATH = DATA_DIR / "trial_eval_set.jsonl"
+TRIAL_EVAL_COUNT = 40               # real trials in the trial-domain eval set
+TRIAL_EVAL_CRITERIA = 5             # eligibility criteria per trial
+TRIAL_EVAL_MIN_TYPES = 10           # trials must span at least this many cancer types
+TRIAL_EVAL_MAX_SUMMARY_WORDS = 200  # brief summaries are cut at a sentence boundary near this length
+FEWSHOT_K = 3                       # shots for the few-shot baseline
+FEWSHOT_MAX_SOURCE_WORDS = 60       # shots are drawn from short train pairs
+
 # --- UI text ---------------------------------------------------------------
 DISCLAIMER = "For education, not medical advice."

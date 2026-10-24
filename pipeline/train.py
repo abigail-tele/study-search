@@ -138,7 +138,7 @@ def train(args: argparse.Namespace) -> Path:
 
     random.seed(config.RANDOM_SEED)
     torch.manual_seed(config.RANDOM_SEED)
-    train_rows, val_rows = load_pairs(config.PDQ_PAIRS_PATH, args.min_similarity)
+    train_rows, val_rows = load_pairs(args.pairs, args.min_similarity)
     print(f"Pairs at similarity >= {args.min_similarity}: train={len(train_rows)} val={len(val_rows)}")
     if not train_rows or not val_rows:
         sys.exit("No train/val pairs left after filtering; lower --min-similarity.")
@@ -160,13 +160,13 @@ def train(args: argparse.Namespace) -> Path:
          "weight_decay": config.TRAIN_WEIGHT_DECAY},
         {"params": [p for n, p in model.named_parameters() if any(k in n for k in no_decay)], "weight_decay": 0.0},
     ]
-    optimizer = torch.optim.AdamW(groups, lr=config.TRAIN_LEARNING_RATE)
+    optimizer = torch.optim.AdamW(groups, lr=args.lr)
     scheduler = get_linear_schedule_with_warmup(optimizer, int(config.TRAIN_WARMUP_RATIO * total_steps), total_steps)
     print(f"Optimizer steps: {total_steps} ({steps_per_epoch}/epoch, batch {args.batch_size} x accum {accum})")
 
     meta = {"base_model": config.BASE_MODEL_NAME, "min_similarity": args.min_similarity,
             "git_commit": git_commit(), "train_pairs": len(train_rows), "val_pairs": len(val_rows),
-            "learning_rate": config.TRAIN_LEARNING_RATE, "batch_size": args.batch_size,
+            "learning_rate": args.lr, "pairs_path": str(args.pairs), "batch_size": args.batch_size,
             "grad_accum": accum, "epochs_max": args.epochs, "seed": config.RANDOM_SEED,
             "task_prefix": config.TASK_PREFIX, "bf16": use_bf16, "max_steps": args.max_steps}
     out: Path = args.out
@@ -220,6 +220,8 @@ def train(args: argparse.Namespace) -> Path:
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Fine-tune flan-t5-base on PDQ pairs.")
     p.add_argument("--min-similarity", type=float, default=config.TRAIN_MIN_SIMILARITY)
+    p.add_argument("--lr", type=float, default=config.TRAIN_LEARNING_RATE)
+    p.add_argument("--pairs", type=Path, default=config.PDQ_PAIRS_PATH, help="pairs JSONL (default: paragraph pairs)")
     p.add_argument("--epochs", type=int, default=config.TRAIN_EPOCHS)
     p.add_argument("--batch-size", type=int, default=config.TRAIN_BATCH_SIZE)
     p.add_argument("--out", type=Path, default=config.CHECKPOINT_DIR / config.TRAIN_CHECKPOINT_NAME)

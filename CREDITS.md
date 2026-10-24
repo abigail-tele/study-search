@@ -130,3 +130,4 @@ Generated from the installed distributions in  (importlib.metadata), excluding p
 - CNRI-Python (regex, via transformers), PSF-2.0 (typing_extensions), ISC (shellingham): permissive but not in the rule 5 list (MIT, Apache 2.0, BSD, public domain). NEEDS HUMAN REVIEW.
 - No package with GPL, LGPL or AGPL in its license was found. No package has an unknown license.
 - textstat (planned, not installed) depends on pyphen (GPLv2+/LGPLv2+/MPL-1.1 tri-license): needs human decision before install. Use under MPL-1.1, or write our own Flesch-Kincaid.
+- rouge-score 0.1.2 (Apache-2.0; deps nltk Apache-2.0, absl-py Apache-2.0, six MIT, defusedxml PSF-2.0) installed in `.venv` and `.venv-train` for ROUGE in `pipeline/compare_checkpoints.py` and `pipeline/baselines.py`. defusedxml (PSF-2.0) is not on the rule 5 list: NEEDS HUMAN REVIEW.

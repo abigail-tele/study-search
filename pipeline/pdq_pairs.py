@@ -479,10 +479,11 @@ def unsupported_numbers(source: str, target: str) -> set[str]:
     return bad | (numbers_in(plain_target) - numbers_in(source))
 
 
-def pair_drop_reason(source: str, target: str, sim: float) -> str | None:
+def pair_drop_reason(source: str, target: str, sim: float, min_words: int | None = None) -> str | None:
     """Why a candidate pair must be dropped, or None to keep it."""
+    min_words = cfg.PDQ_MIN_WORDS if min_words is None else min_words
     sw, tw = len(source.split()), len(target.split())
-    if sw < cfg.PDQ_MIN_WORDS or tw < cfg.PDQ_MIN_WORDS:
+    if sw < min_words or tw < min_words:
         return "too_short"
     if sw > cfg.PDQ_MAX_SOURCE_WORDS:
         return "source_too_long"
@@ -751,6 +752,7 @@ def run(
         s: sum(1 for r in all_records if r["split"] == s) for s in ("train", "val", "test")
     }
     stats["near_dup"] = {"ratio": cfg.PDQ_NEAR_DUP_RATIO, "dropped": drop_near_duplicates(all_records)}
+    stats["dedupe_dropped"] = dedupe_records(all_records)
     stats["pairs_dropped_total"] = _sum_page_stat(stats["pages"], "pairs_dropped")
     stats["xref_sentences_stripped_total"] = sum(p["xref_sentences_stripped"] for p in stats["pages"].values())
     stats["pairs_with_xref_stripped_total"] = sum(p["pairs_with_xref_stripped"] for p in stats["pages"].values())
@@ -760,6 +762,369 @@ def run(
     _write_outputs(all_records, split_of, stats, out_path, stats_path)
     _write_borderline(all_records, borderline_path)
     return stats
+
+
+# --- Sentence-level pairs (extra training data) -------------------------------
+def split_sentences(paragraph: str) -> list[str]:
+    """Split a paragraph into sentences (same splitter the xref filter uses)."""
+    return [x.strip() for x in _SENT_SPLIT_RE.split(paragraph) if x.strip()]
+
+
+def _sentence_targets(
+    paragraphs: list[str], max_window: int, exclude: set[str] | None = None
+) -> list[tuple[tuple[int, ...], str]]:
+    """Patient candidates: every sentence and every run of up to `max_window` sentences.
+
+    Runs stay inside one paragraph and never contain a sentence in `exclude`
+    (already paired). Indices are global sentence numbers so the aligner can
+    stop two overlapping candidates from both being used.
+    """
+    exclude = exclude or set()
+    out: list[tuple[tuple[int, ...], str]] = []
+    n = 0
+    for para in paragraphs:
+        sents = split_sentences(para)
+        for a in range(len(sents)):
+            for b in range(a, min(a + max_window, len(sents))):
+                if not any(x in exclude for x in sents[a : b + 1]):
+                    out.append((tuple(range(n + a, n + b + 1)), " ".join(sents[a : b + 1])))
+        n += len(sents)
+    return out
+
+
+def align_sentence_windows(
+    items: list[SrcItem], targets: list[tuple[tuple[int, ...], str]], encode: Encoder, threshold: float,
+) -> list[tuple[tuple[int, ...], tuple[int, ...], float, str, str]]:
+    """Greedy one-to-one alignment of professional sentence windows to patient sentence windows.
+
+    Same idea as align_windows, but BOTH sides can be windows (professional
+    1-3 sentences, patient 1-2). Multi-sentence candidates are penalised by
+    PDQ_WINDOW_MIN_GAIN each, so they only win when clearly better. Candidates
+    whose target would be longer than PDQ_MAX_LEN_RATIO x source, or that are
+    near-copies (> PDQ_MAX_ALIGN_SIM), are skipped so a better candidate can win.
+    Returns (source idxs, target sentence idxs, cosine, source text, target text).
+    """
+    import numpy as np
+
+    if not items or not targets:
+        return []
+    wins = make_windows(items, cfg.PDQ_SENT_MAX_WINDOW)
+    sim = np.asarray(encode([t for _, t in wins])) @ np.asarray(encode([t for _, t in targets])).T
+    sw = np.array([len(t.split()) for _, t in wins])
+    tw = np.array([len(t.split()) for _, t in targets])
+    s_multi = np.array([len(ix) > 1 for ix, _ in wins], dtype=float)
+    t_multi = np.array([len(ix) > 1 for ix, _ in targets], dtype=float)
+    rank = sim - cfg.PDQ_WINDOW_MIN_GAIN * (s_multi[:, None] + t_multi[None, :])
+    ok = (sim >= threshold) & (sim <= cfg.PDQ_MAX_ALIGN_SIM) & (tw[None, :] <= cfg.PDQ_MAX_LEN_RATIO * sw[:, None])
+    rows, cols = np.nonzero(ok)
+    order = np.argsort(-rank[rows, cols], kind="stable")
+    used_src: set[int] = set()
+    used_tgt: set[int] = set()
+    out = []
+    for k in order:
+        si, tj = wins[rows[k]], targets[cols[k]]
+        if used_src.intersection(si[0]) or used_tgt.intersection(tj[0]):
+            continue
+        used_src.update(si[0])
+        used_tgt.update(tj[0])
+        out.append((si[0], tj[0], float(sim[rows[k], cols[k]]), si[1], tj[1]))
+    return out
+
+
+def _sentence_items(secs: list[tuple[int, Section]]) -> list[SrcItem]:
+    """Professional sentences as (text, section id, position); position runs across paragraphs."""
+    items: list[SrcItem] = []
+    for gid, sec in secs:
+        sents = [x for para in sec.paragraphs for x in split_sentences(para)]
+        items += [(x, gid, k) for k, x in enumerate(sents)]
+    return items
+
+
+def build_sentence_page_pairs(
+    spec: PageSpec, hp_html: str, pt_html: str, encode: Encoder, stats: dict
+) -> list[dict]:
+    """Sentence-level pairs for one page (no split yet). Same two passes as build_page_pairs.
+
+    Pass 1 uses heading-matched sections at PDQ_SENT_SIM_THRESHOLD; pass 2 aligns
+    leftover sentences page-wide at the stricter of that and PDQ_FALLBACK_SIM_THRESHOLD.
+    The same filters apply (length ratio, number-not-in-source, xref stripping,
+    near-identical), with the lower PDQ_SENT_MIN_WORDS floor.
+    """
+    hp = parse_sections(hp_html, False)
+    pt = parse_sections(pt_html, True)
+    group_of = {id(sec): g for g, sec in enumerate(hp)}
+    stats.update(candidates=0, dropped={}, xref_sentences_stripped=0, kept=0)
+    recs: list[dict] = []
+    used_src: set[tuple[int, int]] = set()
+    used_tsent: set[str] = set()
+
+    def run_pool(items: list[SrcItem], tgt_secs: list[Section], threshold: float) -> None:
+        items = [it for it in items if (it[1], it[2]) not in used_src]
+        for pt_sec in tgt_secs:
+            targets = _sentence_targets(pt_sec.paragraphs, cfg.PDQ_SENT_PATIENT_WINDOW, used_tsent)
+            for idxs, _t, sim, src, tgt in align_sentence_windows(items, targets, encode, threshold):
+                stats["candidates"] += 1
+                clean, n_xref = strip_xref_sentences(tgt)
+                stats["xref_sentences_stripped"] += n_xref
+                why = pair_drop_reason(src, clean, sim, cfg.PDQ_SENT_MIN_WORDS)
+                if why:
+                    stats["dropped"][why] = stats["dropped"].get(why, 0) + 1
+                    continue
+                used_src.update((items[i][1], items[i][2]) for i in idxs)
+                used_tsent.update(split_sentences(tgt))
+                recs.append({
+                    "source": src, "target": clean, "cancer_type": spec.cancer_type, "hp_url": spec.hp_url,
+                    "patient_url": spec.patient_url, "section": pt_sec.heading, "similarity": round(sim, 4),
+                    "source_paragraphs": 1, "granularity": "sentence",
+                })
+
+    for pt_sec, hp_secs, _ in match_sections(hp, pt):
+        run_pool(_sentence_items([(group_of[id(sec)], sec) for sec in hp_secs]), [pt_sec], cfg.PDQ_SENT_SIM_THRESHOLD)
+    run_pool(_sentence_items(list(enumerate(hp))), pt,
+             max(cfg.PDQ_SENT_SIM_THRESHOLD, cfg.PDQ_FALLBACK_SIM_THRESHOLD))
+    stats["kept"] = len(recs)
+    return recs
+
+
+def _norm(text: str) -> str:
+    return re.sub(r"\s+", " ", text.lower()).strip()
+
+
+def drop_sentence_duplicates(sent_recs: list[dict], para_recs: list[dict]) -> dict[str, int]:
+    """Drop sentence pairs whose source is already inside a kept paragraph pair of the SAME split (in place).
+
+    Why: the paragraph pair already teaches that text; repeating it as a
+    sentence pair would double-weight it. Also drops repeated identical
+    (source, target) sentence pairs.
+    """
+    by_split: dict[str, list[str]] = {}
+    for r in para_recs:
+        by_split.setdefault(r["split"], []).append(_norm(r["source"]))
+    seen: set[tuple[str, str]] = set()
+    keep: list[dict] = []
+    dropped = {"contained_in_paragraph_pair": 0, "repeated": 0}
+    for r in sent_recs:
+        src = _norm(r["source"])
+        if any(src in big for big in by_split.get(r["split"], [])):
+            dropped["contained_in_paragraph_pair"] += 1
+        elif (src, _norm(r["target"])) in seen:
+            dropped["repeated"] += 1
+        else:
+            seen.add((src, _norm(r["target"])))
+            keep.append(r)
+    sent_recs[:] = keep
+    return dropped
+
+
+def run_sentences(
+    encode: Encoder | None = None,
+    pages_path: Path = cfg.PDQ_PAGES_PATH,
+    para_path: Path = cfg.PDQ_PAIRS_PATH,
+    stats_path: Path = cfg.PDQ_STATS_PATH,
+    out_path: Path = cfg.PDQ_SENT_PAIRS_PATH,
+    cache_dir: Path = cfg.PDQ_RAW_DIR,
+) -> dict:
+    """Build data/pdq_pairs_sent.jsonl from CACHED html; splits copied from the paragraph run.
+
+    Why reuse the paragraph run's page->split map (pdq_stats.json): a sentence
+    must land in the same split as its page, otherwise val/test text could leak
+    into training. data/pdq_pairs.jsonl is only read, never changed.
+    """
+    page_split = json.loads(stats_path.read_text(encoding="utf-8"))["split"]["page_to_split"]
+    para_recs = [json.loads(l) for l in para_path.open(encoding="utf-8") if l.strip()]
+    stats: dict = {"pages": {}}
+    recs: list[dict] = []
+    for spec in load_pages(pages_path):
+        if spec.cancer_type not in page_split:
+            continue
+        hp_html = load_html(spec.hp_url, spec.hp_fetch_url, cache_dir, fetch=False)
+        pt_html = load_html(spec.patient_url, spec.patient_fetch_url, cache_dir, fetch=False)
+        if encode is None:
+            encode = default_encoder()
+        pstats: dict = {}
+        page_recs = build_sentence_page_pairs(spec, hp_html, pt_html, encode, pstats)
+        for n, r in enumerate(page_recs):
+            r.update(id=f"{spec.cancer_type}-s{n:04d}", split=page_split[spec.cancer_type])
+        recs += page_recs
+        stats["pages"][spec.cancer_type] = pstats
+        getattr(encode, "save", lambda: None)()
+    stats["before_dedupe"] = len(recs)
+    stats["dedupe"] = drop_sentence_duplicates(recs, para_recs)
+    # leakage guard: a val/test sentence target nearly equal to ANY train target is dropped
+    n_before = len(recs)
+    combined = [r for r in para_recs if r["split"] == "train"] + recs
+    drop_near_duplicates(combined)
+    survivors = {r["id"] for r in combined}
+    recs = [r for r in recs if r["id"] in survivors]
+    stats["near_dup_dropped"] = n_before - len(recs)
+    stats["dedupe_dropped"] = dedupe_records(recs)
+    order = ("id", "source", "target", "split", "cancer_type", "hp_url", "patient_url", "section",
+             "similarity", "source_paragraphs", "granularity")
+    with out_path.open("w", encoding="utf-8") as f:
+        for r in recs:
+            f.write(json.dumps({k: r[k] for k in order}, ensure_ascii=False) + "\n")
+    stats["pairs_per_split"] = {s: sum(1 for r in recs if r["split"] == s) for s in ("train", "val", "test")}
+    stats["sim_threshold"] = cfg.PDQ_SENT_SIM_THRESHOLD
+    return stats
+
+
+# --- Deduplication (applies to paragraph, sentence and combined files) --------
+def norm_key(text: str) -> str:
+    """Comparison key: lower-case, collapsed whitespace, punctuation stripped at both ends."""
+    return re.sub(r"\s+", " ", text.lower()).strip(" \t.,;:!?\"'()[]-–—")
+
+
+def _best_first(records: list[dict]) -> list[dict]:
+    """Highest similarity first; on ties prefer paragraph over sentence pairs, then file order."""
+    return sorted(records, key=lambda r: (-r["similarity"], r.get("granularity") == "sentence"))
+
+
+def _keep_best_per_key(records: list[dict], key_of: Callable[[dict], tuple]) -> tuple[list[dict], int]:
+    """Keep the best record per key (same split only); original order is preserved."""
+    keep_ids: set[int] = set()
+    seen: set[tuple] = set()
+    for r in _best_first(records):
+        k = (r["split"],) + key_of(r)
+        if k not in seen:
+            seen.add(k)
+            keep_ids.add(id(r))
+    return [r for r in records if id(r) in keep_ids], len(records) - len(keep_ids)
+
+
+def drop_near_duplicates_in_train(records: list[dict], ratio: float | None = None) -> int:
+    """Within TRAIN, drop records whose target is >= ratio similar (difflib) to a better kept one (in place).
+
+    Why: near-copies in training over-weight one sentence and make val loss
+    look better than it is. Speed: targets are sorted by length and only
+    compared with kept targets whose length could reach `ratio` (difflib's
+    ratio is bounded by 2*min/(a+b)), so ~3k rows take seconds.
+    """
+    ratio = cfg.PDQ_NEAR_DUP_RATIO if ratio is None else ratio
+    train = _best_first([r for r in records if r["split"] == "train"])
+    kept: list[tuple[int, str]] = []  # (length, normalized target) of kept records
+    drop_ids: set[int] = set()
+    sm = difflib.SequenceMatcher(None)
+    for r in train:
+        t = norm_key(r["target"])
+        sm.set_seq2(t)
+        dup = False
+        for ln, other in kept:
+            if 2 * min(ln, len(t)) / max(ln + len(t), 1) < ratio:
+                continue
+            sm.set_seq1(other)
+            if sm.real_quick_ratio() >= ratio and sm.quick_ratio() >= ratio and sm.ratio() >= ratio:
+                dup = True
+                break
+        if dup:
+            drop_ids.add(id(r))
+        else:
+            kept.append((len(t), t))
+    records[:] = [r for r in records if id(r) not in drop_ids]
+    return len(drop_ids)
+
+
+def drop_sentence_substrings(records: list[dict]) -> int:
+    """Drop sentence pairs whose source OR target is inside a paragraph pair of the same split (in place)."""
+    paras: dict[str, tuple[list[str], list[str]]] = {}
+    for r in records:
+        if r.get("granularity", "paragraph") != "sentence":
+            srcs, tgts = paras.setdefault(r["split"], ([], []))
+            srcs.append(norm_key(r["source"]))
+            tgts.append(norm_key(r["target"]))
+    keep: list[dict] = []
+    for r in records:
+        if r.get("granularity") == "sentence":
+            srcs, tgts = paras.get(r["split"], ([], []))
+            s, t = norm_key(r["source"]), norm_key(r["target"])
+            if any(s in x for x in srcs) or any(t in x for x in tgts):
+                continue
+        keep.append(r)
+    n = len(records) - len(keep)
+    records[:] = keep
+    return n
+
+
+def dedupe_records(records: list[dict], ratio: float | None = None) -> dict[str, int]:
+    """Apply every dedupe rule in place; returns {rule: number dropped}.
+
+    Rules (each within one split): exact (source, target) repeats; repeated
+    targets and repeated sources (best similarity wins); sentence pairs that
+    sit inside a paragraph pair; near-duplicate targets inside train. The
+    separate val/test-vs-train check (drop_near_duplicates) stays in place.
+    """
+    counts = {"exact_pair": 0, "duplicate_target": 0, "duplicate_source": 0,
+              "sentence_inside_paragraph_pair": 0, "near_duplicate_in_train": 0}
+    records[:], counts["exact_pair"] = _keep_best_per_key(
+        records, lambda r: (norm_key(r["source"]), norm_key(r["target"])))
+    counts["sentence_inside_paragraph_pair"] = drop_sentence_substrings(records)
+    records[:], counts["duplicate_target"] = _keep_best_per_key(records, lambda r: (norm_key(r["target"]),))
+    records[:], counts["duplicate_source"] = _keep_best_per_key(records, lambda r: (norm_key(r["source"]),))
+    counts["near_duplicate_in_train"] = drop_near_duplicates_in_train(records, ratio)
+    counts["total"] = sum(counts.values())
+    return counts
+
+
+def _read_jsonl(path: Path) -> list[dict]:
+    return [json.loads(l) for l in path.open(encoding="utf-8") if l.strip()]
+
+
+def _write_jsonl(path: Path, records: list[dict]) -> None:
+    with path.open("w", encoding="utf-8") as f:
+        for r in records:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+
+def _split_counts(records: list[dict]) -> dict[str, int]:
+    return {s: sum(1 for r in records if r["split"] == s) for s in ("train", "val", "test")}
+
+
+def dedupe_files(
+    para_path: Path = cfg.PDQ_PAIRS_PATH, sent_path: Path = cfg.PDQ_SENT_PAIRS_PATH,
+    combined_path: Path = cfg.PDQ_COMBINED_PAIRS_PATH, stats_path: Path = cfg.PDQ_STATS_PATH,
+    min_para_sim: float | None = None,
+) -> dict:
+    """Dedupe the paragraph file, the sentence file, and write the combined training file.
+
+    Paragraph and sentence files are rewritten in place (originals are kept as
+    *.predup.jsonl the first time). The combined file = paragraph pairs +
+    sentence pairs, deduped together, with the sentence-inside-paragraph rule
+    checked only against paragraph pairs that training would actually use
+    (similarity >= min_para_sim, default PDQ_COMBINED_MIN_PARA_SIM). Counts go
+    into pdq_stats.json under "dedupe".
+    """
+    min_para_sim = cfg.PDQ_COMBINED_MIN_PARA_SIM if min_para_sim is None else min_para_sim
+    out: dict = {}
+    para = _read_jsonl(para_path)
+    for path in (para_path, sent_path):
+        bak = path.with_suffix(".predup.jsonl")
+        if path.exists() and not bak.exists():
+            bak.write_bytes(path.read_bytes())
+    out["paragraph_before"] = _split_counts(para)
+    out["paragraph_dropped"] = dedupe_records(para)
+    out["paragraph_after"] = _split_counts(para)
+    _write_jsonl(para_path, para)
+    result: dict = {"paragraph": out}
+    if sent_path.exists():
+        sent = _read_jsonl(sent_path)
+        before = _split_counts(sent)
+        dropped = dedupe_records(sent)
+        # also against the paragraph pairs training will use
+        usable = [r for r in para if r["similarity"] >= min_para_sim]
+        combined = usable + sent
+        dropped["sentence_inside_paragraph_pair"] += drop_sentence_substrings(combined)
+        dropped["total"] = sum(v for k, v in dropped.items() if k != "total")
+        sent[:] = [r for r in combined if r.get("granularity") == "sentence"]
+        result["sentence"] = {"before": before, "dropped": dropped, "after": _split_counts(sent)}
+        _write_jsonl(sent_path, sent)
+        every = para + sent
+        result["combined_extra_dropped"] = dedupe_records(every)
+        result["combined"] = _split_counts(every)
+        _write_jsonl(combined_path, every)
+    if stats_path.exists():
+        st = json.loads(stats_path.read_text(encoding="utf-8"))
+        st["dedupe"] = result
+        stats_path.write_text(json.dumps(st, indent=2, ensure_ascii=False), encoding="utf-8")
+    return result
 
 
 def _sum_page_stat(pages: dict, key: str) -> dict[str, int]:
@@ -816,8 +1181,19 @@ def main(argv: list[str] | None = None) -> None:
                     help="override PDQ_ALIGN_SIM_THRESHOLD for this run (default stays in config.py)")
     ap.add_argument("--out", type=Path, default=cfg.PDQ_PAIRS_PATH, help="pairs JSONL path")
     ap.add_argument("--stats-out", type=Path, default=cfg.PDQ_STATS_PATH, help="stats JSON path")
+    ap.add_argument("--sentences", action="store_true",
+                    help="build sentence-level pairs from cached HTML into data/pdq_pairs_sent.jsonl")
+    ap.add_argument("--dedupe", action="store_true",
+                    help="dedupe data/pdq_pairs.jsonl + pdq_pairs_sent.jsonl in place and write pdq_pairs_combined.jsonl")
     args = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(message)s")
+    if args.dedupe:
+        print(json.dumps(dedupe_files(), indent=2))
+        return
+    if args.sentences:
+        st = run_sentences()
+        print(json.dumps({k: v for k, v in st.items() if k != "pages"}, indent=2))
+        return
     types = [t.strip() for t in args.types.split(",")] if args.types else None
     stats = run(types=types, fetch=not args.no_fetch, out_path=args.out,
                 stats_path=args.stats_out, sim_threshold=args.sim_threshold)
