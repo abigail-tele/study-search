@@ -1,6 +1,6 @@
 """Tests for backend.search and the db read helpers.
 
-RRF and detect_cancer_types are HUMAN-WRITTEN stubs; integration tests swap in
+Integration tests swap in
 simple fakes defined here (never in backend/) so the pipeline is still covered.
 """
 import pytest
@@ -8,8 +8,6 @@ import pytest
 from backend import config, db, search, taxonomy
 from tests.fixtures import tiny_db
 
-HUMAN_RRF = pytest.mark.xfail(raises=NotImplementedError, strict=True,
-                              reason="HUMAN-WRITTEN: reciprocal_rank_fusion")
 
 
 # ------------------------------------------------------------- test-only fakes
@@ -93,46 +91,39 @@ def test_fts_query_sanitizes():
 
 
 # ------------------------------------------------------------- RRF (human)
-@HUMAN_RRF
 def test_rrf_basic_formula():
     out = dict(search.reciprocal_rank_fusion([["a", "b"], ["b", "a"]], k=60))
     assert out["a"] == pytest.approx(1 / 61 + 1 / 62)
     assert out["b"] == pytest.approx(1 / 62 + 1 / 61)
 
 
-@HUMAN_RRF
 def test_rrf_item_in_both_lists_beats_single():
     out = search.reciprocal_rank_fusion([["a", "b"], ["c", "a"]], k=60)
     assert out[0][0] == "a"
 
 
-@HUMAN_RRF
 def test_rrf_item_in_only_one_list():
     out = dict(search.reciprocal_rank_fusion([["a"], ["b"]], k=60))
     assert out == {"a": pytest.approx(1 / 61), "b": pytest.approx(1 / 61)}
 
 
-@HUMAN_RRF
 def test_rrf_rank_starts_at_one():
     out = dict(search.reciprocal_rank_fusion([["a"]], k=0))
     assert out["a"] == pytest.approx(1.0)
 
 
-@HUMAN_RRF
 def test_rrf_k_effect():
     small = dict(search.reciprocal_rank_fusion([["a", "b"]], k=1))
     big = dict(search.reciprocal_rank_fusion([["a", "b"]], k=1000))
     assert small["a"] / small["b"] > big["a"] / big["b"]
 
 
-@HUMAN_RRF
 def test_rrf_sorted_descending():
     out = search.reciprocal_rank_fusion([["a", "b", "c"], ["c", "b"]], k=60)
     scores = [s for _, s in out]
     assert scores == sorted(scores, reverse=True)
 
 
-@HUMAN_RRF
 def test_rrf_ties_are_deterministic():
     first = search.reciprocal_rank_fusion([["b"], ["a"]], k=60)
     again = search.reciprocal_rank_fusion([["b"], ["a"]], k=60)
@@ -140,13 +131,11 @@ def test_rrf_ties_are_deterministic():
     assert [n for n, _ in first] == ["a", "b"]  # tie broken by id ascending
 
 
-@HUMAN_RRF
 def test_rrf_empty():
     assert search.reciprocal_rank_fusion([]) == []
     assert search.reciprocal_rank_fusion([[], []]) == []
 
 
-@HUMAN_RRF
 def test_rrf_default_k_comes_from_config():
     out = dict(search.reciprocal_rank_fusion([["a"]]))
     assert out["a"] == pytest.approx(1 / (config.RRF_K + 1))

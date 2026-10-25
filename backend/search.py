@@ -78,17 +78,28 @@ def fts_query(text: str) -> str:
     return " OR ".join(f'"{w}"' for w in dict.fromkeys(words))
 
 
-# HUMAN-WRITTEN
+# AI-written (Claude Code, 2026-10-24) at the team's request - team must review
 def reciprocal_rank_fusion(rankings: list[list[str]],
                            k: int = config.RRF_K) -> list[tuple[str, float]]:
     """Merge several ranked lists of ids into one list of (id, score), best first.
 
-    Formula: score(id) = sum over every list containing id of 1 / (k + rank),
-    where rank starts at 1 for the first item. An id found in only one list
-    just gets that one term. Sort by score descending; break ties
-    deterministically (by id ascending) so results are stable. Empty input -> [].
+    Why RRF: keyword (FTS5) scores and embedding similarities are on different
+    scales, so we cannot add them. Rank positions are comparable, so each list
+    "votes" for an id with 1 / (k + rank), rank starting at 1 for its first item.
+
+    score(id) = sum over every list containing id of 1 / (k + rank)
+
+    An id found by both searches collects two votes and beats an id found by
+    only one; an id in one list simply gets that one term. A bigger k flattens
+    the difference between rank 1 and rank 10 (k=60 is the value from the
+    original RRF paper). Ties are broken by id ascending so the same input
+    always gives the same order. Empty input -> [].
     """
-    raise NotImplementedError("HUMAN-WRITTEN: reciprocal_rank_fusion")
+    scores: dict[str, float] = {}
+    for ranking in rankings:
+        for rank, item in enumerate(ranking, start=1):
+            scores[item] = scores.get(item, 0.0) + 1.0 / (k + rank)
+    return sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
 # ---------------------------------------------------------------- resources

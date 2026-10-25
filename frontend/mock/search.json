@@ -23,7 +23,22 @@
       },
       "url": "https://clinicaltrials.gov/study/NCT05000001",
       "citation": "Example Cancer Center (MOCK). A Randomized Phase 2 Study (MOCK DATA) of a Targeted Medicine Added to Chemotherapy for HER2-Positive Breast Cancer. ClinicalTrials.gov ID: NCT05000001. Last updated 2026-09-14. Available from: https://clinicaltrials.gov/study/NCT05000001",
-      "score": 0.0328
+      "score": 0.0328,
+      "match": {
+        "age": "ok",
+        "sex": "ok",
+        "mentioned_in_requirements": [
+          {
+            "term": "her2 positive",
+            "criterion": "Confirmed HER2-positive breast cancer, Stage II or Stage III"
+          }
+        ],
+        "mentioned_in_exclusions": [],
+        "possible_conflicts": [],
+        "ignored_terms": [],
+        "summary_label": "Possible match",
+        "label_text": "Possible match — the study team decides who can join"
+      }
     },
     {
       "nct_id": "NCT05000002",
@@ -38,7 +53,22 @@
       "nearest_site": null,
       "url": "https://clinicaltrials.gov/study/NCT05000002",
       "citation": "Example Cancer Center (MOCK). A Phase 3 Study (MOCK DATA) of Hormone Therapy Timing in Early Breast Cancer. ClinicalTrials.gov ID: NCT05000002. Last updated 2026-10-02. Available from: https://clinicaltrials.gov/study/NCT05000002",
-      "score": 0.0315
+      "score": 0.0315,
+      "match": {
+        "age": "ok",
+        "sex": "ok",
+        "mentioned_in_requirements": [],
+        "mentioned_in_exclusions": [
+          {
+            "term": "pregnant",
+            "criterion": "Pregnant or breastfeeding"
+          }
+        ],
+        "possible_conflicts": [],
+        "ignored_terms": [],
+        "summary_label": "Check with study team",
+        "label_text": "Check with study team — they decide who can join"
+      }
     },
     {
       "nct_id": "NCT05000003",
@@ -53,7 +83,22 @@
       "nearest_site": null,
       "url": "https://clinicaltrials.gov/study/NCT05000003",
       "citation": "Example University Medical School (MOCK). A Behavioral Study (MOCK DATA) of an Exercise Program During Breast Cancer Treatment. ClinicalTrials.gov ID: NCT05000003. Last updated 2026-08-21. Available from: https://clinicaltrials.gov/study/NCT05000003",
-      "score": 0.0297
+      "score": 0.0297,
+      "match": {
+        "age": "ok",
+        "sex": "ok",
+        "mentioned_in_requirements": [],
+        "mentioned_in_exclusions": [
+          {
+            "term": "pregnant",
+            "criterion": "Pregnant or breastfeeding"
+          }
+        ],
+        "possible_conflicts": [],
+        "ignored_terms": [],
+        "summary_label": "Check with study team",
+        "label_text": "Check with study team — they decide who can join"
+      }
     },
     {
       "nct_id": "NCT05000004",
@@ -73,7 +118,22 @@
       },
       "url": "https://clinicaltrials.gov/study/NCT05000004",
       "citation": "Example Imaging Institute (MOCK). A Phase 1/2 Study (MOCK DATA) of an Imaging Method to Detect Breast Tumors Early. ClinicalTrials.gov ID: NCT05000004. Last updated 2026-07-30. Available from: https://clinicaltrials.gov/study/NCT05000004",
-      "score": 0.0281
+      "score": 0.0281,
+      "match": {
+        "age": "ok",
+        "sex": "ok",
+        "mentioned_in_requirements": [],
+        "mentioned_in_exclusions": [
+          {
+            "term": "pregnant",
+            "criterion": "Pregnant or breastfeeding"
+          }
+        ],
+        "possible_conflicts": [],
+        "ignored_terms": [],
+        "summary_label": "Check with study team",
+        "label_text": "Check with study team — they decide who can join"
+      }
     },
     {
       "nct_id": "NCT05000005",
@@ -88,7 +148,22 @@
       "nearest_site": null,
       "url": "https://clinicaltrials.gov/study/NCT05000005",
       "citation": "Example Survivorship Network (MOCK). A Behavioral Study (MOCK DATA) of a Survivorship Care Plan for Women With Breast Cancer. ClinicalTrials.gov ID: NCT05000005. Last updated 2026-10-10. Available from: https://clinicaltrials.gov/study/NCT05000005",
-      "score": 0.0264
+      "score": 0.0264,
+      "match": {
+        "age": "ok",
+        "sex": "ok",
+        "mentioned_in_requirements": [],
+        "mentioned_in_exclusions": [
+          {
+            "term": "pregnant",
+            "criterion": "Pregnant or breastfeeding"
+          }
+        ],
+        "possible_conflicts": [],
+        "ignored_terms": [],
+        "summary_label": "Check with study team",
+        "label_text": "Check with study team — they decide who can join"
+      }
     }
   ]
 }

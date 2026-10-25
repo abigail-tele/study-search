@@ -75,9 +75,9 @@ You are the orchestrator. Plan, delegate, verify. Keep your own context small.
 - After each phase: test-runner → reviewer → fix → commit → update `AI_USE.md` (via grunt).
 - If blocked on something only a human can do (portal registration, GPU training run, eligibility), stop and list it clearly.
 
-## Human-owned work (do NOT do these for the team)
-Mark with `# HUMAN-WRITTEN` and leave a clear stub + tests if asked to scaffold:
+## Formerly human-owned work
+On 2026-10-24 the team asked Claude Code to implement these (originally reserved for team members):
 - `search.py::reciprocal_rank_fusion`
 - `summarize.py::faithfulness_check`
 - `taxonomy.py::detect_cancer_types`
-These are the parts team members write and explain themselves, so the project shows real personal effort. Write the tests for them; review their code when asked.
+They are AI-written and must be logged as such in `AI_USE.md`. Team members must read them, be able to explain every line to judges, and record their review in `AI_USE.md`. Keep their docstrings explaining WHY.

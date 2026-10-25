@@ -17,7 +17,7 @@ Every dependency and data source used by this project. The Version column shows 
 | transformers | 5.20.2 (min >=4.41.0) | Apache-2.0 | https://pypi.org/project/transformers/ | Loads and runs flan-t5-base for plain-language rewriting |
 | torch | 2.14.1+cpu (min >=2.3.0) | Combined expression per package metadata: Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT (all permissive) | https://pypi.org/project/torch/ | Deep learning backend for embeddings and T5 training/inference |
 | sentencepiece | 0.2.2 (min >=0.2.0) | Apache-2.0 | https://pypi.org/project/sentencepiece/ | Tokenizer required by flan-t5 |
-| rapidfuzz | 3.14.6 (min >=3.9.0) | MIT | https://pypi.org/project/rapidfuzz/ | Fuzzy string matching for cancer-type detection (planned for `taxonomy.py`; not imported yet) |
+| rapidfuzz | 3.14.6 (min >=3.9.0) | MIT | https://pypi.org/project/rapidfuzz/ | Fuzzy string matching for cancer-type detection (used in `backend/taxonomy.py` for misspelled cancer names) |
 | rouge-score | 0.1.2 (min >=0.1.2) | Apache-2.0 | https://pypi.org/project/rouge-score/ | ROUGE-L evaluation of generated summaries |
 | pytest | 9.1.1 (min >=8.0.0) | MIT | https://pypi.org/project/pytest/ | Test suite |
 

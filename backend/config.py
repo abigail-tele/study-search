@@ -4,13 +4,16 @@ Why one file: thresholds and paths change while we tune the app, and judges
 should be able to see every "magic number" in one place. No other module
 should hard-code a path, threshold, or k value.
 """
+import os
 from pathlib import Path
 
 # --- Paths -----------------------------------------------------------------
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT_DIR / "data"
 RAW_DIR = DATA_DIR / "raw"  # cached downloads (API pages, PDQ HTML); git-ignored
-DB_PATH = DATA_DIR / "trials.db"
+DEFAULT_DB_PATH = DATA_DIR / "trials.db"      # full offline database (indexer/pipeline write here)
+SHIP_DB_PATH = DATA_DIR / "trials_ship.db"    # slim read-only copy built by pipeline/make_ship_db.py for deployment
+DB_PATH = Path(os.environ.get("STUDY_SEARCH_DB", str(DEFAULT_DB_PATH)))  # deployment points this at the ship DB
 FAISS_INDEX_PATH = DATA_DIR / "faiss.index"
 FAISS_ROWMAP_PATH = DATA_DIR / "faiss_rowmap.json"
 CANCER_TYPES_PATH = DATA_DIR / "cancer_types.json"
@@ -94,6 +97,13 @@ RADIUS_OPTIONS_MI = (25, 50, 100, 250)
 EMBED_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 TYPE_DETECT_FUZZY_THRESHOLD = 85      # rapid/fuzzy string match score (0-100)
 TYPE_DETECT_EMBED_THRESHOLD = 0.55    # cosine similarity for embedding fallback
+# The embedding fallback only runs if the query also contains one of these cancer cues. Why: MiniLM scores
+# "stomach ache" 0.63 against "stomach cancer" (same organ), so similarity alone cannot tell a symptom from a cancer.
+TYPE_DETECT_CUE_REGEX = (
+    r"cancer|tumou?r|carcinom|neoplas|malignan|leuka?emi|lymphom|myelom|sarcom|melanom|gliom|blastom|"
+    r"metasta|oncolog|chemo|radiation|lump|growth|stage \d|\bstage (?:i|ii|iii|iv)\b|"
+    r"\b(?:egfr|her2|kras|braf|alk|brca\d?|psa|nsclc|sclc)\b"
+)
 
 # --- PDQ training data -----------------------------------------------------
 PDQ_ALIGN_SIM_THRESHOLD = 0.60  # min cosine similarity to keep a paragraph pair
@@ -145,6 +155,17 @@ PDQ_COMBINED_MIN_PARA_SIM = 0.70  # paragraph pairs at least this similar are wh
 PDQ_SENT_PATIENT_WINDOW = 2     # patient side: single sentence or 2-sentence window
 RANDOM_SEED = 42
 
+# --- Evaluation (pipeline/evaluate.py) ---------------------------------------
+EVAL_RETRIEVAL_CSV = ROOT_DIR / "results" / "eval_retrieval.csv"
+EVAL_JSON = ROOT_DIR / "results" / "eval_summary.json"
+EVAL_DOC_PATH = ROOT_DIR / "docs" / "EVAL.md"
+BATCH_SUMMARY_STATS_PATH = DATA_DIR / "batch_summary_stats.json"  # written by pipeline/batch_summarize.py
+EVAL_TOP_K = 10                 # precision / recall depth
+EVAL_HIT_K = 5                  # hit@k depth
+EVAL_LATENCY_REPEATS = 5        # timed runs per query per path (after one warm-up pass)
+EVAL_LATENCY_ZIP = "10001"      # ZIP used for the "with ZIP filter" latency rows
+EVAL_LATENCY_RADIUS_MI = 100
+
 # --- Model -----------------------------------------------------------------
 BASE_MODEL_NAME = "google/flan-t5-base"
 TASK_PREFIX = "simplify: "
@@ -169,11 +190,20 @@ TRAIN_BEST_CHECKPOINT_NAME = "flan-t5-pdq-best"  # winner of the experiments in 
 # --- Summarizer (backend/summarize.py) ---------------------------------------
 SUMMARY_MODEL_DIR = CHECKPOINT_DIR / TRAIN_BEST_CHECKPOINT_NAME      # preferred checkpoint
 SUMMARY_FALLBACK_MODEL_DIR = CHECKPOINT_DIR / TRAIN_CHECKPOINT_NAME  # used until the "best" one exists
+DRUG_LEXICON_PATH = DATA_DIR / "drug_lexicon.txt"   # drug names the suffix rules miss (faithfulness_check)
 GLOSSARY_PATH = DATA_DIR / "glossary.json"   # NCI Dictionary of Cancer Terms paraphrases (fallback wording)
 SUMMARY_BATCH_SIZE = 8              # chunks sent through the model at once (CPU-friendly)
 SUMMARY_FALLBACK_TOKENS_PER_WORD = 1.4  # token estimate when no tokenizer is loaded (tests only)
 SUMMARY_MAX_CRITERIA_PER_SIDE = 25  # criteria beyond this are shown in original (glossary-swapped) wording
 SUMMARY_MIN_CRITERION_WORDS = 3     # shorter fragments ("None") are not worth a model call
+# --- Batch summarizer (pipeline/batch_summarize.py) ---------------------------
+BATCH_GEN_PIECES = 128              # pieces per GPU generate() call (sorted by length so padding stays small)
+BATCH_DTYPE = "bfloat16"            # GPU precision for the offline run (the live CPU path stays float32)
+BATCH_TRIALS_PER_COMMIT = 100       # trials generated, then committed to SQLite together (also the resume granularity)
+BATCH_STATUS_ORDER = ("RECRUITING", "NOT_YET_RECRUITING", "ACTIVE_NOT_RECRUITING", "ENROLLING_BY_INVITATION")  # generation order; unlisted statuses go last
+BATCH_DB_WAIT_SECONDS = 600         # wait this long for a locked trials.db (the API and eval scripts read it too)
+BATCH_STATS_PATH = DATA_DIR / "batch_summary_stats.json"   # per-check pass/fallback counts from the check stage
+BATCH_GUARD_SAMPLE_TRIALS = 1500    # trials used to measure the guard-only pass rate (it embeds sentences, so it is sampled)
 READING_LEVEL_DECIMALS = 1
 SUMMARY_MIN_KEPT_FRACTION = 0.5     # if unsupported/boilerplate sentences are dropped, keep the rest only when at least this share of the output survives
 
@@ -221,3 +251,13 @@ FEWSHOT_MAX_SOURCE_WORDS = 60       # shots are drawn from short train pairs
 
 # --- UI text ---------------------------------------------------------------
 DISCLAIMER = "For education, not medical advice."
+
+
+# --- "About you" matching (backend/match.py) ---------------------------------
+MATCH_SIM_THRESHOLD = 0.50      # min MiniLM cosine between a user's term and a criterion (starting guess; tune on real trials)
+MATCH_MAX_TERMS = 10            # most condition terms we look at
+MATCH_MAX_TERM_CHARS = 60       # longer terms are cut to this
+MATCH_MAX_CONDITIONS_CHARS = 600  # API limit for the free-text box
+MATCH_MAX_PER_TERM = 3          # most criteria listed per term per side
+MATCH_CRITERION_MAX_CHARS = 400  # longer criteria are phrase-matched only (a paragraph's vector says little)
+MATCH_CACHE_SIZE = 256          # trials whose criterion vectors we keep in memory (public text only, never user text)

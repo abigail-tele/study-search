@@ -2,21 +2,87 @@
 
 Real numbers only. Each section is filled in by `pipeline/evaluate.py` or by a human run; do not write estimates here.
 
-## Retrieval (hit@5 hybrid vs keyword)
+## Retrieval (keyword vs meaning vs hybrid)
 
-TODO: real numbers only.
+Measured by `python -m pipeline.evaluate` on the 25 lay queries in `data/test_queries.json`, inside the same candidate set `search()` uses (tagged with the query's expected types, status RECRUITING, no age/ZIP filter). Keyword = FTS5 bm25 top 50; meaning = FAISS/MiniLM top 50; hybrid = reciprocal rank fusion of the two.
+
+**Proxy metrics (automatic, no human labels).** A result counts if its stored cancer tags include one of the query's expected types. This checks the ranking stays on the right cancer; it does NOT prove the best trial was found, so it is not hit@5. Because candidates are already restricted to trials tagged with the expected types (rule 1), these proxies are 1.0 whenever a ranking returns anything: they confirm the type filter works and that no query comes back empty, nothing more. Ranking quality is only measured by the true metrics below.
+
+| system | type precision@10 (proxy) | type hit@5 (proxy) | queries with no results |
+|---|---|---|---|
+| keyword | 1.000 | 1.000 | 0 / 25 |
+| meaning | 1.000 | 1.000 | 0 / 25 |
+| hybrid | 1.000 | 1.000 | 0 / 25 |
+
+**True metrics (need human `relevant_ncts`).**
+
+| system | hit@5 | MRR | recall@10 | labelled queries |
+|---|---|---|---|---|
+| keyword | pending: relevant_ncts not filled in yet | - | - | 0 |
+| meaning | pending: relevant_ncts not filled in yet | - | - | 0 |
+| hybrid | pending: relevant_ncts not filled in yet | - | - | 0 |
 
 ## Off-topic redirect
 
-TODO: real numbers only.
+- Off-topic queries redirected (no cancer type detected, chips returned): **10/10**
+- On-topic recall (lay queries where any cancer type was detected): **1.000** of 25
+- Lay queries where a detected type is one of the expected types: **1.000** of 25
 
 ## Summaries (ROUGE-L, reading level)
 
-TODO: real numbers only.
+Copied from `results/baselines_results.csv` (held-out PDQ test split, produced once by `pipeline/baselines.py`; not recomputed here). Full model comparison is further down.
 
-## Faithfulness pass rate
+| system | ROUGE-L F1 | key-term P / R | support | boilerplate % | FK out (src 16.2) |
+|---|---|---|---|---|---|
+| copy-source | 0.205 | 1.000 / 1.000 | 1.000 | 0.0 | 16.2 |
+| flan-t5-pdq-clean-sent | 0.240 | 1.000 / 0.237 | 0.919 | 14.0 | 12.4 |
+| flan-t5-pdq-lr1e4-s70 | 0.231 | 1.000 / 0.197 | 0.804 | 27.2 | 12.1 |
+| zero-shot-instruct | 0.204 | 0.985 / 0.390 | 0.979 | 0.0 | 15.5 |
 
-TODO: real numbers only.
+## Faithfulness pass rate (batch summary pipeline)
+
+From `data/batch_summary_stats.json` (written by `pipeline/batch_summarize.py`): pieces whose model rewrite was shown versus replaced by the glossary-swapped original, with the reasons.
+
+| item | value |
+|---|---|
+| model_version | flan-t5-pdq-best@0d5c3292 |
+| checked_at | 2026-10-24T23:38:28+00:00 |
+| faithfulness_check_implemented | False |
+| trials.checked | 200 |
+| trials.fallback_used | 200 |
+| real_run.pieces_total | 2570 |
+| real_run.shown_as_model_text | 0 |
+| real_run.shown_model_text_trimmed | 0 |
+| real_run.fell_back.empty_output | 0 |
+| real_run.fell_back.faithfulness_check | 2570 |
+| real_run.fell_back.guards_whole_piece | 0 |
+| real_run.guard_sentences_dropped.support | 0 |
+| real_run.guard_sentences_dropped.boilerplate_risk_definition | 0 |
+| real_run.guard_sentences_dropped.direction | 0 |
+| real_run.model_text_rate | 0.0 |
+| guard_only.note | what would be shown if faithfulness_check passed everything; sampled, never stored |
+| guard_only.sample_trials | 200 |
+| guard_only.pieces_total | 2570 |
+| guard_only.shown_as_model_text | 1676 |
+| guard_only.shown_model_text_trimmed | 21 |
+| guard_only.fell_back.empty_output | 0 |
+| guard_only.fell_back.faithfulness_check | 0 |
+| guard_only.fell_back.guards_whole_piece | 894 |
+| guard_only.guard_sentences_dropped.support | 512 |
+| guard_only.guard_sentences_dropped.boilerplate_risk_definition | 566 |
+| guard_only.guard_sentences_dropped.direction | 101 |
+| guard_only.model_text_rate | 0.6521 |
+
+## Latency
+
+Warm (one untimed pass first), 5 timed runs per query, milliseconds. A run = candidate filter + one ranking + building the result cards; RRF is arithmetic on at most 100 ids and is not included. With-ZIP rows use ZIP 10001 and a 100-mile radius. Measured on the developer PC (CPU search), so the host will differ.
+
+| path | p50 ms | p95 ms | runs |
+|---|---|---|---|
+| keyword/no_zip | 41.1 | 156.3 | 125 |
+| keyword/with_zip | 255.8 | 380.9 | 125 |
+| meaning/no_zip | 17.0 | 41.2 | 125 |
+| meaning/with_zip | 201.6 | 233.7 | 125 |
 
 ## Training experiments (fixed val set, 125 pairs)
 

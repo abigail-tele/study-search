@@ -52,11 +52,34 @@
             <option value="">Any</option>
           </select>
         </div>
-        <div class="field">
-          <label for="age">Patient age (optional)</label>
-          <input id="age" type="number" min="0" max="120" inputmode="numeric">
-        </div>
       </div>
+
+      <details id="about-you" class="about-you">
+        <summary>About you (optional)</summary>
+        <fieldset>
+          <legend class="sr-only">About you (optional)</legend>
+          <p class="help" id="about-help">Add your details to see how each trial lines up with them. <strong>Not saved. Only used for this search.</strong> The study team always decides who can join.</p>
+          <div class="about-grid">
+            <div class="field">
+              <label for="age">Age (years)</label>
+              <input id="age" type="number" min="0" max="120" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label for="sex">Sex</label>
+              <select id="sex">
+                <option value="">Prefer not to say</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="conditions">Conditions and history</label>
+            <textarea id="conditions" rows="3" maxlength="600" aria-describedby="conditions-help"></textarea>
+            <span id="conditions-help" class="help">For example: HER2 positive, stage 3, had chemotherapy, diabetes, pregnant. Separate with commas. Not saved. Only used for this search.</span>
+          </div>
+        </fieldset>
+      </details>
 
       <button type="submit" class="btn primary">Search trials</button>
     </form>
@@ -64,6 +87,13 @@
 
     <div id="results-area" hidden>
       <h2 id="results-h" tabindex="-1">Results</h2>
+      <div id="sort-field" class="field sort-field" hidden>
+        <label for="sort">Sort</label>
+        <select id="sort">
+          <option value="relevance">Best search match first</option>
+          <option value="match">Best match for you first</option>
+        </select>
+      </div>
       <div id="offtopic" class="offtopic" hidden>
         <p><strong>We only cover cancer trials.</strong> Try one of these types:</p>
         <div id="offtopic-chips" class="chips"></div>

@@ -44,19 +44,33 @@ async function mockMatches(q, cancer) {
   return types.some(t => t.lay_terms.concat([t.label]).some(term => text.includes(term.toLowerCase())));
 }
 
-/* params: {q, cancer, zip, radius_mi, status, age}; empty values are omitted. */
+const MATCH_ORDER = { "Possible match": 0, "Check with study team": 1, "Likely not a match": 2 };
+
+/* params: {q, cancer, zip, radius_mi, status, age, sex, conditions, sort}; empty values are omitted.
+   Rule 8: age/sex/conditions travel only in this request's query string; nothing is stored. */
 async function fetchSearch(params) {
   if (USE_MOCK) {
     const hit = await mockMatches(params.q || "", params.cancer);
-    return getJSON(MOCK_BASE + (hit ? "search.json" : "search-offtopic.json"));
+    const data = await getJSON(MOCK_BASE + (hit ? "search.json" : "search-offtopic.json"));
+    if (params.sort === "match" && data.results) {   // same stable ordering the server uses
+      data.results = data.results.map((r, i) => [r, i])
+        .sort((a, b) => ((MATCH_ORDER[a[0].match && a[0].match.summary_label] ?? 1) - (MATCH_ORDER[b[0].match && b[0].match.summary_label] ?? 1)) || a[1] - b[1])
+        .map(x => x[0]);
+    }
+    return data;
   }
   const qs = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => { if (v !== "" && v != null) qs.set(k, v); });
   return getJSON("/api/search?" + qs.toString());
 }
 
-async function fetchStudy(nct) {
-  return getJSON(USE_MOCK ? MOCK_BASE + "study-NCT05000001.json" : "/api/study/" + encodeURIComponent(nct));
+/* profile: {age, sex, conditions, zip} (all optional). Sent only as query parameters for this one request. */
+async function fetchStudy(nct, profile) {
+  if (USE_MOCK) return getJSON(MOCK_BASE + "study-NCT05000001.json");
+  const qs = new URLSearchParams();
+  Object.entries(profile || {}).forEach(([k, v]) => { if (v !== "" && v != null) qs.set(k, v); });
+  const tail = qs.toString();
+  return getJSON("/api/study/" + encodeURIComponent(nct) + (tail ? "?" + tail : ""));
 }
 
 async function fetchSummary(nct) {
@@ -65,7 +79,7 @@ async function fetchSummary(nct) {
   try { return await getJSON("/api/summary/" + encodeURIComponent(nct)); }
   catch (e) {
     /* 404 = no summary generated yet: say so kindly; the key facts above still show. */
-    if (/not available/i.test(e.message)) throw new Error("A plain-language summary is not ready for this study yet. The key facts above and the link to ClinicalTrials.gov still work.");
+    if (/not available/i.test(e.message)) throw new Error("A plain-language summary is not ready for this study yet. The ClinicalTrials.gov page for the study still has the full details.");
     throw e;
   }
 }

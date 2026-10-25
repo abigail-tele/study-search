@@ -1,11 +1,8 @@
-"""Tests for backend.taxonomy. The detect_* tests are xfail(strict) until a human
-implements detect_cancer_types; remove the marker then (strict=True will remind you)."""
+"""Tests for backend.taxonomy (loaders and cancer-type detection)."""
 import pytest
 
 from backend import taxonomy
 
-HUMAN = pytest.mark.xfail(raises=NotImplementedError, strict=True,
-                          reason="HUMAN-WRITTEN: detect_cancer_types")
 
 BLOOD = {"leukemia_all", "leukemia_aml", "leukemia_cll", "leukemia_cml",
          "lymphoma_hodgkin", "lymphoma_nhl", "multiple_myeloma"}
@@ -44,13 +41,11 @@ OFF_TOPIC = ["knee pain", "diabetes", "all of my family", "flu shot", "how do I 
              "broken arm", "", "all", "hello"]
 
 
-@HUMAN
 @pytest.mark.parametrize("q", OFF_TOPIC)
 def test_off_topic_returns_empty(q):
     assert taxonomy.detect_cancer_types(q) == []
 
 
-@HUMAN
 @pytest.mark.parametrize("q,expected", [
     ("breast cancer", {"breast"}),
     ("lump in my breast", {"breast"}),
@@ -70,59 +65,49 @@ def test_single_type_queries(q, expected):
     assert set(taxonomy.detect_cancer_types(q)) == expected
 
 
-@HUMAN
 def test_lung_cancer_is_both_lung_types():
     assert set(taxonomy.detect_cancer_types("lung cancer")) == {"lung_nsclc", "lung_sclc"}
 
 
-@HUMAN
 def test_blood_cancer_is_seven_types():
     assert set(taxonomy.detect_cancer_types("blood cancer")) == BLOOD
     assert len(taxonomy.detect_cancer_types("blood cancer")) == 7
 
 
-@HUMAN
 def test_lymphoma_umbrella():
     assert set(taxonomy.detect_cancer_types("lymphoma")) == {"lymphoma_hodgkin", "lymphoma_nhl"}
 
 
-@HUMAN
 def test_no_duplicates_and_known_ids():
     ids = {t["id"] for t in taxonomy.load_cancer_types()}
     out = taxonomy.detect_cancer_types("blood cancer and leukemia")
     assert len(out) == len(set(out)) and set(out) <= ids
 
 
-@HUMAN
 def test_bare_all_never_matches_leukemia():
     assert "leukemia_all" not in taxonomy.detect_cancer_types("all of my family has diabetes")
     assert taxonomy.detect_cancer_types("all") == []
 
 
-@HUMAN
 def test_all_leukemia_phrase_matches():
     assert "leukemia_all" in taxonomy.detect_cancer_types("all leukemia")
 
 
-@HUMAN
 def test_mixed_query_unions_types():
     assert set(taxonomy.detect_cancer_types("breast and lung cancer")) == {
         "breast", "lung_nsclc", "lung_sclc"}
 
 
-@HUMAN
 def test_small_cell_lung_cancer_includes_sclc():
     out = taxonomy.detect_cancer_types("small cell lung cancer")
     assert "lung_sclc" in out
 
 
-@HUMAN
 @pytest.mark.parametrize("q", ["small", "camel", "ball", "a small camel and a ball"])
 def test_short_acronyms_not_matched_inside_words(q):
     out = set(taxonomy.detect_cancer_types(q))
     assert not out & {"leukemia_aml", "leukemia_cml", "leukemia_all"}
 
 
-@HUMAN
 def test_aml_whole_word_matches():
     assert "leukemia_aml" in taxonomy.detect_cancer_types("AML")

@@ -14,7 +14,7 @@ Today: Fri Oct 23, 2026. Code freeze: Sun Oct 25, 6 pm. Submit: Sun night (buffe
 3. Backend detects cancer type(s). None → "We only cover cancer trials" + chips.
 4. Hybrid search inside detected types, filters applied, top 10.
 5. Citation cards: title, NCT ID, status badge (word + color), phase, ≤3 cancer tags, nearest site + distance (if ZIP), sponsor, last updated, "View on ClinicalTrials.gov" (`https://clinicaltrials.gov/study/{NCT}`, new tab), "Copy citation", "Explain this study".
-6. Summary panel: Key facts (API fields) · What this study is testing (model) · Who can join (model; include/exclude bullets) · Original text (collapsible) · reading level before→after · faithfulness check mark or "showing original wording".
+6. Summary panel: Study at a glance (API fields) · What this study is testing (model) · What they're looking for / Who can't join (criteria; highlighted if "About you" was filled in) · Key facts (API fields) · Original text (collapsible) · reading level before→after · faithfulness check mark or "showing original wording".
 7. Copy citation, print view, fixed "Questions to ask your doctor" template.
 8. Back to results with filters kept.
 
@@ -25,11 +25,14 @@ Citation string:
 | Endpoint | Params | Returns |
 |---|---|---|
 | GET /api/cancer-types | — | `[{id, label, lay_terms[]}]` |
-| GET /api/search | q, cancer?, zip?, radius_mi?, status?, age? | `{query, detected_types[], off_topic, suggested_types[{id,label}], results[]}` — `suggested_types` = cancer chips, filled when off_topic (rule 1), else `[]` |
-| GET /api/study/{nct} | — | key facts object |
+| GET /api/search | q, cancer?, zip?, radius_mi?, status?, age?, sex? (female/male/any), conditions? (<=600 chars), sort? (relevance/match) | `{query, detected_types[], off_topic, suggested_types[{id,label}], results[]}` — `suggested_types` = cancer chips, filled when off_topic (rule 1), else `[]` |
+| GET /api/study/{nct} | age?, sex?, conditions?, zip? | key facts object + `overview` + `criteria` + `match` (null without a profile) |
 | GET /api/summary/{nct} | — | summary object |
 
 Search result item: `nct_id, title, status, phase, cancer_tags[], sponsor, last_updated, nearest_site{city,state,distance_mi}|null, url, citation, score`
+"About you" (optional, never stored or logged, rule 8; query params only, never in the URL hash): when age, sex or conditions is given, each search result gets `match` and `sort=match` lists "Possible match" first (relevance order kept inside each group).
+`match`: `{age: ok|outside|unknown, sex: ok|no|unknown, mentioned_in_requirements[{term,criterion}], mentioned_in_exclusions[{term,criterion}], possible_conflicts[{term,criterion}], ignored_terms[], summary_label: "Possible match"|"Check with study team"|"Likely not a match", label_text}`. Never says "eligible"; the study team decides.
+`overview` (study panel top, stored API fields only, rule 2): `{sentence, facts[{label,value}]}`. `criteria`: `{include[], exclude[]}` of `{text (original + glossary), original, flag: match|concern|null, terms[]}`.
 Summary object: `nct_id, what_is_tested, who_can_join{include[],exclude[]}, original{summary,eligibility}, faithful, fallback_used, reading_level{before,after}, model_version, generated_at`
 Errors: `{"error": "..."}` + HTTP status. Off-topic is not an error.
 

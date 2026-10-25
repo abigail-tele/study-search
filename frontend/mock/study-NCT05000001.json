@@ -4,8 +4,13 @@
   "official_title": "A Randomized Phase 2 Study (MOCK DATA) of a Targeted Medicine Added to Chemotherapy for HER2-Positive Breast Cancer",
   "status": "RECRUITING",
   "phase": "PHASE2",
-  "conditions": ["Breast Cancer", "HER2-Positive Breast Cancer"],
-  "cancer_tags": ["breast"],
+  "conditions": [
+    "Breast Cancer",
+    "HER2-Positive Breast Cancer"
+  ],
+  "cancer_tags": [
+    "breast"
+  ],
   "min_age": "18 Years",
   "max_age": null,
   "sex": "ALL",
@@ -28,11 +33,111 @@
       "state": "IL",
       "zip": "61602",
       "lat": 40.6936,
-      "lon": -89.5890
+      "lon": -89.589
     }
   ],
   "url": "https://clinicaltrials.gov/study/NCT05000001",
   "citation": "Example Cancer Center (MOCK). A Randomized Phase 2 Study (MOCK DATA) of a Targeted Medicine Added to Chemotherapy for HER2-Positive Breast Cancer. ClinicalTrials.gov ID: NCT05000001. Last updated 2026-09-14. Available from: https://clinicaltrials.gov/study/NCT05000001",
   "brief_summary": "This study compares a new targeted medicine added to standard chemotherapy with standard chemotherapy alone. People with HER2-positive breast cancer at Stage II or Stage III may take part. Participants receive treatment for about 1 year and are checked with scans and blood tests every 3 months. The main goal is to learn whether the new medicine helps more people stay free of cancer for longer. (MOCK DATA: this is fake text for development only.)",
-  "eligibility_text": "Inclusion Criteria:\n* Adults aged 18 years or older\n* Confirmed HER2-positive breast cancer, Stage II or Stage III\n* ECOG performance status 0 or 1\n\nExclusion Criteria:\n* Prior treatment with a HER2-targeted therapy\n* Heart function (left ventricular ejection fraction) below 50%\n* Pregnant or breastfeeding"
+  "eligibility_text": "Inclusion Criteria:\n* Adults aged 18 years or older\n* Confirmed HER2-positive breast cancer, Stage II or Stage III\n* ECOG performance status 0 or 1\n\nExclusion Criteria:\n* Prior treatment with a HER2-targeted therapy\n* Heart function (left ventricular ejection fraction) below 50%\n* Pregnant or breastfeeding",
+  "overview": {
+    "sentence": "A Phase 2 study, now recruiting, for people ages 18 and older with Breast Cancer and HER2-Positive Breast Cancer. Run by Example Cancer Center (MOCK) at 2 sites (nearest: Springfield, IL — 12 mi).",
+    "facts": [
+      {
+        "label": "Status",
+        "value": "Now recruiting"
+      },
+      {
+        "label": "Phase",
+        "value": "Phase 2"
+      },
+      {
+        "label": "Ages",
+        "value": "ages 18 and older"
+      },
+      {
+        "label": "Who",
+        "value": "All sexes"
+      },
+      {
+        "label": "Planned size",
+        "value": "120 people"
+      },
+      {
+        "label": "Sites",
+        "value": "2"
+      },
+      {
+        "label": "Nearest site",
+        "value": "Springfield, IL — 12 mi"
+      },
+      {
+        "label": "Sponsor",
+        "value": "Example Cancer Center (MOCK)"
+      }
+    ]
+  },
+  "match": {
+    "age": "ok",
+    "sex": "ok",
+    "mentioned_in_requirements": [
+      {
+        "term": "her2 positive",
+        "criterion": "Confirmed HER2-positive breast cancer, Stage II or Stage III"
+      }
+    ],
+    "mentioned_in_exclusions": [],
+    "possible_conflicts": [],
+    "ignored_terms": [],
+    "summary_label": "Possible match",
+    "label_text": "Possible match — the study team decides who can join"
+  },
+  "criteria": {
+    "include": [
+      {
+        "text": "Adults aged 18 years or older",
+        "original": "Adults aged 18 years or older",
+        "flag": null,
+        "terms": []
+      },
+      {
+        "text": "Confirmed HER2-positive breast cancer, Stage II or Stage III",
+        "original": "Confirmed HER2-positive breast cancer, Stage II or Stage III",
+        "flag": "match",
+        "terms": [
+          "her2 positive"
+        ]
+      },
+      {
+        "text": "ECOG performance status 0 or 1",
+        "original": "ECOG performance status 0 or 1",
+        "flag": null,
+        "terms": []
+      }
+    ],
+    "exclude": [
+      {
+        "text": "Prior treatment with a HER2-targeted therapy",
+        "original": "Prior treatment with a HER2-targeted therapy",
+        "flag": "concern",
+        "terms": [
+          "her2 positive"
+        ]
+      },
+      {
+        "text": "Heart function (left ventricular ejection fraction) below 50%",
+        "original": "Heart function (left ventricular ejection fraction) below 50%",
+        "flag": null,
+        "terms": []
+      },
+      {
+        "text": "Pregnant or breastfeeding",
+        "original": "Pregnant or breastfeeding",
+        "flag": "concern",
+        "terms": [
+          "pregnant"
+        ]
+      }
+    ]
+  }
 }

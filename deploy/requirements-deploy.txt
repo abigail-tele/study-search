@@ -1,0 +1,11 @@
+# Runtime-only packages for the container. Training/scraping/test packages
+# (beautifulsoup4, lxml, httpx, rouge-score, pytest) are left out to keep the image small.
+# torch is installed separately from the PyTorch CPU wheel index (see Dockerfile).
+fastapi>=0.110.0
+uvicorn>=0.29.0
+numpy>=1.26.0
+faiss-cpu>=1.8.0
+sentence-transformers>=3.0.0
+transformers>=4.41.0
+sentencepiece>=0.2.0
+rapidfuzz>=3.9.0
