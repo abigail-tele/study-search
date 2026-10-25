@@ -178,3 +178,44 @@ Fixed val (125 pairs): s70 ROUGE-L F1 0.221, token 0.337/0.217/0.264, key-term 1
 Test (136, run once for the new winner only): clean-sent ROUGE-L F1 0.240, token 0.331/0.251/0.285, key-term 1.000/0.237/0.384, support 0.919, boilerplate 14.0%, FK 12.4 (s70 on the same patterns: 0.231, 0.337/0.218/0.265, 1.000/0.197/0.328, 0.804, 27.2%, 12.1).
 
 Decision: key-term precision differs by 0.004 (about one term; treated as a tie, as before), then clean-sent has better support (0.843 vs 0.826) and much lower boilerplate (13.8% vs 21.3%), at the cost of lower key-term recall (0.534 vs 0.582). A strict reading of the rule (key-term precision first, no tolerance) would keep s70. `checkpoints/flan-t5-pdq-best` is now a copy of `flan-t5-pdq-clean-sent`. Cleaning helped on support and boilerplate but did not fix content dropping (recall about 0.5) or the remaining 14-16% of outputs with a generic opener.
+
+## Bigger models and in-domain data (added later)
+
+**New data.** `pipeline/ctgov_pairs.py` aligns each trial's brief-summary sentence (or 2-sentence window) to the best 1-3 consecutive
+detailed-description sentences (MiniLM cosine >= 0.70) from ClinicalTrials.gov (public domain). Kept only if the target is >= 2.0 FK grades
+easier, <= 1.5x as long, adds no number/marker/stage/drug, has no PDQ boilerplate; then deduplicated. Every trial-set NCT is excluded (25 of its 40 trials had both texts);
+train/val split by NCT id. Of 115,295 candidates from 16,493 trials: low similarity 63,739; FK drop too small 21,422; near-identical
+8,035; length ratio 5,925; new key term/number 3,164; length bounds 406; boilerplate 306; dedupe 4,425 -> **7,873 pairs** (7,143 train / 730 val,
+5,307 trials). Training used PDQ-clean (1,434 train / 239 val) plus a random 2,000 train / 250 val ctgov sample (so PDQ is not drowned out):
+3,434 train / 489 val. Caution: val loss in these runs is on the mixed val set and is not comparable with earlier PDQ-only runs.
+
+**Runs** (lr 1e-4, early stopping; trial-set = 240 pieces; guard-pass = piece has no sentence flagged by support / boilerplate / risk / definition / direction):
+
+| system | split | key-term P | R | F1 | support | boilerplate % | guard-pass % | FK out |
+|---|---|---|---|---|---|---|---|---|
+| flan-t5-pdq-clean-sent (previous best) | trials | 0.992 | 0.534 | 0.694 | 0.843 | 13.8 | 67.5 | 11.3 |
+| G flan-t5-base pdq+ctgov | trials | 0.972 | 0.684 | 0.803 | 0.951 | 5.8 | 84.6 | 13.4 |
+| H flan-t5-large pdq-clean | trials | 0.979 | 0.597 | 0.742 | 0.885 | 13.3 | 75.4 | 12.0 |
+| I flan-t5-large pdq+ctgov | trials | 0.980 | 0.741 | 0.844 | 0.945 | 2.9 | 90.8 | 14.1 |
+| J Qwen2.5-1.5B LoRA (r16) pdq+ctgov | trials | 0.580 | 0.174 | 0.268 | 0.235 | 10.0 | 18.8 | 12.4 |
+| J2 Qwen2.5-1.5B LoRA (r64, a16, lr2e-4, b8 x 3 ep) | trials | 0.518 | 0.157 | 0.241 | 0.221 | 10.8 | 16.3 | 12.4 |
+| previous best | val | 1.000 | 0.288 | 0.448 | 0.901 | 20.8 | 63.2 | 12.9 |
+| G | val | 0.991 | 0.439 | 0.608 | 0.933 | 16.8 | 71.2 | 13.4 |
+| H | val | 1.000 | 0.265 | 0.419 | 0.929 | 11.2 | 74.4 | 13.5 |
+| I | val | 1.000 | 0.324 | 0.490 | 0.950 | 8.0 | 76.0 | 13.6 |
+| J | val | 0.600 | 0.012 | 0.023 | 0.312 | 22.4 | 18.4 | 10.6 |
+| J2 | val | 0.636 | 0.028 | 0.053 | 0.378 | 25.6 | 16.8 | 10.5 |
+
+Reference: the source text reads at FK 15.4 (trials) / 15.8 (val); zero-shot-instruct has guard-pass 94.6% but FK 14.7.
+J2 sweep (batch 8 x 1 vs 3 epochs) was chosen on val loss (1.4104 vs 1.4080), not on test. Both Qwen LoRA runs write generic PDQ-style
+sentences that ignore the source (precision 0.5-0.6), so they are rejected; the cause was not investigated further.
+
+**Winner: I (flan-t5-large on PDQ-clean + ctgov).** On val it ties on key-term precision (1.000), and is best on support (0.950), boilerplate
+(8.0%), recall and guard-pass. On the trial set its key-term precision is 0.980 vs 0.992 for the previous best (a small drop), but support is
+0.945 vs 0.843, boilerplate 2.9% vs 13.8%, and 91% of pieces pass the guards vs 68%. Trade-off: it simplifies less (FK 14.1 vs 11.3 on trials;
+the ctgov targets are close in wording to their sources). Test split, run once for I only: key-term P 1.000 / R 0.308 / F1 0.471, support 0.905,
+boilerplate 7.4%, FK 13.6, ROUGE-L 0.228.
+Inference cost on CPU (12 threads, batch 1, 4 beams, trial pieces): previous best 1.5 s/piece (~9 s per trial of 6 pieces); I 4.9 s/piece
+(~30 s per trial). Summaries are pre-generated, so this only matters for the live fallback. G (flan-t5-base, same cost as the previous best) is
+the cheap alternative: guard-pass 84.6%, key-term P 0.972.
+Copied to `checkpoints/candidate-best` (not `flan-t5-pdq-best`).

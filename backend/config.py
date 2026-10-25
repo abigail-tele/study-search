@@ -276,3 +276,9 @@ CTGOV_TARGET_WINDOW = 2         # brief-summary side: 1 sentence or a 2-sentence
 CTGOV_MIN_TARGET_WORDS = 8
 CTGOV_MAX_SOURCE_WORDS = 300
 CTGOV_VAL_FRACTION = 0.10       # split by NCT id, so no trial is in both
+
+# --- LoRA chat-model runs (pipeline/train_lora.py) -----------------------------
+LORA_BASE_MODEL = "Qwen/Qwen2.5-1.5B-Instruct"   # Apache-2.0 (verify on the model card before use)
+LORA_INSTRUCTION = "Rewrite this for a patient in plain language, keeping every number, drug and requirement:"
+LORA_GRAD_ACCUM = 2             # batch 8 x accum 2 = effective 16, same as train.py
+LORA_MAX_TOKENS = 1024          # prompt + answer; sources are <= 300 words

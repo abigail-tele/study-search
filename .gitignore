@@ -15,3 +15,5 @@ data/trials_ship.db-*
 models/
 results/*
 !results/baselines_results.csv
+data/ctgov_pairs.jsonl
+data/ctgov_pairs_mix.jsonl
