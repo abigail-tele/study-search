@@ -30,7 +30,9 @@ Full plan: `docs/PLAN.md`. Status: `REPORT.md`. Last updated 2026-10-24 (Gate 3 
 ## Human to-dos (only a person can)
 - [ ] Fill in the "human review" column in `AI_USE.md` (all rows say "pending"); review and be able to explain `detect_cancer_types`, `reciprocal_rank_fusion`, `faithfulness_check`
 - [ ] License sign-off: certifi + tqdm (MPL-2.0), regex (CNRI-Python), typing_extensions + defusedxml (PSF-2.0), shellingham (ISC)
-- [ ] Hugging Face account, create the Space, log in / push (see `docs/DEPLOY.md`)
+- [x] Hugging Face account + Space `ngroborocks/CongessionalAppChallenge` created; app uploaded (Docker, 46 files)
+- [ ] Space is PAUSED: "Quota exceeded for flavor cpu-basic … limit=0" (account limit). Try a teammate's HF account, or add billing / paid CPU, then Restart (see `docs/DEPLOY.md`)
+- [ ] Delete the stray public *model* repo `ngroborocks/CongessionalAppChallenge` (created by an upload without `--repo-type space`); keep the Space
 - [ ] 3-5 human readers check the plain-language summaries; proofread `data/glossary.json`
 - [ ] Fill `relevant_ncts` in `data/test_queries.json` so true hit@5 / MRR / recall@10 can be computed
 - [ ] Click through the frontend in a real browser (keyboard only, phone width, print)

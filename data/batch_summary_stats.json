@@ -1,43 +1,126 @@
 {
   "model_version": "flan-t5-pdq-best@b34a546a-4cecc6",
-  "checked_at": "2026-10-25T05:28:41+00:00",
+  "checked_at": "2026-10-25T08:20:48+00:00",
   "faithfulness_check_implemented": true,
   "trials": {
-    "checked": 20432,
-    "fallback_used": 19676
+    "checked": 27657,
+    "fallback_used": 26547
   },
   "real_run": {
-    "pieces_total": 413998,
-    "shown_as_model_text": 277867,
-    "shown_model_text_trimmed": 3068,
+    "pieces_total": 581161,
+    "shown_as_model_text": 403335,
+    "shown_model_text_trimmed": 4294,
     "fell_back": {
       "empty_output": 1,
-      "faithfulness_check": 63732,
-      "guards_whole_piece": 72398
+      "faithfulness_check": 73745,
+      "guards_whole_piece": 104080
     },
     "guard_sentences_dropped": {
-      "support": 35681,
-      "boilerplate_risk_definition": 62482,
-      "direction": 390
+      "support": 52162,
+      "boilerplate_risk_definition": 88514,
+      "direction": 657
     },
-    "model_text_rate": 0.6712
+    "model_text_rate": 0.694
   },
   "guard_only": {
     "note": "what would be shown if faithfulness_check passed everything; sampled, never stored",
-    "sample_trials": 1612,
-    "pieces_total": 32384,
-    "shown_as_model_text": 22276,
-    "shown_model_text_trimmed": 592,
+    "sample_trials": 3458,
+    "pieces_total": 75290,
+    "shown_as_model_text": 55267,
+    "shown_model_text_trimmed": 1092,
     "fell_back": {
       "empty_output": 0,
       "faithfulness_check": 0,
-      "guards_whole_piece": 10108
+      "guards_whole_piece": 20023
     },
     "guard_sentences_dropped": {
-      "support": 3175,
-      "boilerplate_risk_definition": 5164,
-      "direction": 4728
+      "support": 7644,
+      "boilerplate_risk_definition": 12021,
+      "direction": 6710
     },
-    "model_text_rate": 0.6879
+    "model_text_rate": 0.7341
+  },
+  "parts": {
+    "note": "sum of two check runs with the same model and checks: RECRUITING + NOT_YET_RECRUITING (checked_at 2026-10-25T05:28:41+00:00), then ACTIVE_NOT_RECRUITING + ENROLLING_BY_INVITATION (check --only-new)",
+    "recruiting_not_yet_recruiting": {
+      "trials": {
+        "checked": 20432,
+        "fallback_used": 19676
+      },
+      "real_run": {
+        "pieces_total": 413998,
+        "shown_as_model_text": 277867,
+        "shown_model_text_trimmed": 3068,
+        "fell_back": {
+          "empty_output": 1,
+          "faithfulness_check": 63732,
+          "guards_whole_piece": 72398
+        },
+        "guard_sentences_dropped": {
+          "support": 35681,
+          "boilerplate_risk_definition": 62482,
+          "direction": 390
+        },
+        "model_text_rate": 0.6712
+      },
+      "guard_only": {
+        "note": "what would be shown if faithfulness_check passed everything; sampled, never stored",
+        "sample_trials": 1612,
+        "pieces_total": 32384,
+        "shown_as_model_text": 22276,
+        "shown_model_text_trimmed": 592,
+        "fell_back": {
+          "empty_output": 0,
+          "faithfulness_check": 0,
+          "guards_whole_piece": 10108
+        },
+        "guard_sentences_dropped": {
+          "support": 3175,
+          "boilerplate_risk_definition": 5164,
+          "direction": 4728
+        },
+        "model_text_rate": 0.6879
+      }
+    },
+    "active_not_recruiting_enrolling_by_invitation": {
+      "trials": {
+        "checked": 7225,
+        "fallback_used": 6871
+      },
+      "real_run": {
+        "pieces_total": 167163,
+        "shown_as_model_text": 125468,
+        "shown_model_text_trimmed": 1226,
+        "fell_back": {
+          "empty_output": 0,
+          "faithfulness_check": 10013,
+          "guards_whole_piece": 31682
+        },
+        "guard_sentences_dropped": {
+          "support": 16481,
+          "boilerplate_risk_definition": 26032,
+          "direction": 267
+        },
+        "model_text_rate": 0.7506
+      },
+      "guard_only": {
+        "note": "what would be shown if faithfulness_check passed everything; sampled, never stored",
+        "sample_trials": 1846,
+        "pieces_total": 42906,
+        "shown_as_model_text": 32991,
+        "shown_model_text_trimmed": 500,
+        "fell_back": {
+          "empty_output": 0,
+          "faithfulness_check": 0,
+          "guards_whole_piece": 9915
+        },
+        "guard_sentences_dropped": {
+          "support": 4469,
+          "boilerplate_risk_definition": 6857,
+          "direction": 1982
+        },
+        "model_text_rate": 0.7689
+      }
+    }
   }
 }

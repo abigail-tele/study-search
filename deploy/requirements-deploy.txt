@@ -1,11 +1,13 @@
 # Runtime-only packages for the container. Training/scraping/test packages
 # (beautifulsoup4, lxml, httpx, rouge-score, pytest) are left out to keep the image small.
 # torch is installed separately from the PyTorch CPU wheel index (see Dockerfile).
-fastapi>=0.110.0
-uvicorn>=0.29.0
-numpy>=1.26.0
-faiss-cpu>=1.8.0
-sentence-transformers>=3.0.0
-transformers>=4.41.0
-sentencepiece>=0.2.0
-rapidfuzz>=3.9.0
+# Pinned to the exact versions verified on Linux (Python 3.11, 2026-10-25) so a later
+# rebuild of the Space cannot pull a new major version that behaves differently.
+fastapi==0.162.0
+uvicorn==0.54.0
+numpy==2.4.6
+faiss-cpu==1.15.1
+sentence-transformers==6.2.0
+transformers==5.20.2
+sentencepiece==0.2.2
+rapidfuzz==3.14.6

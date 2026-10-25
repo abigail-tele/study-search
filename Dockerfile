@@ -22,7 +22,7 @@ RUN useradd -m -u 1000 appuser
 WORKDIR /app
 
 # CPU-only torch (~200 MB) instead of the default CUDA wheel (~2 GB+). Separate layer so it caches.
-RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
+RUN pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
 COPY deploy/requirements-deploy.txt /tmp/requirements-deploy.txt
 RUN pip install -r /tmp/requirements-deploy.txt
 

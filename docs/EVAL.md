@@ -251,3 +251,22 @@ direction. `support.direction_check` now fails any output that repeats a number 
 direction (a range with both ends kept is fine); faithfulness_check calls the same function. Effect on G: faithfulness fallbacks rose from 17,802 to 63,732 pieces
 (+45,930), and model text fell from 78.3% to 67.6% (67.1% after the last claim-phrase round: "may require", "may be done/needed", "you may have", "it may", "is very long", and an acronym defined as a thing; still above clean-sent's 61.7%). For future generation `summarize.model_input_text` spells the symbols out
 ("at least", "at most", "more than", "less than") in the model prompt only; the stored source and the checks keep the original. G's current outputs were NOT regenerated.
+
+### Extension to all trials (Oct 25, later)
+
+The summaries now cover all 27,657 trials: G was also run on the 7,225 ACTIVE_NOT_RECRUITING and ENROLLING_BY_INVITATION trials (167,163 pieces;
+`generate --status ACTIVE_NOT_RECRUITING ENROLLING_BY_INVITATION`, 37 min on the RTX 5090 for the last 6,605 trials, then `check --only-new` on the CPU,
+about 30 min). Same checkpoint, same model_version, same checks; the 20,432 existing summary rows were not touched (checksum compared before and after).
+One difference: these trials were generated after `summarize.model_input_text` was added, so their model input had >=, <=, <, > spelled out.
+
+| | first 20,432 trials | added 7,225 trials | all 27,657 |
+|---|---|---|---|
+| pieces | 413,998 | 167,163 | 581,161 |
+| pieces shown as model text | 67.1% | 75.1% | 69.4% |
+| fell back: faithfulness_check / guards / empty | 63,732 / 72,398 / 1 | 10,013 / 31,682 / 0 | 73,745 / 104,080 / 1 |
+| trials with no fallback at all | 756 (3.7%) | 354 (4.9%) | 1,110 (4.0%) |
+
+The fewer faithfulness fallbacks on the added trials (6.0% of pieces vs 15.4%) are most likely the spelled-out symbols (the comparator guard above was the
+largest cause of fallbacks); the two groups are different trials, so this is not a controlled comparison. Effective reading grade over all 27,657
+(FK, 1,000 random trials, seed 42): 14.77 shown vs 20.75 source. `data/batch_summary_stats.json` now holds the sum of both check runs plus a
+`parts` block with each run's own counts (the guard-only sample is the sum of the two runs' samples).

@@ -77,6 +77,19 @@ HF Spaces free CPU tier: 2 vCPU, 16 GB RAM, so both fit. Render free (512 MB) do
 
 Dry run of the Dockerfile's pip steps in a fresh venv (CPU torch + `deploy/requirements-deploy.txt`): 1.2 GB of site-packages (torch 543 MB, transformers 122, scipy 119). Estimate: about 1.2 GB Python layers + 0.15 GB base + 0.6 GB data = about 2.0 GB, or about 3.0 GB with the T5 checkpoint. Docker is not installed on the build machine, so `docker build` itself was never run; the Dockerfile was reviewed by hand and its install and uvicorn steps were run natively with the same offline env vars.
 
+**Linux rehearsal (2026-10-25):** the staged folder was copied to a case-sensitive Linux path (WSL), the Dockerfile's two pip steps were replayed in a fresh Python 3.11 venv, and the app was run as a non-root user with `data/`, `models/`, `backend/`, `frontend/` read-only and the same env vars. All endpoints passed (35 cancer types; search, off-topic, ZIP + "about you"; study; summary; 404s); startup 3-5 s, ~600 MB peak RAM. The versions that passed are now pinned in `deploy/requirements-deploy.txt` and the Dockerfile's torch line.
+
+## Uploading with the `hf` CLI (what we actually used)
+
+Simpler than git + LFS (large files are handled automatically). From `study-search\`, one line at a time:
+```powershell
+$S = "N:\Congressional-App-Challenge\space-upload"
+.\.venv\Scripts\hf upload <user>/<space-name> $S . --repo-type space
+```
+`--repo-type space` is essential: without it `hf` creates a separate *model* repo with the same name. Stage into a fresh folder (`-Out`) and never run anything inside it, or caches end up in the upload.
+
+**"Quota exceeded for flavor cpu-basic … limit=0" (Space shows PAUSED):** an account-side limit, not a code problem; reported by other new accounts on the Hugging Face forum in 2026. Options: run the Space under a teammate's (older) account, add billing / PRO, or choose paid CPU hardware in the Space settings.
+
 ## Render fallback
 
 New Web Service, Docker runtime, pointed at a GitHub repo containing the staged folder (with LFS). `PORT` is set by Render; health check path `/api/cancer-types`. Plan with at least 1 GB RAM.
