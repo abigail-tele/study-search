@@ -32,6 +32,7 @@ Usage:
     python -m pipeline.indexer [--types breast,lung_nsclc] [--since YYYY-MM-DD]
                                [--limit-pages N]
     python -m pipeline.indexer --retag
+    python -m pipeline.indexer --fields-backfill interventions
 """
 from __future__ import annotations
 
@@ -94,6 +95,12 @@ def parse_study(study: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, A
             "lat": geo.get("lat"), "lon": geo.get("lon"),
         })
     return rec, locs
+
+
+def parse_interventions(study: dict[str, Any]) -> list[dict[str, str | None]]:
+    """[{type, name}] from armsInterventionsModule (e.g. DRUG / 'Pembrolizumab'); [] if absent."""
+    items = study.get("protocolSection", {}).get("armsInterventionsModule", {}).get("interventions") or []
+    return [{"type": i.get("type"), "name": i.get("name")} for i in items if i.get("name")]
 
 
 # --- fetching --------------------------------------------------------------
@@ -260,6 +267,7 @@ def index_type(conn, client: httpx.Client, ctype: dict[str, Any], since: str | N
                all_types: list[dict[str, Any]] | None = None) -> dict[str, int]:
     """Fetch and store all trials for one cancer type. Returns counts."""
     all_types = all_types or [ctype]
+    db.ensure_interventions_table(conn)
     counts = {"fetched": 0, "new": 0, "updated": 0, "tags": 0, "locations": 0,
               "dropped": 0, "removed": 0}
     for study in fetch_studies(client, ctype["ctgov_query"], since, limit_pages):
@@ -281,6 +289,7 @@ def index_type(conn, client: httpx.Client, ctype: dict[str, Any], since: str | N
         counts["new" if db.upsert_trial(conn, rec) else "updated"] += 1
         counts["tags"] += db.add_cancer_tags(conn, rec["nct_id"], tags)
         counts["locations"] += db.replace_locations(conn, rec["nct_id"], locs)
+        db.replace_interventions(conn, rec["nct_id"], parse_interventions(study))
     conn.commit()
     return counts
 
@@ -336,6 +345,52 @@ def retag(db_path=config.DB_PATH, types: list[dict[str, Any]] | None = None,
             "trials_after": n_after, "dropped": len(dropped)}
 
 
+def backfill_interventions(db_path=config.DB_PATH, client: httpx.Client | None = None,
+                           batch: int = config.CTGOV_BACKFILL_BATCH) -> dict[str, int]:
+    """Fetch ONLY NCTId + intervention fields for trials already stored (no re-download of everything).
+
+    Why filter.ids: one small request per `batch` NCT ids instead of paging whole cancer queries.
+    Each batch is written in its own short transaction so a running batch_summarize is not blocked,
+    and trials that already have rows are skipped, so the job can be re-run to resume.
+    """
+    conn = db.connect(db_path)
+    conn.execute("PRAGMA busy_timeout=30000")
+    db.ensure_interventions_table(conn)
+    done = {r[0] for r in conn.execute("SELECT DISTINCT nct_id FROM trial_interventions")}
+    seen = {r[0].split(":", 1)[1] for r in conn.execute("SELECT key FROM meta WHERE key LIKE 'interv_checked:%'")}
+    todo = [r[0] for r in conn.execute("SELECT nct_id FROM trials ORDER BY nct_id")
+            if r[0] not in done and r[0] not in seen]
+    own = client is None
+    client = client or httpx.Client(headers={"User-Agent": config.CTGOV_USER_AGENT},
+                                    timeout=config.CTGOV_TIMEOUT_SECONDS)
+    counts = {"requested": len(todo), "with_interventions": 0, "rows": 0}
+    try:
+        for i in range(0, len(todo), batch):
+            ids = todo[i:i + batch]
+            params = {"filter.ids": ",".join(ids), "fields": config.INTERVENTION_FIELDS,
+                      "pageSize": str(max(batch, 100))}
+            data = get_with_retry(client, params)
+            got = set()
+            for study in data.get("studies", []):
+                nct = study.get("protocolSection", {}).get("identificationModule", {}).get("nctId")
+                items = parse_interventions(study)
+                if nct and items:
+                    counts["rows"] += db.replace_interventions(conn, nct, items)
+                    counts["with_interventions"] += 1
+                    got.add(nct)
+            # remember trials the API has no interventions for, so a re-run does not ask again
+            conn.executemany("INSERT OR REPLACE INTO meta VALUES (?,?)",
+                             [(f"interv_checked:{n}", "1") for n in ids if n not in got])
+            conn.commit()
+            log.info("interventions: %d/%d trials processed", min(i + batch, len(todo)), len(todo))
+            time.sleep(config.CTGOV_SLEEP_SECONDS)
+    finally:
+        if own:
+            client.close()
+        conn.close()
+    return counts
+
+
 def load_types(only: list[str] | None = None) -> list[dict[str, Any]]:
     with open(config.CANCER_TYPES_PATH, encoding="utf-8") as f:
         types = json.load(f)
@@ -381,12 +436,18 @@ def main(argv: list[str] | None = None) -> None:
                     help="use the date of the last full run stored in the meta table")
     ap.add_argument("--retag", action="store_true",
                     help="re-apply tag + oncology rules to the existing DB (no fetching)")
+    ap.add_argument("--fields-backfill", choices=["interventions"],
+                    help="fetch just one extra field set for trials already in the DB")
     ap.add_argument("--limit-pages", type=int, help="stop after N pages per type (testing)")
     args = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)  # one line per page is noise
     if args.retag:
         retag()
+        return
+    if args.fields_backfill == "interventions":
+        t0 = time.time()
+        log.info("backfill: %s in %.1fs", backfill_interventions(), time.time() - t0)
         return
     since = args.since
     if args.auto_since and not since:

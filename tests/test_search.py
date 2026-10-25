@@ -270,3 +270,13 @@ def test_get_summary(env):
                                         (None, None), (0.0192, "1 Week")])
 def test_format_age(years, text):
     assert db.format_age(years) == text
+
+
+def test_zip_radius_results_always_carry_numeric_distance(env):
+    """Regression: with zip + radius every result needs nearest_site.distance_mi as a number within the radius."""
+    r = search.search("breast cancer", zip="10001", radius_mi=50, status="ANY", conn=env)
+    assert r["results"]
+    for x in r["results"]:
+        assert set(x["nearest_site"]) == {"city", "state", "distance_mi"}
+        assert isinstance(x["nearest_site"]["distance_mi"], float)
+        assert 0 <= x["nearest_site"]["distance_mi"] <= 50

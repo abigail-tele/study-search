@@ -58,8 +58,11 @@ CTGOV_FIELDS = (
     "Phase,EnrollmentCount,Condition,Keyword,LeadSponsorName,BriefSummary,"
     "DetailedDescription,EligibilityCriteria,HealthyVolunteers,Sex,MinimumAge,"
     "MaximumAge,LocationFacility,LocationCity,LocationState,LocationZip,"
-    "LocationCountry,LocationStatus,LocationGeoPoint"
+    "LocationCountry,LocationStatus,LocationGeoPoint,InterventionType,InterventionName"
 )
+CTGOV_BACKFILL_BATCH = 200       # NCT ids per filter.ids request (URL stays short)
+INTERVENTION_FIELDS = "NCTId,InterventionType,InterventionName"
+OVERVIEW_MAX_INTERVENTIONS = 3  # names shown in the overview sentence before "and N more"
 # Rule 1 (cancer only) post-filter. A trial is oncology if its conditions,
 # keywords or titles match this (case-insensitive) OR the acronym list
 # (case-sensitive, so "all" / "aml" in ordinary prose never counts). The word
@@ -261,3 +264,15 @@ MATCH_MAX_CONDITIONS_CHARS = 600  # API limit for the free-text box
 MATCH_MAX_PER_TERM = 3          # most criteria listed per term per side
 MATCH_CRITERION_MAX_CHARS = 400  # longer criteria are phrase-matched only (a paragraph's vector says little)
 MATCH_CACHE_SIZE = 256          # trials whose criterion vectors we keep in memory (public text only, never user text)
+
+# --- In-domain ClinicalTrials.gov training pairs (pipeline/ctgov_pairs.py) -----
+CTGOV_PAIRS_PATH = DATA_DIR / "ctgov_pairs.jsonl"
+CTGOV_PAIRS_STATS_PATH = DATA_DIR / "ctgov_pairs_stats.json"
+CTGOV_PAIR_SIM = 0.70           # min MiniLM cosine between a brief-summary piece and its detailed-description window
+CTGOV_MIN_FK_DROP = 2.0         # target must read at least this many grade levels easier than the source
+CTGOV_MAX_LEN_RATIO = 1.5       # target words <= ratio * source words
+CTGOV_MAX_WINDOW = 3            # detailed-description side: 1-3 consecutive sentences
+CTGOV_TARGET_WINDOW = 2         # brief-summary side: 1 sentence or a 2-sentence window
+CTGOV_MIN_TARGET_WORDS = 8
+CTGOV_MAX_SOURCE_WORDS = 300
+CTGOV_VAL_FRACTION = 0.10       # split by NCT id, so no trial is in both

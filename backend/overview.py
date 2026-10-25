@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import re
 
-from backend import geo
+from backend import config, geo
 
 _STATUS_WORDS = {
     "RECRUITING": "now recruiting", "NOT_YET_RECRUITING": "not yet recruiting",
@@ -17,6 +17,39 @@ _STATUS_WORDS = {
 _PHASE_WORDS = {"EARLY_PHASE1": "Early Phase 1", "PHASE1": "Phase 1", "PHASE2": "Phase 2",
                 "PHASE3": "Phase 3", "PHASE4": "Phase 4"}
 _SEX_WORDS = {"FEMALE": "women", "MALE": "men"}
+
+
+_TYPE_WORDS = {"DRUG": "drug", "BIOLOGICAL": "biological", "DEVICE": "device", "PROCEDURE": "procedure",
+               "RADIATION": "radiation", "BEHAVIORAL": "behavioral", "GENETIC": "genetic",
+               "DIETARY_SUPPLEMENT": "dietary supplement", "COMBINATION_PRODUCT": "combination product",
+               "DIAGNOSTIC_TEST": "diagnostic test"}   # OTHER / unknown: no label
+_TYPE_ORDER = ["DRUG", "BIOLOGICAL", "RADIATION", "PROCEDURE", "DEVICE", "COMBINATION_PRODUCT", "GENETIC",
+               "DIETARY_SUPPLEMENT", "BEHAVIORAL", "DIAGNOSTIC_TEST"]
+
+
+def intervention_phrase(items: list[dict] | None) -> str | None:
+    """'pembrolizumab (drug), radiation (radiation) and 2 more'; None when the trial lists none.
+
+    Why: shows what is being tested from the stored API names (rule 2), most treatment-like types
+    first so 'Biospecimen Collection' does not crowd out the actual drug. Names are never reworded.
+    """
+    seen, uniq = set(), []
+    for i in items or []:
+        name = (i.get("name") or "").strip()
+        if name and name.lower() not in seen:
+            seen.add(name.lower())
+            uniq.append({"type": i.get("type"), "name": name})
+    if not uniq:
+        return None
+    rank = {t: n for n, t in enumerate(_TYPE_ORDER)}
+    uniq.sort(key=lambda i: rank.get(i["type"], len(rank)))   # stable: API order kept within a type
+    limit = config.OVERVIEW_MAX_INTERVENTIONS
+    shown = [f"{i['name']} ({_TYPE_WORDS[i['type']]})" if i["type"] in _TYPE_WORDS else i["name"]
+             for i in uniq[:limit]]
+    more = len(uniq) - limit
+    if more > 0:
+        shown.append(f"{more} more")
+    return shown[0] if len(shown) == 1 else ", ".join(shown[:-1]) + " and " + shown[-1]
 
 
 def phase_words(phase: str | None) -> str | None:
@@ -56,6 +89,9 @@ def study_overview(study: dict, zip_code: str | None = None) -> dict:
     head = f"A {phase} study" if phase else "A study"
     s = head + (f", {status}," if status else "") + f" for {who} {ages}"
     s += f" with {' and '.join(conds)}." if conds else "."
+    tested = intervention_phrase(study.get("interventions"))
+    if tested:
+        s += f" It is testing {tested}."
     sites = study.get("sites") or []
     near = geo.nearest_site(sites, zip_code) if zip_code else None
     tail = []
@@ -75,6 +111,8 @@ def study_overview(study: dict, zip_code: str | None = None) -> dict:
         facts.append({"label": "Phase", "value": phase})
     facts.append({"label": "Ages", "value": ages})
     facts.append({"label": "Who", "value": "All sexes" if who == "people" else who.capitalize() + " only"})
+    if tested:
+        facts.append({"label": "Being tested", "value": tested})
     if study.get("enrollment"):
         facts.append({"label": "Planned size", "value": f"{study['enrollment']} people"})
     if sites:

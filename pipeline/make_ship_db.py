@@ -17,7 +17,7 @@ from pathlib import Path
 from backend import config
 
 # Tables the live app reads (fts_* shadow tables belong to the fts virtual table).
-KEEP_TABLES = {"trials", "trial_cancer_types", "locations", "fts", "summaries", "meta"}
+KEEP_TABLES = {"trials", "trial_cancer_types", "locations", "fts", "summaries", "meta", "trial_interventions"}
 # Columns of `trials` the app never reads (get_study / search / summarize use the rest).
 DROP_TRIAL_COLUMNS = ("detailed_description",)
 RETRIES = 6
@@ -57,6 +57,7 @@ def _trim(path: Path) -> None:
         for col in DROP_TRIAL_COLUMNS:
             if col in cols:
                 conn.execute(f'ALTER TABLE trials DROP COLUMN "{col}"')
+        conn.execute("DELETE FROM meta WHERE key LIKE 'interv_checked:%'")  # backfill bookkeeping only
         conn.commit()
         conn.execute("VACUUM")
     finally:

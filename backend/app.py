@@ -46,8 +46,13 @@ def _install_log_redaction() -> None:
     def factory(*args, **kwargs):
         record = previous(*args, **kwargs)
         try:
-            record.msg = _SENSITIVE.sub(r"[redacted]", record.getMessage())
-            record.args = ()
+            if record.name == "uvicorn.access" and isinstance(record.args, tuple) and record.args:
+                # keep the args tuple's SHAPE: uvicorn's access formatter unpacks exactly 5 values from it
+                record.args = tuple(_SENSITIVE.sub(r"\1[redacted]", a) if isinstance(a, str) else a for a in record.args)
+                record.msg = _SENSITIVE.sub(r"\1[redacted]", str(record.msg))
+            else:
+                record.msg = _SENSITIVE.sub(r"\1[redacted]", record.getMessage())
+                record.args = ()
         except Exception:
             pass
         return record
@@ -200,6 +205,7 @@ def study(nct: str, age: str | None = None, sex: str | None = None, conditions: 
         data = db.get_study(conn, nct)
         if data is None:
             return _err(404, "Study not found")
+        data["interventions"] = db.get_interventions(conn, nct)
         data["overview"] = overview.study_overview(data, zip or None)
         include, exclude = match.split_criteria(data.get("eligibility_text"))
         m = None

@@ -45,6 +45,11 @@ CREATE TABLE IF NOT EXISTS summaries (
     reading_before REAL, reading_after REAL,
     model_version TEXT, generated_at TEXT
 );
+CREATE TABLE IF NOT EXISTS model_outputs (
+    nct_id TEXT NOT NULL, piece_id TEXT NOT NULL, kind TEXT,
+    source_text TEXT, output_text TEXT, model_version TEXT NOT NULL, generated_at TEXT,
+    PRIMARY KEY (nct_id, piece_id, model_version)
+);
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT);
 """
 
@@ -170,7 +175,7 @@ def delete_trial(conn: sqlite3.Connection, nct_id: str) -> None:
     Why one helper: a half-deleted trial (say, tags left behind) would show up
     in search results with no page to open, so all tables go together.
     """
-    for table in ("trials", "trial_cancer_types", "locations", "fts", "summaries"):
+    for table in ("trials", "trial_cancer_types", "locations", "fts", "summaries", "model_outputs"):
         conn.execute(f"DELETE FROM {table} WHERE nct_id=?", (nct_id,))
 
 
@@ -227,3 +232,56 @@ def get_summary(conn: sqlite3.Connection, nct: str) -> dict | None:
         "reading_level": {"before": s["reading_before"], "after": s["reading_after"]},
         "model_version": s["model_version"], "generated_at": s["generated_at"],
     }
+
+
+# --- Raw model output cache (offline batch pipeline only) --------------------
+# Why a cache: GPU generation is the slow part; the faithfulness/guard check is
+# fast and will change when the team writes faithfulness_check. Storing the raw
+# output per piece lets the check run again without touching the GPU.
+def save_model_outputs(conn: sqlite3.Connection, rows: Iterable[tuple]) -> int:
+    """Store (nct_id, piece_id, kind, source_text, output_text, model_version, generated_at) rows. Caller commits."""
+    rows = list(rows)
+    conn.executemany("INSERT OR REPLACE INTO model_outputs VALUES (?,?,?,?,?,?,?)", rows)
+    return len(rows)
+
+
+def get_model_outputs(conn: sqlite3.Connection, nct: str, version: str) -> list[sqlite3.Row]:
+    """All cached pieces of one trial for one model version."""
+    return conn.execute("SELECT * FROM model_outputs WHERE nct_id=? AND model_version=?", (nct, version)).fetchall()
+
+
+def trials_with_outputs(conn: sqlite3.Connection, version: str) -> set[str]:
+    """NCT ids that have at least one cached piece for this model version (used to resume generation)."""
+    return {r[0] for r in conn.execute("SELECT DISTINCT nct_id FROM model_outputs WHERE model_version=?", (version,))}
+
+
+# --- Interventions (what is being tested; straight from API data, rule 2) ----
+INTERVENTIONS_DDL = """
+CREATE TABLE IF NOT EXISTS trial_interventions (
+    nct_id TEXT NOT NULL, type TEXT, name TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_ti_nct ON trial_interventions(nct_id);
+"""
+
+
+def ensure_interventions_table(conn: sqlite3.Connection) -> None:
+    """Create trial_interventions if missing (kept out of SCHEMA so old DBs and fixtures still work)."""
+    conn.executescript(INTERVENTIONS_DDL)
+
+
+def replace_interventions(conn: sqlite3.Connection, nct_id: str, items: list[dict[str, Any]]) -> int:
+    """Replace a trial's intervention rows with [{type, name}]. Caller commits."""
+    conn.execute("DELETE FROM trial_interventions WHERE nct_id=?", (nct_id,))
+    rows = [(nct_id, i.get("type"), i.get("name")) for i in items if i.get("name")]
+    conn.executemany("INSERT INTO trial_interventions VALUES (?,?,?)", rows)
+    return len(rows)
+
+
+def get_interventions(conn: sqlite3.Connection, nct: str) -> list[dict[str, str | None]]:
+    """[{type, name}] for one trial; [] when none or the table does not exist (older database)."""
+    try:
+        rows = conn.execute("SELECT type, name FROM trial_interventions WHERE nct_id=? ORDER BY rowid",
+                            (nct,)).fetchall()
+    except sqlite3.OperationalError:
+        return []
+    return [{"type": r[0], "name": r[1]} for r in rows]

@@ -33,6 +33,7 @@ def client(monkeypatch):
     monkeypatch.setattr(db, "connect_ro", lambda path=None: FakeConn())
     monkeypatch.setattr(geo, "lookup", lambda z: None if z == "00000" else (40.0, -74.0))
     monkeypatch.setattr(db, "get_study", lambda c, n: {"nct_id": n} if n == "NCT05000001" else None)
+    monkeypatch.setattr(db, "get_interventions", lambda c, n: [{"type": "DRUG", "name": "pembrolizumab"}])
     monkeypatch.setattr(db, "get_summary", lambda c, n: {"nct_id": n, "faithful": True} if n == "NCT05000001" else None)
     from backend import match
     monkeypatch.setattr(match, "match_for_nct", lambda *a, **k: {"summary_label": "Possible match"})
