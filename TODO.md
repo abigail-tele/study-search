@@ -3,6 +3,26 @@
 Code freeze **Sun Oct 25, 6 pm**. Submit Sunday night (buffer: Mon Oct 26 morning, if that is the district deadline).
 Full plan: `docs/PLAN.md`. Last updated 2026-10-24 (after Gate 1).
 
+## ⚠️ Teammate branches not merged yet (abigail/attributions, abigail/vector-search)
+Both branches start from commit `6f65350`, before `detect_cancer_types` was implemented on `main`. A trial merge
+(cancelled, nothing changed on their branches) showed everything merges except the taxonomy tests. To do, **by the
+teammate in their own files**:
+- [ ] `tests/test_taxonomy.py`: remove the `@HUMAN` (strict xfail) markers on the 8 new semantic-fallback tests: the
+      function is implemented now, so strict xfail turns them into failures (the file header already says to remove
+      them once implemented). `main` also no longer defines `HUMAN`, so the merged file won't load until this is done.
+- [ ] `tests/fixtures/tiny_taxonomy.py`: inside `install()`, add
+      `monkeypatch.setattr(taxonomy.config, "TYPE_DETECT_CUE_REGEX", r"")`. The real detector only runs the semantic
+      step when the query has a cancer word ("stomach ache" guard); the hand-set test phrases ("close pair",
+      "clear winner", "four types") have none, so 3 tests fail without this line.
+- [ ] Then merge both branches into `main`. Conflicts to resolve, all keep-both: `AI_USE.md` (rows),
+      `backend/config.py` (keep `TYPE_DETECT_EMBED_MARGIN`/`_MAX_TYPES` **and** `TYPE_DETECT_CUE_REGEX`),
+      `docs/EVAL.md`, `docs/HOW_IT_WORKS.md` (taxonomy paragraph), `backend/taxonomy.py` (keep
+      `cancer_type_term_matrix()` and make `_embedding_match` use it with the margin and cap; the trial merge did
+      exactly this and 50/53 taxonomy tests passed before the two edits above).
+- Why keep the cancer-word guard: with the real model and no guard, "stomach ache" → stomach cancer and "bone pain"
+  → sarcoma (rule 1). With it, `python -m pipeline.evaluate_types` gives off-topic 10/10 at every threshold.
+- Backup of `main` before the trial merge: local branch `backup/main-before-abigail-merge`.
+
 ## Done: Phase 1 (commit `8025be2`)
 - [x] Repo scaffold, `backend/config.py`, requirements, CREDITS / AI_USE / README / docs skeletons
 - [x] `data/cancer_types.json` (35 types) + `data/umbrella_terms.json`
