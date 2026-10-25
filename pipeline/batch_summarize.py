@@ -115,7 +115,7 @@ def run_model(texts: list[str], tok, model, device, batch: int = config.BATCH_GE
 def generate_slab(conn, trials: list[dict], version: str, generate_fn, count) -> tuple[int, int]:
     """Plan, generate and store one slab of trials. Returns (pieces stored, trials stored)."""
     planned = [(t["nct_id"], p) for t in trials for p in summarize.plan_pieces(t, count)]
-    outs = generate_fn([p["source_text"] for _, p in planned]) if planned else []
+    outs = generate_fn([p["model_input"] for _, p in planned]) if planned else []
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     rows = [(nct, p["piece_id"], p["kind"], p["source_text"], o, version, now)
             for (nct, p), o in zip(planned, outs)]
@@ -211,6 +211,9 @@ def cmd_check(args) -> int:
                                        (version,))]
     if args.nct:
         ncts = [n for n in ncts if n in set(args.nct)]
+    if args.only_new:   # resume: skip trials already judged under this version (used while generation is still running)
+        done = {r[0] for r in conn.execute("SELECT nct_id FROM summaries WHERE model_version=?", (version,))}
+        ncts = [n for n in ncts if n not in done]
     if args.limit:
         ncts = ncts[:args.limit]
     if not ncts:
@@ -299,6 +302,7 @@ def main(argv: list[str] | None = None) -> int:
     c = sub.add_parser("check", parents=[common], help="CPU/GPU: judge stored outputs, write the summaries table")
     c.add_argument("--all", action="store_true", help="every trial with cached outputs (the default)")
     c.add_argument("--limit", type=int, default=0)
+    c.add_argument("--only-new", action="store_true", help="skip trials that already have a summary for this model_version")
     c.add_argument("--nct", nargs="+", default=None)
     c.add_argument("--model-version", default=None, help="override the cached model_version to read")
     c.add_argument("--no-guard-stat", action="store_true", help="skip the guard-only sample (it embeds sentences)")

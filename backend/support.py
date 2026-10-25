@@ -157,6 +157,37 @@ def is_unbacked_definition(source: str, sentence: str) -> bool:
     return sum(1 for w in words if w not in src) / len(words) > config.DEFINITION_ABSENT_FRACTION
 
 
+_CLAIM_RES = [re.compile(p, re.IGNORECASE) for p in config.CLAIM_PATTERNS]
+_ACRONYM_DEF_RE = re.compile(config.ACRONYM_DEFINITION_RE)   # case-sensitive on purpose
+_COPULA_RE = re.compile(r"\b(?:is|are)\s+(?:a|an|the)\s+([\w\-]+(?:\s+[\w\-]+)*)", re.IGNORECASE)
+
+
+def adds_invented_claim(source: str, sentence: str) -> bool:
+    """True if the sentence defines or claims something the source never says.
+
+    Why: the model learned PDQ-style textbook sentences ("X is a rare type of
+    cancer", "Y is used to treat Z"). Trial text states requirements, so any
+    such statement we add is invented, and for a drug it would be a medical
+    claim (rule 7). Two parts: (1) a documented phrase list (config.CLAIM_PATTERNS),
+    dropped unless the source has the same phrase; (2) general rule: any
+    "X is/are a/an/the <predicate>" is dropped unless the predicate's first
+    COPULA_BACKED_WORDS words appear verbatim in the source.
+    """
+    src = " ".join(source.lower().split())
+    for rx in _CLAIM_RES:
+        m = rx.search(sentence)
+        if m and not rx.search(src):
+            return True
+    am = _ACRONYM_DEF_RE.match(sentence)
+    if am and not re.search(re.escape(am.group(0).strip().lower()), src):
+        return True
+    m = _COPULA_RE.search(sentence)
+    if m:
+        pred = " ".join(m.group(1).lower().split()[: config.COPULA_BACKED_WORDS])
+        return pred not in src
+    return False
+
+
 def boilerplate_sentences(source: str, output: str) -> list[str]:
     """Output sentences to hard-drop at inference time (generic claims the model learned from PDQ, not from the trial).
 
@@ -165,7 +196,8 @@ def boilerplate_sentences(source: str, output: str) -> list[str]:
     (4) unbacked definition (is_unbacked_definition).
     """
     return [x for x in split_sentences(output)
-            if has_boilerplate(source, x) or is_tautology(x) or adds_risk_claim(source, x) or is_unbacked_definition(source, x)]
+            if has_boilerplate(source, x) or is_tautology(x) or adds_risk_claim(source, x) or is_unbacked_definition(source, x)
+                    or adds_invented_claim(source, x)]
 
 
 # ---------------------------------------------------------------------------
@@ -215,11 +247,37 @@ def number_bounds(text: str) -> list[tuple[str, str, str]]:
     return out
 
 
+def _in_range(num: str, text: str) -> bool:
+    """True if `num` is an end of a range in the text ('18-75', '18 to 75', 'between 18 and 75'): both ends kept means no comparator is needed."""
+    for m in re.finditer(rf"{_NUM}\s*(?:-|–|—|to|and)\s*{_NUM}", text, re.IGNORECASE):
+        if num in (_norm_num(m.group(1)), _norm_num(m.group(2))):
+            return True
+    return False
+
+
+def _dropped_comparators(source: str, output: str) -> list[str]:
+    """Numbers the source bounds (>= 18, 3 months or less) that the output repeats with NO bound of that direction.
+
+    Why: the T5 tokenizer cannot write >= <= < >, so '>= 18 years' came out as
+    '18 years' and the requirement silently lost its direction. A bare number is
+    only accepted when it is part of a range whose ends are both kept.
+    """
+    out_bounds: dict[str, set[str]] = {}
+    for n, d, _ in number_bounds(output):
+        out_bounds.setdefault(n, set()).add(d)
+    out_nums = {_norm_num(m.group(1)) for m in re.finditer(rf"(?<![\w.]){_NUM}(?![\w])", output)}
+    problems = []
+    for n, d, phrase in number_bounds(source):
+        if n in out_nums and d not in out_bounds.get(n, set()) and not _in_range(n, output):
+            problems.append(f"comparator dropped for {n}: source '{phrase}', output has the number without a {d} bound")
+    return problems
+
+
 def _flipped_numbers(source: str, output: str) -> list[str]:
     src: dict[str, dict[str, str]] = {}
     for n, d, phrase in number_bounds(source):
         src.setdefault(n, {})[d] = phrase
-    problems = []
+    problems = _dropped_comparators(source, output)
     for n, d, phrase in number_bounds(output):
         if n in src and d not in src[n]:
             problems.append(f"direction flipped for {n}: output '{phrase}' vs source '{next(iter(src[n].values()))}'")

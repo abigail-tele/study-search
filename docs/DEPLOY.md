@@ -6,9 +6,9 @@ Rule 4: nothing is downloaded or fetched while serving users. All artifacts are 
 
 | Artifact | Size | In plain git? |
 |---|---|---|
-| `data/trials_ship.db` (copied as `data/trials.db` in the Space) | ~430 MB | no (Git LFS) |
+| `data/trials_ship.db` (copied as `data/trials.db` in the Space) | ~515 MB | no (Git LFS) |
 | `data/faiss.index` | 43 MB | no (Git LFS) |
-| `data/faiss_rowmap.json`, `cancer_types.json`, `umbrella_terms.json`, `glossary.json`, `zip_centroids.csv` | ~1.5 MB | yes |
+| `data/faiss_rowmap.json`, `cancer_types.json`, `umbrella_terms.json`, `glossary.json`, `zip_centroids.csv`, `drug_lexicon.txt`, `data/README.md` | ~1.5 MB | yes |
 | `models/all-MiniLM-L6-v2/` | 88 MB | no (Git LFS) |
 | `checkpoints/flan-t5-pdq-best/` (optional) | ~950 MB | no (Git LFS) |
 
@@ -45,9 +45,9 @@ Equivalent: `git lfs track "*.db" "*.index" "*.safetensors" "*.bin"`.
 
 Folder layout the Dockerfile expects (the stage script builds it):
 ```
-Dockerfile  .dockerignore  README.md (Space YAML header)  .gitattributes
+Dockerfile  .dockerignore  README.md (Space YAML header)  .gitattributes  LICENSE  NOTICE  CREDITS.md  AI_USE.md
 backend/  frontend/  deploy/requirements-deploy.txt
-data/{trials.db,faiss.index,faiss_rowmap.json,cancer_types.json,umbrella_terms.json,glossary.json,zip_centroids.csv}
+data/{trials.db,faiss.index,faiss_rowmap.json,cancer_types.json,umbrella_terms.json,glossary.json,zip_centroids.csv,drug_lexicon.txt,README.md}
 models/all-MiniLM-L6-v2/
 checkpoints/   (empty, or flan-t5-pdq-best/ with -IncludeModel)
 ```

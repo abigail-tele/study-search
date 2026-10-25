@@ -11,9 +11,16 @@ const USE_MOCK = (() => {
 })();
 const MOCK_BASE = "mock/";
 
-async function getJSON(url) {
+/* body given -> POST with a JSON body (rule 8: personal details never go in the URL, where a proxy could log them). */
+async function getJSON(url, body) {
   let resp;
-  try { resp = await fetch(url, { headers: { Accept: "application/json" } }); }
+  const opts = { headers: { Accept: "application/json" } };
+  if (body !== undefined) {
+    opts.method = "POST";
+    opts.headers["Content-Type"] = "application/json";
+    opts.body = JSON.stringify(body);
+  }
+  try { resp = await fetch(url, opts); }
   catch (e) { throw new Error("Could not reach the server. Please check your connection and try again."); }
   let data = null;
   try { data = await resp.json(); } catch (e) { /* non-JSON body */ }
@@ -47,7 +54,7 @@ async function mockMatches(q, cancer) {
 const MATCH_ORDER = { "Possible match": 0, "Check with study team": 1, "Likely not a match": 2 };
 
 /* params: {q, cancer, zip, radius_mi, status, age, sex, conditions, sort}; empty values are omitted.
-   Rule 8: age/sex/conditions travel only in this request's query string; nothing is stored. */
+   Rule 8: q/zip/age/sex/conditions travel only in this request's POST body (never the URL); nothing is stored. */
 async function fetchSearch(params) {
   if (USE_MOCK) {
     const hit = await mockMatches(params.q || "", params.cancer);
@@ -59,18 +66,19 @@ async function fetchSearch(params) {
     }
     return data;
   }
-  const qs = new URLSearchParams();
-  Object.entries(params).forEach(([k, v]) => { if (v !== "" && v != null) qs.set(k, v); });
-  return getJSON("/api/search?" + qs.toString());
+  return getJSON("/api/search", nonEmpty(params));
 }
 
-/* profile: {age, sex, conditions, zip} (all optional). Sent only as query parameters for this one request. */
+function nonEmpty(obj) {
+  const out = {};
+  Object.entries(obj || {}).forEach(([k, v]) => { if (v !== "" && v != null) out[k] = v; });
+  return out;
+}
+
+/* profile: {age, sex, conditions, zip} (all optional). Sent only in the POST body of this one request. */
 async function fetchStudy(nct, profile) {
   if (USE_MOCK) return getJSON(MOCK_BASE + "study-NCT05000001.json");
-  const qs = new URLSearchParams();
-  Object.entries(profile || {}).forEach(([k, v]) => { if (v !== "" && v != null) qs.set(k, v); });
-  const tail = qs.toString();
-  return getJSON("/api/study/" + encodeURIComponent(nct) + (tail ? "?" + tail : ""));
+  return getJSON("/api/study/" + encodeURIComponent(nct), nonEmpty(profile));
 }
 
 async function fetchSummary(nct) {

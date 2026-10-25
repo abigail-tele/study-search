@@ -15,6 +15,7 @@ from typing import Iterator
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.concurrency import run_in_threadpool
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -112,7 +113,51 @@ def cancer_types() -> list[dict]:
             for t in taxonomy.load_cancer_types()]
 
 
+_SEARCH_FIELDS = ("q", "cancer", "zip", "radius_mi", "status", "age", "sex", "conditions", "sort")
+_STUDY_FIELDS = ("age", "sex", "conditions", "zip")
+
+
+async def _json_fields(request: Request, allowed: tuple[str, ...]) -> dict[str, str] | JSONResponse:
+    """Read a POST body into the same all-strings shape the GET query params have, so one validator serves both.
+
+    Why POST exists (rule 8): the query text, ZIP, age, sex and conditions in a URL can be logged by a hosting proxy.
+    A request body is not part of the URL. Unknown keys are ignored; numbers are accepted and turned into text.
+    Error messages never echo the body.
+    """
+    try:
+        body = await request.json()
+    except Exception:
+        return _err(400, "Invalid request body.")
+    if not isinstance(body, dict):
+        return _err(400, "Invalid request body.")
+    out: dict[str, str] = {}
+    for k in allowed:
+        v = body.get(k)
+        if v is None:
+            continue
+        if isinstance(v, bool) or not isinstance(v, (str, int)):
+            return _err(400, "Invalid request body.")
+        out[k] = str(v)
+    return out
+
+
 @app.get("/api/search")
+def search_get(q: str = "", cancer: str | None = None, zip: str | None = None,
+               radius_mi: str | None = None, status: str | None = None,
+               age: str | None = None, sex: str | None = None, conditions: str | None = None,
+               sort: str | None = None) -> JSONResponse:
+    """Kept for backwards compatibility. The web page uses POST so nothing personal appears in the URL."""
+    return search_endpoint(q, cancer, zip, radius_mi, status, age, sex, conditions, sort)
+
+
+@app.post("/api/search")
+async def search_post(request: Request) -> JSONResponse:
+    fields = await _json_fields(request, _SEARCH_FIELDS)
+    if isinstance(fields, JSONResponse):
+        return fields
+    return await run_in_threadpool(lambda: search_endpoint(**fields))
+
+
 def search_endpoint(q: str = "", cancer: str | None = None, zip: str | None = None,
                     radius_mi: str | None = None, status: str | None = None,
                     age: str | None = None, sex: str | None = None, conditions: str | None = None,
@@ -186,6 +231,20 @@ def _attach_matches(result: dict, age: int | None, sex: str | None, conditions: 
 
 
 @app.get("/api/study/{nct}")
+def study_get(nct: str, age: str | None = None, sex: str | None = None, conditions: str | None = None,
+              zip: str | None = None) -> JSONResponse:
+    """Kept for backwards compatibility. The web page uses POST so nothing personal appears in the URL."""
+    return study(nct, age, sex, conditions, zip)
+
+
+@app.post("/api/study/{nct}")
+async def study_post(nct: str, request: Request) -> JSONResponse:
+    fields = await _json_fields(request, _STUDY_FIELDS)
+    if isinstance(fields, JSONResponse):
+        return fields
+    return await run_in_threadpool(lambda: study(nct, **fields))
+
+
 def study(nct: str, age: str | None = None, sex: str | None = None, conditions: str | None = None,
           zip: str | None = None) -> JSONResponse:
     if not _NCT_RE.match(nct):

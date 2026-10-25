@@ -91,3 +91,14 @@ def test_discover_checkpoints_skips_best_copies(tmp_path):
 def test_test_split_needs_opt_in():
     with pytest.raises(SystemExit):
         B.cmd_generate(B.argparse.Namespace(splits="val,test", allow_test=False, systems="copy-source", cpu=True))
+
+
+def test_effective_grade_blends_output_and_source():
+    assert B.effective_grade(100, 8.0, 15.0) == 8.0
+    assert B.effective_grade(0, 8.0, 15.0) == 15.0
+    assert abs(B.effective_grade(50, 8.0, 15.0) - 11.5) < 1e-9
+
+
+def test_strip_think_removes_reasoning_block():
+    assert B.strip_think("<think>\nhmm\n</think>\n\nPlain text.") == "Plain text."
+    assert B.strip_think("Plain text.") == "Plain text."

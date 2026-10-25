@@ -29,6 +29,8 @@ from pipeline.train import git_commit, load_pairs
 RECIPES = {
     "j": dict(r=16, alpha=32, dropout=0.05, lr=1e-4, wd=0.01, clip=1.0, sweep=[(8, 5)], early_stop=True),
     "j2": dict(r=64, alpha=16, dropout=0.0, lr=2e-4, wd=0.001, clip=0.2, sweep=[(8, 1), (8, 3)], early_stop=False),
+    # 7-8B models: same LoRA settings as j, micro-batch 2 (x accum 8 = 16) with gradient checkpointing, 1-2 epochs
+    "j8b": dict(r=16, alpha=32, dropout=0.05, lr=1e-4, wd=0.01, clip=1.0, sweep=[(2, 2)], early_stop=False, bs_accum=8),
 }
 
 
@@ -58,13 +60,20 @@ def train_one(args, rec: dict, batch: int, epochs: int, train_rows, val_rows, ou
     from trl import SFTConfig, SFTTrainer
 
     tok = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForCausalLM.from_pretrained(args.model, dtype=torch.bfloat16)
+    quant = None
+    if getattr(args, "qlora", False):    # only if bf16 LoRA does not fit in 32 GB (bitsandbytes is MIT)
+        from transformers import BitsAndBytesConfig
+        quant = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16,
+                                   bnb_4bit_use_double_quant=True)
+    model = AutoModelForCausalLM.from_pretrained(args.model, dtype=torch.bfloat16, quantization_config=quant,
+                                                 device_map={"": 0} if quant else None)
     lora = LoraConfig(r=rec["r"], lora_alpha=rec["alpha"], lora_dropout=rec["dropout"], bias="none",
                       task_type="CAUSAL_LM", target_modules="all-linear")
     cfg = SFTConfig(
         output_dir=str(out / f"run_b{batch}_e{epochs}"), num_train_epochs=epochs,
         per_device_train_batch_size=batch, per_device_eval_batch_size=batch,
-        gradient_accumulation_steps=config.LORA_GRAD_ACCUM, learning_rate=rec["lr"],
+        gradient_accumulation_steps=rec.get("bs_accum", config.LORA_GRAD_ACCUM),
+        gradient_checkpointing=rec.get("bs_accum") is not None, learning_rate=rec["lr"],
         lr_scheduler_type="cosine", warmup_steps=config.TRAIN_WARMUP_RATIO, weight_decay=rec["wd"],
         max_grad_norm=rec["clip"], bf16=True, max_length=config.LORA_MAX_TOKENS, completion_only_loss=True,
         eval_strategy="epoch", save_strategy="epoch", save_total_limit=1, load_best_model_at_end=True,
@@ -101,6 +110,7 @@ def main(argv: list[str] | None = None) -> Path:
     p.add_argument("--recipe", choices=sorted(RECIPES), default="j")
     p.add_argument("--model", default=config.LORA_BASE_MODEL)
     p.add_argument("--pairs", type=Path, nargs="+", required=True)
+    p.add_argument("--qlora", action="store_true", help="load the base model in 4-bit (QLoRA); merge still uses bf16")
     p.add_argument("--min-similarity", type=float, default=config.TRAIN_MIN_SIMILARITY)
     p.add_argument("--out", type=Path, required=True)
     args = p.parse_args(argv)
@@ -122,7 +132,7 @@ def main(argv: list[str] | None = None) -> Path:
             "instruction": config.LORA_INSTRUCTION, "pairs_path": [str(x) for x in args.pairs],
             "train_pairs": len(train_rows), "val_pairs": len(val_rows), "git_commit": git_commit(),
             "trl": trl.__version__, "peft": peft.__version__, "seed": config.RANDOM_SEED,
-            "min_similarity": args.min_similarity}
+            "min_similarity": args.min_similarity, "qlora": args.qlora}
     merge_and_save(args, Path(win["adapter"]), args.out, meta)
     print(f"saved merged model -> {args.out} (chosen {win})")
     return args.out

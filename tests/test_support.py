@@ -135,3 +135,64 @@ def test_direction_flipped_sentences_reports_only_bad_ones():
     src = "Patients must be at least 18 years old. Patients must have breast cancer."
     bad = support.direction_flipped_sentences(src, "You must have breast cancer. You must be under 18 years old.")
     assert bad == ["You must be under 18 years old."]
+
+
+@pytest.mark.parametrize("source,out", [
+    ("Histologically confirmed diagnosis of PMBCL", "PMBCL, EBV+ DLBCL or THRLBCL is a rare type of cancer."),
+    ("MRI showed lymph node necrosis", "MRI showed lymph node necrosis is a rare type of lymph node cancer that has spread to other parts of the body."),
+    ("Receipt of ASCT", "Patients who received ASCT are called allogeneic."),
+    ("NEO100 for high-grade meningioma", "NEO100 is a drug used to treat high-grade meningioma."),
+    ("Pain score above 4", "Pain is called a painkiller."),
+    ("Vertebroplasty planned", "Vertebroplasty is a surgery to remove the vertebrae."),
+    ("Organ function adequate", "Insufficiency or failure of major organs can lead to cancer."),
+    ("Screening for TB", "TB tests are used to diagnose active infections such as tuberculosis."),
+    ("Tumor may be treated with surgery", "A sunny day is a good thing."),
+])
+def test_invented_claims_dropped(source, out):
+    assert support.boilerplate_sentences(source, out) == [out]
+
+
+@pytest.mark.parametrize("source,out", [
+    ("Participants must have a biopsy. Pain is a symptom of this disease.", "Pain is a symptom of this disease."),
+    ("Age 18 or older with lung cancer", "You must be 18 or older and have lung cancer."),
+    ("The study drug is a pill taken daily.", "The study drug is a pill taken daily."),
+])
+def test_source_backed_statements_kept(source, out):
+    assert support.boilerplate_sentences(source, out) == []
+
+
+@pytest.mark.parametrize("source,out", [
+    ("Glomerular filtration rate ≥ 30 ml/min", "GFR is 30 ml/min."),
+    ("Female patients ≥ 18 years of age.", "Female patients 18 years of age."),
+    ("Age ≥ 18", "Age 18"),
+    ("Survival < 3 months", "Survival 3 months"),
+])
+def test_dropped_comparator_flagged(source, out):
+    assert not support.direction_check(source, out)[0]
+
+
+@pytest.mark.parametrize("source,out", [
+    ("Age ≥ 18 years", "You must be 18 years or older."),
+    ("Age ≥ 18 years", "You must be at least 18 years old."),
+    ("Expected survival < 3 months", "Expected survival is less than 3 months."),
+    ("Age between 18-75 years", "Age 18 to 75 years."),
+    ("Platelets ≥ 75", "Platelets must be at least 75."),
+])
+def test_comparator_kept_ok(source, out):
+    assert support.direction_check(source, out)[0]
+
+
+@pytest.mark.parametrize("source,out", [
+    ("Serious infection within 28 days (CTCAE grade 3)", "CTCAE is a serious infection that can occur within 28 days prior to the first dose."),
+    ("Any other cancer in the past", "If you have any other cancer, you may have a history of cancer."),
+    ("Active infection requiring systemic therapy", "If the infection is active, it may require systemic therapy."),
+    ("History of cardiovascular disease", "Screening may be done to find out if a patient has a history of cardiovascular disease."),
+    ("History of subarachnoid hemorrhage (SAH)", "The history of subarachnoid hemorrhage (SAH) is very long."),
+])
+def test_gate3_spotcheck_examples_dropped(source, out):
+    assert support.boilerplate_sentences(source, out) == [out]
+
+
+def test_may_phrases_and_acronym_kept_when_source_says_them():
+    assert support.boilerplate_sentences("Steroids may be needed for rash.", "Steroids may be needed for rash.") == []
+    assert support.boilerplate_sentences("ECOG is a performance score.", "ECOG is a performance score.") == []

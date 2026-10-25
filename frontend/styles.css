@@ -78,3 +78,9 @@ textarea{resize:vertical;min-height:5rem}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{.no-print,#search-form,.site-header .tagline,.skip,#search-view,.actions{display:none!important}
 #summary-view{display:block!important}body{font-size:12pt}a{color:#000}.panel{border-color:#000;break-inside:avoid}}
+
+.ai-note { margin: .4rem 0; font-size: .95rem; }
+.src-tag { font-size: .75rem; color: var(--muted); white-space: nowrap; margin-left: .25rem; }
+
+.crit-controls{margin:.3rem 0 .4rem}
+.btn.toggle[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg)}

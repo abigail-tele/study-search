@@ -123,7 +123,10 @@ def test_resolve_prefers_best(tmp_path, monkeypatch):
 def test_model_version_reads_commit(tmp_path):
     d = tmp_path / "flan-t5-pdq"; d.mkdir()
     (d / "train_metadata.json").write_text(json.dumps({"git_commit": "abcdef1234567890"}))
-    assert summarize.model_version(d) == "flan-t5-pdq@abcdef12"
+    v = summarize.model_version(d)
+    assert v.startswith("flan-t5-pdq@abcdef12-") and len(v) == len("flan-t5-pdq@abcdef12-") + config.MODEL_HASH_CHARS
+    (d / "train_metadata.json").write_text(json.dumps({"git_commit": "abcdef1234567890", "train_pairs": 5}))
+    assert summarize.model_version(d) != v   # same folder + commit, different model -> different version
     d2 = tmp_path / "other"; d2.mkdir()
     assert summarize.model_version(d2) == "other"
 
@@ -534,3 +537,10 @@ def test_flipped_negation_everything_falls_back(monkeypatch):
     src = "Patients must not have taken chemotherapy in the past."
     out, fb = _run_screen(monkeypatch, "Patients must have taken chemotherapy in the past.", source=src)
     assert fb is True and out.startswith("Patients must not have taken")
+
+
+def test_model_input_spells_comparators_but_keeps_source():
+    trial = {"nct_id": "N1", "brief_summary": "Adults age ≥ 18 years with tumors < 5 cm are studied here.", "eligibility_text": ""}
+    p = summarize.plan_pieces(trial)[0]
+    assert "≥" in p["source_text"] and "at least 18" in p["model_input"] and "less than 5" in p["model_input"]
+    assert "≥" not in p["model_input"] and "<" not in p["model_input"]

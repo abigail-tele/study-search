@@ -7,6 +7,7 @@ query vectors and trial vectors would not live in the same space.
 from __future__ import annotations
 
 import json
+import os
 from typing import Any, Callable
 
 import numpy as np
@@ -42,7 +43,9 @@ def get_encoder() -> Callable[[list[str]], np.ndarray]:
             raise RuntimeError(f"Embedding model not found at {config.EMBED_MODEL_DIR}. "
                                "Run `python -m pipeline.fetch_models` once (offline setup step).")
         from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer(str(config.EMBED_MODEL_DIR), local_files_only=True)
+        # Device from env (default cpu, so serving never grabs a GPU); offline jobs may set e.g. cuda.
+        model = SentenceTransformer(str(config.EMBED_MODEL_DIR), local_files_only=True,
+                                    device=os.environ.get("STUDY_SEARCH_EMBED_DEVICE", "cpu"))
 
         def encode(texts: list[str]) -> np.ndarray:
             return np.asarray(model.encode(texts, normalize_embeddings=True,

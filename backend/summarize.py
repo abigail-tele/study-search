@@ -10,6 +10,7 @@ other field is read straight from stored API data elsewhere.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import math
@@ -222,16 +223,24 @@ def load_model(path: Path | str = config.SUMMARY_MODEL_DIR):
 
 
 def model_version(path: Path | str = config.SUMMARY_MODEL_DIR) -> str:
-    """'<checkpoint folder>@<git commit of the training code>' so a summary can be traced to its model."""
+    """'<checkpoint folder>@<git commit>-<hash>' so a summary can be traced to its exact model.
+
+    Why the hash: two different checkpoints can be copied into the same folder
+    at the same training-code commit; a short hash of train_metadata.json (data
+    files, sizes, loss) keeps their cached model_outputs from colliding.
+    """
     d = resolve_model_dir(path)
-    commit = ""
+    commit, digest = "", ""
     meta = d / "train_metadata.json"
     if meta.exists():
         try:
-            commit = json.loads(meta.read_text(encoding="utf-8")).get("git_commit", "")[:8]
+            raw = meta.read_bytes()
+            commit = json.loads(raw.decode("utf-8")).get("git_commit", "")[:8]
+            digest = hashlib.sha1(raw).hexdigest()[:config.MODEL_HASH_CHARS]
         except (ValueError, OSError):
             pass
-    return f"{d.name}@{commit}" if commit else d.name
+    base = f"{d.name}@{commit}" if commit else d.name
+    return f"{base}-{digest}" if digest else base
 
 
 def _token_counter() -> Callable[[str], int]:
@@ -660,6 +669,13 @@ def trial_layout(trial: dict) -> dict:
 _SIDE_TAG = {"include": "I", "exclude": "E"}
 
 
+def model_input_text(text: str) -> str:
+    """Spell comparator symbols out ('>= 18' -> 'at least 18') for the model only; stored source and checks keep the original."""
+    for sym in sorted(config.COMPARATOR_MODEL_WORDS, key=len, reverse=True):
+        text = text.replace(sym, config.COMPARATOR_MODEL_WORDS[sym] + " ")
+    return " ".join(text.split())
+
+
 def plan_pieces(trial: dict, count: Callable[[str], int] = _word_count_tokens) -> list[dict]:
     """Every model input for one trial as {piece_id, kind, source_text}, in a stable order.
 
@@ -668,11 +684,11 @@ def plan_pieces(trial: dict, count: Callable[[str], int] = _word_count_tokens) -
     output per piece, so judging can be redone later without regenerating.
     """
     lay = trial_layout(trial)
-    pieces = [{"piece_id": f"S:{c}", "kind": "summary", "source_text": t}
+    pieces = [{"piece_id": f"S:{c}", "kind": "summary", "source_text": t, "model_input": model_input_text(t)}
               for c, t in enumerate(chunk_sentences(lay["summary_src"], count))] if lay["summary_src"] else []
     for side, info in lay["sides"].items():
         for i in info["long_idx"]:
-            pieces += [{"piece_id": f"{_SIDE_TAG[side]}:{i}:{c}", "kind": side, "source_text": t}
+            pieces += [{"piece_id": f"{_SIDE_TAG[side]}:{i}:{c}", "kind": side, "source_text": t, "model_input": model_input_text(t)}
                        for c, t in enumerate(chunk_sentences(info["todo"][i], count))]
     return pieces
 
@@ -735,7 +751,7 @@ def summarize_trial(trial: dict) -> dict:
     way the patient only sees checked or original text.
     """
     pieces = plan_pieces(trial, _token_counter())
-    raw = simplify_chunks([p["source_text"] for p in pieces])
+    raw = simplify_chunks([p["model_input"] for p in pieces])
     shown, fallback = judge_chunks([(p["piece_id"], p["source_text"], o) for p, o in zip(pieces, raw)],
                                    trial["nct_id"])
     return assemble_summary(trial, shown, fallback)

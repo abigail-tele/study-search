@@ -41,37 +41,7 @@ Copied from `results/baselines_results.csv` (held-out PDQ test split, produced o
 
 ## Faithfulness pass rate (batch summary pipeline)
 
-From `data/batch_summary_stats.json` (written by `pipeline/batch_summarize.py`): pieces whose model rewrite was shown versus replaced by the glossary-swapped original, with the reasons.
-
-| item | value |
-|---|---|
-| model_version | flan-t5-pdq-best@0d5c3292 |
-| checked_at | 2026-10-24T23:38:28+00:00 |
-| faithfulness_check_implemented | False |
-| trials.checked | 200 |
-| trials.fallback_used | 200 |
-| real_run.pieces_total | 2570 |
-| real_run.shown_as_model_text | 0 |
-| real_run.shown_model_text_trimmed | 0 |
-| real_run.fell_back.empty_output | 0 |
-| real_run.fell_back.faithfulness_check | 2570 |
-| real_run.fell_back.guards_whole_piece | 0 |
-| real_run.guard_sentences_dropped.support | 0 |
-| real_run.guard_sentences_dropped.boilerplate_risk_definition | 0 |
-| real_run.guard_sentences_dropped.direction | 0 |
-| real_run.model_text_rate | 0.0 |
-| guard_only.note | what would be shown if faithfulness_check passed everything; sampled, never stored |
-| guard_only.sample_trials | 200 |
-| guard_only.pieces_total | 2570 |
-| guard_only.shown_as_model_text | 1676 |
-| guard_only.shown_model_text_trimmed | 21 |
-| guard_only.fell_back.empty_output | 0 |
-| guard_only.fell_back.faithfulness_check | 0 |
-| guard_only.fell_back.guards_whole_piece | 894 |
-| guard_only.guard_sentences_dropped.support | 512 |
-| guard_only.guard_sentences_dropped.boilerplate_risk_definition | 566 |
-| guard_only.guard_sentences_dropped.direction | 101 |
-| guard_only.model_text_rate | 0.6521 |
+See the "Production summaries" section (added at the end of this file) for the pass rate of the summaries the site actually serves. The earlier 200-trial run in this spot was made before `faithfulness_check` existed (every piece fell back by design), so it is not a result and was removed.
 
 ## Latency
 
@@ -219,3 +189,65 @@ Inference cost on CPU (12 threads, batch 1, 4 beams, trial pieces): previous bes
 (~30 s per trial). Summaries are pre-generated, so this only matters for the live fallback. G (flan-t5-base, same cost as the previous best) is
 the cheap alternative: guard-pass 84.6%, key-term P 0.972.
 Copied to `checkpoints/candidate-best` (not `flan-t5-pdq-best`).
+
+
+### 8B models (zero-shot, added 2026-10-24)
+
+Qwen/Qwen2.5-7B-Instruct and Qwen/Qwen3-8B (both Apache-2.0 on their model cards), bf16 on the RTX 5090, greedy, max 256 new tokens,
+Qwen3 thinking off (`enable_thinking=False`). System prompt: "You rewrite clinical-trial text for patients at a 6th-8th grade reading level. Keep every
+number, drug name, gene/marker, stage and requirement exactly. Do not add facts, definitions, or advice. Output only the rewrite." Systems
+`zero-shot-qwen2.5-7b` / `zero-shot-qwen3-8b` in `pipeline/baselines.py` (opt-in via `--systems`). All rows below were re-scored with the
+broadened guards in `backend/support.py` (file dated 2026-10-24 22:24), so guard-pass numbers differ slightly from the table above.
+"Effective grade" = guard-pass x FK out + (1 - guard-pass) x FK source (failed pieces show the original text).
+
+| system (trials) | key-term P | R | F1 | support | boilerplate % | guard-pass % | FK out | effective grade |
+|---|---|---|---|---|---|---|---|---|
+| copy-source | 1.000 | 1.000 | 1.000 | 1.000 | 0 | 100 | 15.4 | 15.4 |
+| zero-shot-instruct (flan-t5-base) | 0.985 | 0.726 | 0.836 | 0.960 | 0.4 | 93.3 | 14.7 | 14.7 |
+| G flan-t5-base pdq+ctgov | 0.972 | 0.684 | 0.803 | 0.951 | 5.8 | 81.7 | 13.4 | 13.8 |
+| I flan-t5-large pdq+ctgov | 0.980 | 0.741 | 0.844 | 0.945 | 2.9 | 90.8 | 14.1 | 14.2 |
+| flan-t5-pdq-clean-sent | 0.992 | 0.534 | 0.694 | 0.843 | 13.8 | 55.8 | 11.3 | 13.1 |
+| zero-shot Qwen2.5-7B | 0.923 | 0.832 | 0.875 | 0.423 | 1.7 | 39.6 | 9.2 | 13.0 |
+| zero-shot Qwen3-8B | 0.995 | 0.917 | 0.955 | 0.551 | 5.8 | 39.6 | 10.1 | 13.3 |
+
+Val (125 pieces): Qwen2.5-7B P 0.845 / R 0.688 / support 0.291 / guard-pass 7.2% / FK 8.6; Qwen3-8B P 0.991 / R 0.866 / support 0.459 /
+guard-pass 11.2% / FK 10.4 (I: 1.000 / 0.324 / 0.950 / 67.2% / 13.6).
+
+Reading: Qwen3-8B keeps far more key terms (recall 0.92) and simplifies a lot, but the support check rejects ~60% of pieces: it paraphrases and
+reorders sentences, and sometimes rewrites a term ("metastatic" -> "stage IV", an invented key term). Gate for LoRA fine-tuning
+(key-term P >= 0.97 AND support >= 0.90 on trials) is NOT met (Qwen3 support 0.55, Qwen2.5 P 0.92), so no LoRA run was done.
+Cost (HF transformers, batch 8, greedy, 5090): trials 240 pieces in 80 s (Qwen2.5-7B, 3.0 pieces/s) and 140 s (Qwen3-8B, 1.7 pieces/s);
+414k pieces would take ~38 h and ~68 h. vLLM (WSL `qwen-infer`) would likely be many times faster; not set up.
+
+## Production summaries (switch to G, flan-t5-base on PDQ-clean + ClinicalTrials.gov)
+
+The shipped summaries now come from G (`checkpoints/flan-t5-pdq-best` is a copy of `flan-t5-base-pdq-ctgov`; model_version
+`flan-t5-pdq-best@b34a546a-4cecc6`, the suffix is a hash of train_metadata.json so two models in one folder never collide). The previous
+model (clean-sent) is kept in `checkpoints/flan-t5-pdq-best-prev-clean-sent`, its stats in `data/batch_summary_stats_clean-sent.json`, and its raw
+outputs stay in `model_outputs` under `flan-t5-pdq-best@0d5c3292`. Same scope for both: 20,432 trials, 413,998 pieces. Generation of G took
+1h53m on the RTX 5090; the check stage took about 14 min on the RTX 4070 Ti (24-30 trials/s, versus about 4 trials/s on CPU).
+Guards were widened for G (config.CLAIM_PATTERNS plus a general "X is a/an/the Y" rule in `support.adds_invented_claim`) after review found invented
+definitions such as "PMBCL ... is a rare type of cancer"; 3,678 of G's raw sentences in a 1,500-trial sample trip it.
+
+| | clean-sent | G |
+|---|---|---|
+| pieces shown as model text | 61.7% | 67.1% |
+| fell back: faithfulness_check / guards / empty | 21,988 / 136,549 / 1 | 63,732 / 72,398 / 1 |
+| trials with no fallback at all | 325 (1.6%) | 756 (3.7%) |
+| effective reading grade shown (FK, 1,000 random trials, seed 42) | 13.86 | 14.54 |
+
+The source text of those trials reads at FK 20.09. The effective grade is the mean of `reading_after`, which is computed over the text actually displayed
+(model text where shown, glossary-swapped original where a piece fell back); G shows more model text but its text is a little harder than clean-sent's.
+Function: `pipeline/batch_summarize.py::effective_reading_grade` (CLI: `batch_summarize reading`). Note the clean-sent figure was measured on the
+summaries table before it was rewritten.
+
+Examples from G (no fallback): "This study aims to evaluate the abnormalities of CASP3 gene in chemo resistance in breast cancer by FISH technique.";
+"The study will monitor the long-term safety and tolerability of participants from AstraZeneca for up to 15 years post last cell or gene therapy treatment.";
+"The ANALLISA study is a fast, proof-of-concept, phase II clinical trial which aims to assess the efficacy of niraparib rechallenge treatment after
+secondary cytoreductive surgery in ovarian cancer patients ...". Known weakness: the symbol ">=" is lost by the tokenizer ("Female patients  18 years of age").
+
+Comparator guard (added last). The T5 tokenizer cannot write the symbols >=, <=, < and >, so ">= 18 years" came out as "18 years" and the requirement lost its
+direction. `support.direction_check` now fails any output that repeats a number the source bounds (symbols or words) without a bound of the same
+direction (a range with both ends kept is fine); faithfulness_check calls the same function. Effect on G: faithfulness fallbacks rose from 17,802 to 63,732 pieces
+(+45,930), and model text fell from 78.3% to 67.6% (67.1% after the last claim-phrase round: "may require", "may be done/needed", "you may have", "it may", "is very long", and an acronym defined as a thing; still above clean-sent's 61.7%). For future generation `summarize.model_input_text` spells the symbols out
+("at least", "at most", "more than", "less than") in the model prompt only; the stored source and the checks keep the original. G's current outputs were NOT regenerated.

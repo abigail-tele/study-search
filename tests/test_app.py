@@ -255,3 +255,66 @@ def test_no_profile_values_in_logs(mclient, caplog):
         logging.getLogger("uvicorn.access").info(
             'GET /api/search?q=a&age=47&sex=female&conditions=secretdiagnosis HTTP/1.1 200')
     assert "secretdiagnosis" not in caplog.text and "age=47" not in caplog.text and "sex=female" not in caplog.text
+
+
+# --- POST endpoints (rule 8: personal details in a JSON body, not the URL) ---------------------------
+def test_post_search_happy_matches_get(client):
+    body = {"q": "breast", "zip": "77030", "radius_mi": 50, "status": "RECRUITING", "age": 40, "cancer": "breast"}
+    r = client.post("/api/search", json=body)
+    assert r.status_code == 200 and r.json()["off_topic"] is False
+    assert client.calls == dict(q="breast", cancer="breast", zip="77030", radius_mi=50, status="RECRUITING", age=40)
+    assert r.json() == client.get("/api/search", params={k: str(v) for k, v in body.items()}).json()
+
+
+def test_post_search_off_topic_is_200(client):
+    assert client.post("/api/search", json={"q": "pizza"}).json()["off_topic"] is True
+
+
+@pytest.mark.parametrize("body", [
+    {}, {"q": "  "}, {"q": "x" * 201}, {"q": "a", "zip": "1234"}, {"q": "a", "zip": "00000"},
+    {"q": "a", "radius_mi": 30}, {"q": "a", "age": 121}, {"q": "a", "age": -1}, {"q": "a", "sex": "other"},
+    {"q": "a", "conditions": "x" * 601}, {"q": "a", "sort": "random"}, {"q": ["a"]}, {"q": "a", "age": True},
+])
+def test_post_search_validation_400(client, body):
+    r = client.post("/api/search", json=body)
+    assert r.status_code == 400 and set(r.json()) == {"error"}
+
+
+@pytest.mark.parametrize("raw", ["not json", "[1,2]", '"str"'])
+def test_post_bad_body_is_400(client, raw):
+    h = {"Content-Type": "application/json"}
+    assert client.post("/api/search", content=raw, headers=h).status_code == 400
+    assert client.post("/api/study/NCT05000001", content=raw, headers=h).status_code == 400
+
+
+def test_post_search_profile_adds_match(mclient):
+    r = mclient.post("/api/search", json={"q": "breast", "sex": "female", "age": 40, "conditions": "HER2 positive, stage 3"})
+    assert [x["match"]["summary_label"] for x in r.json()["results"]] == ["Likely not a match", "Possible match"]
+    assert mclient.seen[0] == ("NCT05000002", 40, "female", ("her2 positive", "stage 3"))
+
+
+def test_post_study(mclient):
+    r = mclient.post("/api/study/NCT05000001", json={"age": 30, "conditions": "diabetes, hiv"})
+    assert r.status_code == 200 and r.json()["match"]["summary_label"] == "Possible match"
+    assert mclient.seen[-1] == ("NCT05000001", 30, None, ("diabetes", "hiv"))
+    assert mclient.post("/api/study/NCT05000001", json={}).json()["match"] is None
+    assert mclient.post("/api/study/NCT09999999", json={}).status_code == 404
+    assert mclient.post("/api/study/NCT123", json={}).status_code == 400
+    assert mclient.post("/api/study/NCT05000001", json={"sex": "x"}).status_code == 400
+    assert mclient.post("/api/study/NCT05000001", json={"zip": "12"}).status_code == 400
+    assert mclient.post("/api/study/NCT05000001", json={"age": 200}).status_code == 400
+
+
+def test_post_logs_and_errors_stay_clean(client, caplog):
+    with caplog.at_level(logging.DEBUG):
+        client.post("/api/search", json={"q": "secretquery", "zip": "12345", "age": 47, "conditions": "secretdiagnosis"})
+        r = client.post("/api/search", json={"q": "secretquery", "sex": "secretsex"})
+    assert "secretquery" not in caplog.text and "secretdiagnosis" not in caplog.text and "12345" not in caplog.text
+    assert "secretsex" not in r.text
+
+
+def test_frontend_uses_post_not_urls():
+    from backend import config
+    js = (config.FRONTEND_DIR / "api.js").read_text(encoding="utf-8")
+    assert 'getJSON("/api/search", ' in js and "/api/search?" not in js
+    assert '"/api/study/" + encodeURIComponent(nct), ' in js

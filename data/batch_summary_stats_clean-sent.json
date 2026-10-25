@@ -1,0 +1,43 @@
+{
+  "model_version": "flan-t5-pdq-best@0d5c3292",
+  "checked_at": "2026-10-25T02:31:47+00:00",
+  "faithfulness_check_implemented": true,
+  "trials": {
+    "checked": 20432,
+    "fallback_used": 20107
+  },
+  "real_run": {
+    "pieces_total": 413998,
+    "shown_as_model_text": 255460,
+    "shown_model_text_trimmed": 2145,
+    "fell_back": {
+      "empty_output": 1,
+      "faithfulness_check": 21988,
+      "guards_whole_piece": 136549
+    },
+    "guard_sentences_dropped": {
+      "support": 82682,
+      "boilerplate_risk_definition": 94532,
+      "direction": 2
+    },
+    "model_text_rate": 0.6171
+  },
+  "guard_only": {
+    "note": "what would be shown if faithfulness_check passed everything; sampled, never stored",
+    "sample_trials": 1612,
+    "pieces_total": 32384,
+    "shown_as_model_text": 20529,
+    "shown_model_text_trimmed": 238,
+    "fell_back": {
+      "empty_output": 0,
+      "faithfulness_check": 0,
+      "guards_whole_piece": 11855
+    },
+    "guard_sentences_dropped": {
+      "support": 6718,
+      "boilerplate_risk_definition": 7500,
+      "direction": 1252
+    },
+    "model_text_rate": 0.6339
+  }
+}

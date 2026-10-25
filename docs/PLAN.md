@@ -25,8 +25,8 @@ Citation string:
 | Endpoint | Params | Returns |
 |---|---|---|
 | GET /api/cancer-types | — | `[{id, label, lay_terms[]}]` |
-| GET /api/search | q, cancer?, zip?, radius_mi?, status?, age?, sex? (female/male/any), conditions? (<=600 chars), sort? (relevance/match) | `{query, detected_types[], off_topic, suggested_types[{id,label}], results[]}` — `suggested_types` = cancer chips, filled when off_topic (rule 1), else `[]` |
-| GET /api/study/{nct} | age?, sex?, conditions?, zip? | key facts object + `overview` + `criteria` + `match` (null without a profile) |
+| GET or POST /api/search | q, cancer?, zip?, radius_mi?, status?, age?, sex? (female/male/any), conditions? (<=600 chars), sort? (relevance/match) | `{query, detected_types[], off_topic, suggested_types[{id,label}], results[]}` — `suggested_types` = cancer chips, filled when off_topic (rule 1), else `[]` |
+| GET or POST /api/study/{nct} | age?, sex?, conditions?, zip? | key facts object + `overview` + `criteria` + `match` (null without a profile) |
 | GET /api/summary/{nct} | — | summary object |
 
 Search result item: `nct_id, title, status, phase, cancer_tags[], sponsor, last_updated, nearest_site{city,state,distance_mi}|null, url, citation, score`
@@ -34,6 +34,7 @@ Search result item: `nct_id, title, status, phase, cancer_tags[], sponsor, last_
 `match`: `{age: ok|outside|unknown, sex: ok|no|unknown, mentioned_in_requirements[{term,criterion}], mentioned_in_exclusions[{term,criterion}], possible_conflicts[{term,criterion}], ignored_terms[], summary_label: "Possible match"|"Check with study team"|"Likely not a match", label_text}`. Never says "eligible"; the study team decides.
 `overview` (study panel top, stored API fields only, rule 2): `{sentence, facts[{label,value}]}`. `criteria`: `{include[], exclude[]}` of `{text (original + glossary), original, flag: match|concern|null, terms[]}`.
 Summary object: `nct_id, what_is_tested, who_can_join{include[],exclude[]}, original{summary,eligibility}, faithful, fallback_used, reading_level{before,after}, model_version, generated_at`
+POST (rule 8): `POST /api/search` and `POST /api/study/{nct}` take the same fields as a JSON body (numbers allowed), with the same validation and responses. **The frontend always uses POST**, so the query, ZIP, age, sex and conditions never appear in a URL a hosting proxy could log. The GET forms stay for backwards compatibility and curl; they are still scrubbed from app logs.
 Errors: `{"error": "..."}` + HTTP status. Off-topic is not an error.
 
 ## 3. Phases, owners, done-checks
@@ -53,6 +54,9 @@ Parallel lanes run at the same time. Gate = test-runner + reviewer pass.
 **Gate 1:** full indexer run for all types started (can run overnight).
 
 ### Phase 2 — Sat Oct 24: search + model (parallel)
+
+> Note (2026-10-24): the tasks marked HUMAN-WRITTEN in these tables (`reciprocal_rank_fusion`, `faithfulness_check`, `detect_cancer_types`) were later implemented by Claude Code at the team's request; the team must review them. The tables below are the original plan and are left as written.
+
 | Task | Agent | Done when |
 |---|---|---|
 | `pipeline/embed.py` + FAISS index | data-engineer | index built, row map matches DB |

@@ -226,13 +226,26 @@ RISK_WORDS = (                      # words that turn an eligibility rule into a
     "likely", "risk", "cause", "common", "survival", "cure", "better", "worse", "effective", "safe",
 )                                   # uses one the source does not use is dropped
 DEFINITION_RE = r"^\s*[\w\s\-\(\)]{1,60}\b(?:is|are)\s+(?:a|an|the)\s+\w+(?:\s+\w+){0,3}\s+(?:that|which|who)\b"
+CLAIM_PATTERNS = (                  # invented-definition / medical-claim phrases (regexes): a sentence containing one is DROPPED
+    r"\b(?:is|are)\s+(?:a\s+)?(?:(?:rare|common|serious)\s+)?(?:type|kind|form|types|kinds|forms)s?\s+of",   # unless the source contains the same phrase
+    r"\b(?:is|are)\s+called", r"\bhas\s+spread\s+to\s+other\s+parts\s+of\s+the\s+body",
+    r"\b(?:may|can)\s+be\s+treated", r"\bused\s+to\s+treat", r"\bis\s+used\s+for",
+    r"\bmay\s+require\b", r"\bmay\s+be\s+(?:done|needed)\b", r"\byou\s+may\s+have\b",
+    r"\bit\s+may\b", r"\bis\s+very\s+long\b", 
+    r"\bis\s+an?\s+(?:drug|treatment|surgery|procedure|test|protein|substance)", r"\b(?:is|are)\s+used\s+to\b", r"\b(?:can|may)\s+lead\s+to\b", r"\bhelps?\s+(?:the\s+body|to)",
+)
+MODEL_HASH_CHARS = 6                # chars of the train_metadata.json hash appended to model_version
+ACRONYM_DEFINITION_RE = r"^\s*[A-Z][A-Z0-9-]{1,10}\b\s+(?:is|are)\s+(?:a|an|the)\b"   # "CTCAE is a ...": an acronym defined as a thing, dropped unless the source defines it the same way
+COPULA_BACKED_WORDS = 2             # general definition rule: "X is/are a/an/the <predicate>" needs the predicate's first N words verbatim in the source
 DEFINITION_VERBS = ("may include", "can include", "includes")  # 'X may include Y' is also a definition-style claim
 DEFINITION_ABSENT_FRACTION = 0.50   # drop a definitional sentence when MORE than this share of its predicate's content words are absent from the source
 # direction / negation check (support.direction_check): comparator phrases that sit next to a number
 BOUND_LOWER_PREFIX = ("greater than or equal to", "at least", "no less than", "not less than", "minimum of", "minimum",
-                      "more than", "greater than", "older than", "over", "above", "≥", ">=", ">")
+                      "more than", "greater than", "older than", "over", "above", "≥", "⩾", ">=", "=>", ">")
 BOUND_UPPER_PREFIX = ("less than or equal to", "at most", "no more than", "not more than", "maximum of", "maximum",
-                      "up to", "less than", "fewer than", "younger than", "under", "below", "≤", "<=", "<")
+                      "up to", "less than", "fewer than", "younger than", "under", "below", "not exceed", "≤", "⩽", "<=", "=<", "<")
+COMPARATOR_MODEL_WORDS = {"≥": "at least", "⩾": "at least", ">=": "at least", "≤": "at most", "⩽": "at most", "<=": "at most",
+                          ">": "more than", "<": "less than"}   # the T5 tokenizer cannot emit these symbols, so spell them out before generation
 BOUND_LOWER_SUFFIX = ("or older", "and older", "or more", "or above", "and above", "or greater", "or higher", "or longer")
 BOUND_UPPER_SUFFIX = ("or younger", "or less", "or below", "or under", "or fewer", "or lower", "or shorter")
 NEGATION_CUES = ("no", "not", "without", "never", "none", "cannot", "excluded", "excluding", "exclude", "excludes",
@@ -282,3 +295,16 @@ LORA_BASE_MODEL = "Qwen/Qwen2.5-1.5B-Instruct"   # Apache-2.0 (verify on the mod
 LORA_INSTRUCTION = "Rewrite this for a patient in plain language, keeping every number, drug and requirement:"
 LORA_GRAD_ACCUM = 2             # batch 8 x accum 2 = effective 16, same as train.py
 LORA_MAX_TOKENS = 1024          # prompt + answer; sources are <= 300 words
+
+
+# --- 8B experiments (pipeline/baselines.py zero-shot causal systems, pipeline/train_lora.py) ----
+# Both model cards say Apache-2.0 (checked on huggingface.co, 2026-10-24).
+ZERO_SHOT_8B_MODELS = {
+    "zero-shot-qwen2.5-7b": "Qwen/Qwen2.5-7B-Instruct",
+    "zero-shot-qwen3-8b": "Qwen/Qwen3-8B",
+}
+ZERO_SHOT_8B_SYSTEM = ("You rewrite clinical-trial text for patients at a 6th-8th grade reading level. Keep every number, "
+                       "drug name, gene/marker, stage and requirement exactly. Do not add facts, definitions, or advice. "
+                       "Output only the rewrite.")
+ZERO_SHOT_8B_BATCH = 8           # prompts per generate() call (sorted by length)
+ZERO_SHOT_8B_MAX_NEW_TOKENS = 256

@@ -2,7 +2,7 @@
 
 Living status report for the team. Updated by Claude Code (orchestrator) and edited by humans.
 Last updated: **2026-10-24 (Sat)**. Code freeze: **Sun Oct 25, 6 pm**.
-Detail lives in: `docs/PLAN.md` (plan), `TODO.md` (checklist), `docs/HOW_IT_WORKS.md` (module explanations), `docs/EVAL.md` (numbers), `docs/TRAINING.md` (how to train), `AI_USE.md` + `CREDITS.md` (disclosure).
+Detail lives in: `docs/PLAN.md` (plan), `TODO.md` (open items), `docs/HOW_IT_WORKS.md` (module explanations), `docs/EVAL.md` (numbers), `docs/TRAINING.md` (how to train), `docs/DEPLOY.md` (Hugging Face Spaces), `AI_USE.md` + `CREDITS.md` (disclosure).
 
 ---
 
@@ -10,92 +10,69 @@ Detail lives in: `docs/PLAN.md` (plan), `TODO.md` (checklist), `docs/HOW_IT_WORK
 
 | Area | Status | Key numbers |
 |---|---|---|
-| Trial index (ClinicalTrials.gov → SQLite) | ✅ Done (Gate 1 passed) | 27,657 cancer trials, 35 cancer types, ~420k sites (98.5% geocoded) |
-| Tag accuracy (reviewer samples) | ✅ | 90–100% per type after fixing "non-small cell", "non-Hodgkin", "cervical = neck" mismatches |
-| PDQ training pairs (NCI, public domain) | ✅ | 168 page pairs; deduped + cleaned → 2,162 paragraph + sentence pairs |
-| Model fine-tuning (flan-t5-base) | ✅ 7 runs compared | best = `clean-sent` (lr 1e-4, cleaned targets); see §3 |
-| Embeddings + FAISS index | ✅ | 27,657 vectors, 334 s to build on CPU |
-| Search pipeline (`search.py`) | ✅ built, ⏳ waits on 2 human-written functions | ~90 ms per search (375 ms with ZIP); models load from local files only (rule 4) |
-| FastAPI backend (`app.py`) | ✅ | 4 endpoints, read-only DB, query/ZIP never logged |
-| Frontend | ✅ on mock + live API | needs a human click-through |
-| Summarizer (`summarize.py`) | ✅ built, ⏳ waits on human-written `faithfulness_check` | every model sentence must pass support, boilerplate, risk-word, definition and direction (negation/comparison) checks or the original wording is shown |
-| Tests | ✅ | 289 passed, 78 "xfail" = tests waiting for the 3 human-written functions |
+| Trial index (ClinicalTrials.gov to SQLite) | Done | 27,657 cancer trials, 35 cancer types, ~420k sites (98.5% geocoded); interventions (drugs/treatments) stored for 25,401 trials |
+| Tag accuracy (reviewer samples) | Done | 90-100% per type after fixing "non-small cell", "non-Hodgkin", "cervical = neck" mismatches |
+| Embeddings + FAISS index | Done | 27,657 vectors, built on CPU |
+| Search (`search.py`, `taxonomy.py`) | Works end to end | off-topic queries redirected 10/10; the 25 lay queries all resolve to the right cancer type (25/25); ~90 ms per search (375 ms with ZIP); models load from local files only (rule 4) |
+| FastAPI backend (`app.py`) | Done | 4 endpoints, read-only DB, query/ZIP never logged |
+| Frontend | Done; checked with headless screenshots only | "About you" condition matching, "Study at a glance" (including what is being tested), "What they're looking for" / "Who can't join". Still needs a human click-through |
+| Summarizer (`summarize.py`, `support.py`) | Done | per-piece faithfulness check + sentence guards; a failing piece shows the glossary-swapped original |
+| Batch summaries | ✅ Done with model G (Oct 25) | 20,432 RECRUITING / NOT_YET_RECRUITING trials (413,998 pieces); earlier run (clean-sent): 61.7% of pieces shown as model text. Now model G: 67.1% of pieces shown as model text after all checks; 756 trials with no fallback |
+| Model experiments | Done | PDQ-only, cleaned targets, ClinicalTrials.gov pairs (7,873), flan-t5-large, Qwen LoRA (rejected); see section 3 |
+| Tests | Passing | 452 collected (`pytest --co`) |
+| Deployment | Guide written, not deployed yet | Hugging Face Spaces, Docker (`docs/DEPLOY.md`); needs a team HF account |
 
-## 2. Human-written functions (team members write and explain these)
-The code around them is finished and tested; each has a stub that raises `NotImplementedError` and a full test suite marked `xfail(strict=True)`. When you implement one, its tests will start passing and **you must delete the `xfail` marker** (pytest will tell you).
+## 2. Who wrote the three formerly human-owned functions
+`detect_cancer_types` (`backend/taxonomy.py`), `reciprocal_rank_fusion` (`backend/search.py`) and `faithfulness_check` (`backend/summarize.py`) were first left as stubs for the team. At the team's explicit request they were implemented by Claude Code (Claude Sonnet subagents), marked AI-written in the code, and logged in `AI_USE.md`. **The team must still review each one and be able to explain it to judges; the "human review" cells in `AI_USE.md` are still pending.** All three have full test suites (the old strict-xfail markers are gone).
 
-| Function | File | Tests | What it does |
-|---|---|---|---|
-| `detect_cancer_types` | `backend/taxonomy.py` | `tests/test_taxonomy.py` | plain-words query → cancer type ids, or `[]` if off-topic. Union exact + umbrella matches ("breast and lung cancer" → both); fuzzy/embedding only if nothing matched; short codes (AML, CML, ALL) only as whole words. |
-| `reciprocal_rank_fusion` | `backend/search.py` | `tests/test_search.py` | merge keyword + meaning rankings: score = Σ 1/(k + rank) |
-| `faithfulness_check` | `backend/summarize.py` | `tests/test_summarize.py` | every number, age, unit, drug, gene/marker, stage term in the model output must appear in the source; also reject flipped comparisons/negations ("at least 18" → "under 18"). Drug-name rule is spelled out in the docstring. |
-
-Until these exist: search returns a clean "ranking not implemented yet" (HTTP 503), and every summary shows the glossary-swapped original wording (safe default for rule 3).
+| Function | What it does |
+|---|---|
+| `detect_cancer_types` | plain-words query to cancer type ids, or `[]` if off-topic. Union of exact + umbrella matches ("breast and lung cancer" gives both); fuzzy spelling, then a meaning comparison, only if nothing matched, and only when the query has a cancer word ("stomach ache" is never stomach cancer); short codes (AML, CLL) only as whole words; bare "all" never counts. |
+| `reciprocal_rank_fusion` | merges the keyword and meaning rankings: score = sum of 1/(60 + rank); ties broken by NCT ID. |
+| `faithfulness_check` | every number, age, unit, dose, gene/marker, stage term and drug (list in `data/drug_lexicon.txt`) in the model output must appear in the source; flipped comparisons and negations are rejected. |
 
 ## 3. Model training
+**Data:** NCI PDQ professional-to-patient pairs (168 pages; 2,162 cleaned paragraph + sentence pairs), split by organ family so near-identical pages never straddle train/val/test, plus 7,873 in-domain pairs from ClinicalTrials.gov (a trial's detailed description paired with its easier brief summary; `pipeline/ctgov_pairs.py`, public domain; every trial in the evaluation set is excluded). Full numbers: `docs/EVAL.md`.
 
-**Data:** `data/pdq_pairs.jsonl` (professional NCI PDQ text → patient-version text). Split train/val/test by *organ family* so near-identical pages (e.g. colon vs rectal) never leak across splits. Filters: similarity threshold, length ratio ≤1.5×, numbers-not-in-source dropped, cross-reference sentences ("Learn more…") stripped, near-duplicates of train removed from val/test.
+**What we learned along the way.** The first fine-tune overfit after epoch 1 and, on real trial text, wrote generic or invented sentences (for example "Women age 18 years or older are more likely to have breast cancer than men" from a bare age rule). Fixes: lower learning rate, de-duplication, sentence-level pairs, cleaned training targets (generic intro sentences and unsupported target sentences removed), and automatic guards in `backend/support.py` (every output sentence must be backed by the source; generic openers, new risk words and flipped comparisons are dropped).
 
-**Run 1 (baseline fine-tune):** min-similarity 0.70, lr 3e-4, 1,072 train / 125 val pairs, RTX 5090, ~3 min.
+**Bigger models and in-domain data** (240 real trial texts; guard-pass = no sentence flagged by the guards; the source text reads at FK grade 15.4):
 
-| Epoch | Train loss | Val loss |
-|---|---|---|
-| 1 | 1.93 | **1.97** (best, saved) |
-| 2 | 1.45 | 1.98 |
-| 3 | 1.20 | 2.00 → early stop |
-
-Train loss kept falling while val loss rose after epoch 1 → **overfitting** (small dataset). Fixes being tried: lower learning rate (`--lr 1e-4`), training-data de-duplication, more data via sentence-level alignment, and a fixed 125-pair comparison set (`data/pdq_val_fixed.jsonl`) so all runs are scored on the same examples.
-
-**⚠️ Known risk (found 2026-10-24):** on real trial text the first checkpoint lowers reading grade (~25 → ~10) but writes generic or made-up sentences that a number/drug check cannot catch, e.g. *"Women age 18 years or older are more likely to have breast cancer than men."* (source was only an age rule) and openers like *"There are different types of treatment for…"*. Cause: trained on NCI education pages, used on trial eligibility text (domain mismatch). **Mitigated by:** cleaned training targets (below) and automatic guards in `backend/support.py` — every output sentence must be backed by the source, and sentences with generic openers, unbacked definitions, new risk/claim words ("more likely", "cause", "effective") or a flipped comparison/negation are dropped; if too little survives, that piece shows the glossary-swapped original. On the 240-text trial set ~69% of pieces still show model text. Until the human-written `faithfulness_check` exists, everything shows the original wording.
-
-**Experiments (2026-10-24):** training data de-duplicated first (paragraph pairs 1,649 → 1,440; sentence pairs 1,556 → 918; per-rule counts in `data/pdq_stats.json`). Model choice used the fixed val set + a real-trial set only; the test split was scored once at the end. Full P/R/F1 tables: `docs/EVAL.md`, `results/baselines_results.csv`, per-system raw predictions and error analyses in `results/`.
-
-| Run | lr | Min sim | Train pairs | Best epoch | Fixed-val loss |
+| System | Key-term P / R / F1 | Support | Boilerplate | Guard-pass | FK out |
 |---|---|---|---|---|---|
-| baseline (before dedup) | 3e-4 | 0.70 | 1,072 | 1 | 1.967 |
-| **s70 (winner)** | 1e-4 | 0.70 | 911 | 3 | 1.947 |
-| s60 | 1e-4 | 0.60 | 1,124 | 3 | 1.932 |
-| sent (paragraph + sentence pairs) | 1e-4 | 0.70 | 1,492 | 3 | 1.914 |
-| sent-lr5e5 | 5e-5 | 0.70 | 1,492 | 5 | 1.920 |
+| clean-sent (PDQ only; was production) | 0.992 / 0.534 / 0.694 | 0.843 | 13.8% | 67.5% | 11.3 |
+| **G flan-t5-base + ClinicalTrials.gov pairs (production, switching now)** | 0.972 / 0.684 / 0.803 | 0.951 | 5.8% | 84.6% | 13.4 |
+| H flan-t5-large, PDQ only | 0.979 / 0.597 / 0.742 | 0.885 | 13.3% | 75.4% | 12.0 |
+| I flan-t5-large + ClinicalTrials.gov pairs | 0.980 / 0.741 / 0.844 | 0.945 | 2.9% | 90.8% | 14.1 |
+| J Qwen2.5-1.5B LoRA (rejected) | 0.580 / 0.174 / 0.268 | 0.235 | 10.0% | 18.8% | 12.4 |
+| J2 Qwen2.5-1.5B LoRA (rejected) | 0.518 / 0.157 / 0.241 | 0.221 | 10.8% | 16.3% | 12.4 |
 
-**On 240 real trial texts** (40 brief summaries + 200 eligibility criteria, 35 cancer types). Key-term = numbers, ages, units, drugs, markers, stages; precision < 1 means invented facts. Support = share of output sentences backed by the source. Boilerplate = generic textbook openers not in the source.
+**Why G and not I.** I scores best on the safety measures but barely simplifies (FK 14.1 vs 15.4 for the source), and regenerating every summary with flan-t5-large would take about 5-6 hours. G keeps far more facts than clean-sent at the same CPU cost (recall 0.684 vs 0.534, guard-pass 84.6% vs 67.5%) and reads at FK 13.4. Both Qwen LoRA runs ignored the source and were rejected.
 
-| System | Key-term P / R / F1 | Support | Boilerplate | Reading grade (source 15.4) |
-|---|---|---|---|---|
-| copy source (no change) | 1.00 / 1.00 / 1.00 | 1.00 | 0% | 15.4 |
-| zero-shot flan-t5 (instruction prompt) | 0.985 / 0.726 / 0.836 | 0.96 | 0.4% | 14.7 |
-| few-shot flan-t5 (3 examples) | 0.960 / 0.786 / 0.865 | 0.89 | 0% | 15.6 |
-| fine-tuned baseline | 1.00 / 0.477 / 0.646 | 0.73 | 43.8%* | 10.7 |
-| fine-tuned s70 (previous winner) | 0.996 / 0.582 / 0.735 | 0.83 | 21.3%* | 11.6 |
-| fine-tuned s60 | 0.996 / 0.488 / 0.655 | 0.80 | 23.8%* | 11.3 |
-| fine-tuned sent | 0.996 / 0.532 / 0.693 | 0.78 | 22.1%* | 11.0 |
-| fine-tuned clean-s70 (cleaned targets, paragraphs) | 0.988 / 0.516 / 0.678 | 0.82 | 15.8% | 11.4 |
-| **fine-tuned clean-sent (cleaned targets, paragraphs + sentences; current best)** | 0.992 / 0.534 / 0.694 | 0.84 | 13.8% | 11.3 |
+**Production summaries (model G, final, Oct 25):** 20,432 trials, 413,998 pieces. After the faithfulness check (numbers, units, markers, stages, drug names, flipped or dropped comparisons like "≥ 18" → "18") and the guards (unsupported, generic, invented-definition and invented-claim sentences), **67.1%** of pieces are shown as model text; the rest fall back to the original wording with plain definitions. Effective reading grade of what patients see ≈ 14.5 (the raw source text measures ≈ 20 on the same 1,000-trial sample). Details: `docs/EVAL.md` "Production summaries".
 
-ROUGE-L F1 vs NCI patient text: val (fixed 125) s70 0.221, clean-sent 0.219, baseline 0.187, copy 0.198; test (136, run once per winner) s70 0.231, clean-sent 0.240, copy 0.205.
+**Known limitation (honest):** a human spot-check of 30 random shown bullets after the final checks still found ~4 that state something the source doesn't (e.g. an exclusion rewritten as a promise, an invented referral). Automatic word-level checks cannot catch every fluent paraphrase. Mitigation: the eligibility lists ("What they're looking for" / "Who can't join") now show the **original wording with plain definitions by default**, and the model's version only behind a "Show simplified wording" button; every panel says the plain text is computer-made and links the original. We also tested zero-shot 7–8B models (Qwen2.5-7B, Qwen3-8B): plainer text, but only ~40% of it could be verified by our checks and generating all summaries would take 38–68 h, so we kept the small fine-tuned model.
 
-\* Boilerplate was re-scored with a broader pattern list added after the first comparison, so these values are higher than first reported (s70 was 10.4%, sent 10.4%, s60 13.3%, baseline 37.9%); rows without * were scored with the current list.
+**What this means (honest read):** adding in-domain ClinicalTrials.gov pairs helped more than anything else: the model keeps more of the facts and writes fewer unsupported sentences. The cost is that it simplifies less (reading grade ~13 vs ~11 for the PDQ-only model, where the source is ~15). Even the best model drops some content and still produces some unbacked sentences, so its output is never shown unchecked: every piece passes the faithfulness check and the guards, or falls back to the original wording with hard words explained. The reading-level gain is modest, not dramatic.
 
-**Cleaned-target experiment:** generic PDQ intro sentences (101) and target sentences unsupported by their source (252) were removed from the training targets (`pipeline/clean_pairs.py`, 2,358 -> 2,162 pairs after re-dedupe). Runs: clean-s70 (paragraphs, 846 train pairs) and clean-sent (paragraphs + sentences, 1,434 train pairs). clean-sent has the best support (0.84) and lowest boilerplate (13.8%) of the fine-tuned runs but lower key-term recall than s70 (0.534 vs 0.582); key-term precision differs by only 0.004, so it replaced s70 as `checkpoints/flan-t5-pdq-best`. Details: `docs/EVAL.md`.
-
-**What this means (honest read):** retraining improved the model a lot vs the first fine-tune (support 0.73 → 0.84, boilerplate 43.8% → 13.8%, key-term F1 0.65 → 0.69; the s70 run reached F1 0.74 but with more boilerplate). Fine-tuning is the only thing that actually lowers reading level (~15 → ~11.3); zero/few-shot mostly copy the source. But the model still drops content (key-term recall ~0.53) and ~16% of its sentences aren't backed by the source, so it can't be shown to patients unchecked. Plan: every model sentence must pass the support check *and* the human-written `faithfulness_check`; anything that fails is replaced by the glossary-swapped original for that piece.
-
-## 4. Decisions the team needs to make
-1. Model choice: `clean-sent` (fewer unsupported sentences, current default) vs `s70` (keeps more key facts: recall 0.58 vs 0.53). Switching = copy the other folder to `checkpoints/flan-t5-pdq-best`.
-2. Sign off on permissive-but-unlisted licenses: certifi, tqdm (MPL-2.0), regex (CNRI-Python), typing_extensions + defusedxml (PSF-2.0), shellingham (ISC). (textstat was removed; reading level uses our own Flesch-Kincaid.)
-3. Proofread `data/glossary.json` (76 plain definitions an AI agent paraphrased from the NCI Dictionary; patients see these).
-4. Deployment: `trials.db` (~460 MB) and `faiss.index` (~43 MB) are not in git → choose Hugging Face Spaces upload / Git LFS / build step.
-5. 333 trials that say only "Cancer"/"Neoplasms" (no specific type) are excluded. Add an "any cancer" type?
+## 4. Decisions and open items for the team
+1. Sign off on permissive-but-unlisted licenses: certifi, tqdm (MPL-2.0), regex (CNRI-Python), typing_extensions + defusedxml (PSF-2.0), shellingham (ISC).
+2. Fill in the "human review" column of `AI_USE.md` (all rows still say pending) and review the three AI-written functions in section 2.
+3. Merge PR #3 (`abigail/vector-search`) after the teammate's two test edits (see `TODO.md`).
+4. Proofread `data/glossary.json` (76 plain definitions an AI agent paraphrased from the NCI Dictionary; patients see these).
+5. Deployment: create the Hugging Face account and Space and follow `docs/DEPLOY.md` (`trials_ship.db` ~430 MB and `faiss.index` ~43 MB go through Git LFS).
+6. 333 trials that say only "Cancer"/"Neoplasms" (no specific type) are excluded. Add an "any cancer" type?
 
 ## 5. How to run (Windows PowerShell, from `study-search\`)
 ```powershell
-.\run_api.ps1                 # whole app at http://127.0.0.1:8000 (needs data/trials.db, data/faiss.index, models/, checkpoints/flan-t5-pdq-best)
 .\.venv\Scripts\python -m pipeline.fetch_models   # run once first: puts the embedding model in models/ (the app never downloads at request time)
+.\run_api.ps1                 # whole app at http://127.0.0.1:8000 (needs data/trials.db, data/faiss.index, models/, checkpoints/flan-t5-pdq-best)
 .\run_frontend.ps1            # frontend only, mock data, http://localhost:8765
 .\.venv\Scripts\python -m pytest -q
 .\.venv-train\Scripts\python -m pipeline.train --min-similarity 0.70 --lr 1e-4   # GPU training (see docs/TRAINING.md)
 ```
 
 ## 6. Changelog
-- **Fri–Sat night:** Phase 1: scaffold, taxonomy, full index (35 types), tag verification + non-cancer filter (3 review rounds), PDQ pairs, frontend on mocks. Gate 1 passed.
-- **Sat:** `train.py` + first fine-tune (overfits after epoch 1). Phase 2 in parallel: embeddings, FAISS, search, API, test queries draft, summarizer. Training experiments: lr flag, dedup, sentence pairs, baselines with P/R/F1 (zero-shot, few-shot, fine-tuned), cleaned targets → `clean-sent` selected. Summarizer guards added after finding generic/made-up sentences. Gate 2 review: 3 blockers (disclosure gaps, model download at request time) fixed.
+- **Fri-Sat night:** Phase 1: scaffold, taxonomy, full index (35 types), tag verification + non-cancer filter, PDQ pairs, frontend on mocks. Gate 1 passed.
+- **Sat:** training experiments (dedupe, sentence pairs, cleaned targets), summarizer guards, embeddings/FAISS, search, API. Gate 2 fixes (disclosure gaps, model download at request time).
+- **Sat (later):** the three formerly human-owned functions implemented by Claude Code at the team's request; batch summaries for 20,432 trials; "About you" matching and study overview with interventions; ClinicalTrials.gov pairs, flan-t5-large and Qwen LoRA experiments; model G chosen for production; Gate 3 doc refresh.

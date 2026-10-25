@@ -262,9 +262,11 @@ function renderSummary(body, m) {
   const ok = !m.fallback_used;
   const status = ok ? el("span", { class: "check", text: ICON_CHECK + " Checked against the original" })
                     : el("span", { class: "notice", text: "Some parts are shown in the original wording (with plain definitions) because our checker couldn't confirm the simplified version." });
+  const ai = el("p", { class: "ai-note" }, el("span", { "aria-hidden": "true", text: "⚙ " }),
+    el("span", { text: "Simplified by a computer model and checked against the original wording. Always check the original." }));
   const rl = m.reading_level ? el("p", { class: "muted", text: "Reading level: grade " + m.reading_level.before + " → grade " + m.reading_level.after }) : null;
   body.appendChild(el("section", { class: "panel" },
-    el("h3", { text: "What this study is testing" }), status, rl, el("p", { text: m.what_is_tested })));
+    el("h3", { text: "What this study is testing" }), status, ai, rl, el("p", { text: m.what_is_tested })));
 }
 
 function originalText(o) {
@@ -274,17 +276,19 @@ function originalText(o) {
     el("h4", { text: "Eligibility" }), el("pre", { class: "orig", text: o.eligibility || "" }));
 }
 
-/* "What they're looking for" / "Who can't join". The plain-language bullets (already faithfulness-checked) are used
-   only when they line up one-to-one with the original criteria; otherwise we show the original wording with plain
-   definitions added. Highlights use an icon AND words, never color alone. */
-function critList(items, plain, showFlags) {
-  const useModel = Array.isArray(plain) && plain.length === items.length;
+/* "What they're looking for" / "Who can't join". Original wording (with plain definitions) by default; the checked
+   plain-language bullets show only when the reader turns simplified wording on and they line up one-to-one with the
+   original criteria. Highlights use an icon AND words, never color alone. */
+function critList(items, plain, showFlags, simplified) {
+  const canSwap = Array.isArray(plain) && plain.length === items.length;
   const ul = el("ul", { class: "crit-list" });
   items.forEach((c, i) => {
     const flag = showFlags ? c.flag : null;
+    const useModel = simplified && canSwap && typeof plain[i] === "string" && plain[i];
     const li = el("li", { class: flag ? "c-" + flag : "" });
     li.appendChild(el("span", { class: "ico", "aria-hidden": "true", text: flag === "match" ? ICON_CHECK : flag ? ICON_WARN : ICON_DOT }));
-    const txt = el("span", null, el("span", { text: useModel ? plain[i] : c.text }));
+    const txt = el("span", null, el("span", { text: useModel ? plain[i] : c.text }),
+      el("span", { class: "src-tag", text: useModel ? " [⚙ simplified]" : " [≡ original wording]" }));
     if (flag) {
       const lead = flag === "match" ? "Mentions something you entered: " : "Check this one. It mentions something you entered: ";
       txt.appendChild(el("span", { class: "why", text: lead + (c.terms || []).join(", ") }));
@@ -295,14 +299,33 @@ function critList(items, plain, showFlags) {
   if (!items.length) ul.appendChild(el("li", { text: "None listed." }));
   return ul;
 }
+/* Criteria default to the ORIGINAL wording (with glossary definitions): a spot-check found some model-written bullets
+   that said things the source did not. The toggle is per page view only; nothing is saved. */
 function criteriaPanel(criteria, who, showFlags) {
   const c = criteria || { include: [], exclude: [] };
   const w = who || {};
+  const lists = el("div", { class: "crit-lists" });
+  const btn = el("button", { type: "button", class: "btn toggle", "aria-pressed": "false", text: "Show simplified wording" });
+  let simplified = false;
+  const draw = () => {
+    clear(lists);
+    lists.appendChild(el("h3", { id: "looking-h", text: "What they're looking for" }));
+    lists.appendChild(critList(c.include, w.include, showFlags, simplified));
+    lists.appendChild(el("h3", { text: "Who can't join" }));
+    lists.appendChild(critList(c.exclude, w.exclude, showFlags, simplified));
+  };
+  btn.addEventListener("click", () => {
+    simplified = !simplified;
+    btn.setAttribute("aria-pressed", String(simplified));
+    btn.textContent = simplified ? "Show original wording" : "Show simplified wording";
+    draw();
+    say(simplified ? "Showing simplified wording." : "Showing original wording.");
+  });
+  draw();
   return el("section", { class: "panel", "aria-labelledby": "looking-h" },
-    el("h3", { id: "looking-h", text: "What they're looking for" }),
-    critList(c.include, w.include, showFlags),
-    el("h3", { text: "Who can't join" }),
-    critList(c.exclude, w.exclude, showFlags),
+    el("div", { class: "crit-controls no-print" }, btn),
+    el("p", { class: "muted", text: "The original wording is what the study team uses. Simplified wording is computer-made and may leave out details." }),
+    lists,
     showFlags ? el("p", { class: "muted", text: "Highlights only show where a rule mentions something you entered. The study team decides who can join." }) : null);
 }
 

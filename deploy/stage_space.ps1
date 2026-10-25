@@ -23,7 +23,7 @@ if (-not $Db) {
 
 # Fail early if an artifact is missing (better than a broken Space build).
 $need = @($Db, "data\faiss.index", "data\faiss_rowmap.json", "data\cancer_types.json", "data\umbrella_terms.json",
-          "data\glossary.json", "data\zip_centroids.csv", "models\all-MiniLM-L6-v2\config.json", "backend\app.py", "frontend\index.html")
+          "data\glossary.json", "data\zip_centroids.csv", "data\drug_lexicon.txt", "NOTICE", "LICENSE", "data\README.md", "models\all-MiniLM-L6-v2\config.json", "backend\app.py", "frontend\index.html")
 foreach ($n in $need) {
   $p = if ([IO.Path]::IsPathRooted($n)) { $n } else { Join-Path $root $n }
   if (-not (Test-Path $p)) { throw "Missing required file: $p" }
@@ -46,6 +46,7 @@ Copy-Item (Join-Path $root ".dockerignore") $Out
 New-Item -ItemType Directory -Force (Join-Path $Out "deploy") | Out-Null
 Copy-Item (Join-Path $root "deploy\requirements-deploy.txt") (Join-Path $Out "deploy")
 Copy-Item (Join-Path $root "LICENSE") $Out -ErrorAction SilentlyContinue
+Copy-Item (Join-Path $root "NOTICE") $Out -ErrorAction SilentlyContinue
 Copy-Item (Join-Path $root "CREDITS.md") $Out -ErrorAction SilentlyContinue
 Copy-Item (Join-Path $root "AI_USE.md") $Out -ErrorAction SilentlyContinue
 
@@ -55,6 +56,8 @@ Copy-Item $Db (Join-Path $data "trials.db")
 foreach ($f in "faiss.index","faiss_rowmap.json","cancer_types.json","umbrella_terms.json","glossary.json","zip_centroids.csv") {
   Copy-Item (Join-Path $root "data\$f") $data
 }
+# data/README.md and drug_lexicon.txt: copied unchanged. The lexicon is read by faithfulness_check (needed with -IncludeModel).
+foreach ($f in "README.md","drug_lexicon.txt") { Copy-Item (Join-Path $root "data\$f") $data }
 Copy-Tree "models\all-MiniLM-L6-v2"
 $ck = Join-Path $Out "checkpoints"; New-Item -ItemType Directory -Force $ck | Out-Null
 if ($IncludeModel) { Copy-Tree "checkpoints\flan-t5-pdq-best" } else { Set-Content (Join-Path $ck ".gitkeep") "" }

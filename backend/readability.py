@@ -1,6 +1,6 @@
 """Reading-level estimate (Flesch-Kincaid grade) with no extra dependency.
 
-Why our own: textstat's license is still undecided, and the formula is short.
+Why our own: textstat was removed on purpose (its pyphen dependency has a mixed license), and the Flesch-Kincaid formula is short, so reading level uses our own Flesch-Kincaid by design.
 The syllable counter is a heuristic (vowel groups), good enough to compare
 "before" and "after" text, not to publish as an exact grade.
 """

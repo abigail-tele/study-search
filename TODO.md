@@ -1,78 +1,44 @@
 # To-do list: Cancer Trials Plain-Language Finder
 
 Code freeze **Sun Oct 25, 6 pm**. Submit Sunday night (buffer: Mon Oct 26 morning, if that is the district deadline).
-Full plan: `docs/PLAN.md`. Last updated 2026-10-24 (after Gate 1).
+Full plan: `docs/PLAN.md`. Status: `REPORT.md`. Last updated 2026-10-24 (Gate 3 doc refresh).
 
-## ⚠️ Teammate branches not merged yet (abigail/attributions, abigail/vector-search)
-Both branches start from commit `6f65350`, before `detect_cancer_types` was implemented on `main`. A trial merge
-(cancelled, nothing changed on their branches) showed everything merges except the taxonomy tests. To do, **by the
-teammate in their own files**:
-- [ ] `tests/test_taxonomy.py`: remove the `@HUMAN` (strict xfail) markers on the 8 new semantic-fallback tests: the
-      function is implemented now, so strict xfail turns them into failures (the file header already says to remove
-      them once implemented). `main` also no longer defines `HUMAN`, so the merged file won't load until this is done.
-- [ ] `tests/fixtures/tiny_taxonomy.py`: inside `install()`, add
-      `monkeypatch.setattr(taxonomy.config, "TYPE_DETECT_CUE_REGEX", r"")`. The real detector only runs the semantic
-      step when the query has a cancer word ("stomach ache" guard); the hand-set test phrases ("close pair",
-      "clear winner", "four types") have none, so 3 tests fail without this line.
-- [ ] Then merge both branches into `main`. Conflicts to resolve, all keep-both: `AI_USE.md` (rows),
-      `backend/config.py` (keep `TYPE_DETECT_EMBED_MARGIN`/`_MAX_TYPES` **and** `TYPE_DETECT_CUE_REGEX`),
-      `docs/EVAL.md`, `docs/HOW_IT_WORKS.md` (taxonomy paragraph), `backend/taxonomy.py` (keep
-      `cancer_type_term_matrix()` and make `_embedding_match` use it with the margin and cap; the trial merge did
-      exactly this and 50/53 taxonomy tests passed before the two edits above).
-- Why keep the cancer-word guard: with the real model and no guard, "stomach ache" → stomach cancer and "bone pain"
-  → sarcoma (rule 1). With it, `python -m pipeline.evaluate_types` gives off-topic 10/10 at every threshold.
-- Backup of `main` before the trial merge: local branch `backup/main-before-abigail-merge`.
+## Teammate branches not merged yet
+- `abigail/attributions`: merged (PR #1, brought in through #4).
+- PR #3 `abigail/vector-search`: still open. It starts from a commit before `detect_cancer_types` was implemented on `main`, so, **by the teammate in their own files**:
+  - [ ] `tests/test_taxonomy.py`: remove the `@HUMAN` (strict xfail) markers on the 8 new semantic-fallback tests: the
+        function is implemented now, so strict xfail turns them into failures. `main` also no longer defines `HUMAN`, so the merged file won't load until this is done.
+  - [ ] `tests/fixtures/tiny_taxonomy.py`: inside `install()`, add
+        `monkeypatch.setattr(taxonomy.config, "TYPE_DETECT_CUE_REGEX", r"")`. The real detector only runs the semantic
+        step when the query has a cancer word ("stomach ache" guard); the hand-set test phrases ("close pair",
+        "clear winner", "four types") have none, so 3 tests fail without this line.
+  - [ ] Then merge. Conflicts to resolve, all keep-both: `AI_USE.md` (rows), `backend/config.py` (keep `TYPE_DETECT_EMBED_MARGIN`/`_MAX_TYPES` and `TYPE_DETECT_CUE_REGEX`), `docs/EVAL.md`, `docs/HOW_IT_WORKS.md` (taxonomy paragraph), `backend/taxonomy.py` (keep `cancer_type_term_matrix()` and make `_embedding_match` use it with the margin and cap).
+  - Note: `pipeline/evaluate_types.py` exists only on that branch (not on `main`).
+  - Why keep the cancer-word guard: with the real model and no guard, "stomach ache" gives stomach cancer and "bone pain" gives sarcoma (rule 1). With it, off-topic is 10/10 at every threshold.
 
-## Done: Phase 1 (commit `8025be2`)
-- [x] Repo scaffold, `backend/config.py`, requirements, CREDITS / AI_USE / README / docs skeletons
-- [x] `data/cancer_types.json` (35 types) + `data/umbrella_terms.json`
-- [x] ClinicalTrials.gov v2 API verified (PLAN §6)
-- [x] `db.py` + `indexer.py`: all 35 types indexed, 27,657 cancer trials, tags verified, non-cancer trials dropped
-- [x] `geo.py` + Census ZIP centroids
-- [x] `pdq_pairs.py`: 168 NCI PDQ pages → 1,649 training pairs
-- [x] Frontend (search, cards, off-topic chips, summary panel) on mock data
-- [x] 93 tests passing, Gate 1 reviewed
+## Teammate-owned files: changes needed (NOTICE and data/README.md; not edited by the docs agent)
+- [ ] `NOTICE` (results section, around line 54): it says `results/` holds model outputs and source-text excerpts. Only `results/baselines_results.csv` (metrics) is tracked in git; the raw predictions and error analyses are git-ignored. Reword so it matches.
+- [ ] `data/README.md`: the file table lists only some of the tracked/untracked data files. Add `ctgov_pairs_stats.json` (counts from the ClinicalTrials.gov pair builder; public domain source, project annotations MIT) and `drug_lexicon.txt` (drug names for the faithfulness check; project data, MIT). Also list `ctgov_pairs.jsonl` / `ctgov_pairs_mix.jsonl` (ClinicalTrials.gov detailed-to-brief training pairs, public domain), `batch_summary_stats*.json`, and `glossary.json` already listed; check the "git-ignored" sentence against `.gitignore`.
 
-## Human: do these first (only a person can)
-- [ ] Confirm district + deadline on congressionalappchallenge.us
-- [ ] Confirm every member is eligible (middle/high school, ≥ half in district, one app per student)
-- [ ] Register the team on the portal
-- [ ] Decide who runs training on the GPU (see `docs/TRAINING.md` once it exists)
-- [ ] Pick the training-pair similarity cutoff: 0.60 (1,649 pairs) or 0.70 (1,411 pairs; reviewer recommends 0.70)
-- [ ] Model: flan-t5-base only, or also try a small Qwen as a comparison?
-- [ ] textstat license call: it pulls in pyphen (GPL/LGPL/MPL tri-license). Use it under MPL-1.1, or write our own Flesch-Kincaid?
-- [ ] Sign off on non-listed permissive licenses: certifi + tqdm (MPL-2.0), regex (CNRI-Python), typing_extensions (PSF-2.0), shellingham (ISC)
-- [ ] Spot-check `data/retag_dropped.csv` (trials we removed) and `data/pdq_borderline_samples.json`
-- [ ] Fill in the "human review" column in `AI_USE.md` (all rows say "pending")
-- [ ] Click through the frontend in a real browser (keyboard only + phone width + print)
-- [ ] Push to GitHub (repo owner: abigail-tele)
+## Done
+- Phase 1: scaffold, `config.py`, 35-type taxonomy + umbrella terms, indexer (27,657 trials, tags verified), geo + ZIP centroids, PDQ pairs, frontend on mocks. Gate 1 passed.
+- Phase 2: embeddings + FAISS, search (tags, FTS5, FAISS, RRF, filters, citations), API (4 endpoints, no query/ZIP logging), 25 lay + 10 off-topic test queries drafted, summarizer + guards (`support.py`), own Flesch-Kincaid, glossary. Gate 2 passed after fixes.
+- The three formerly human-owned functions implemented by Claude Code at the team's request (team must review).
+- Phase 3: `faithfulness_check`, batch summaries for 20,432 trials, `evaluate.py` and `make_ship_db.py`, "About you" condition matching, "Study at a glance" with interventions, ClinicalTrials.gov training pairs, bigger-model experiments, Dockerfile + `docs/DEPLOY.md`, copyright audit (`NOTICE`, `data/README.md`).
+- Production model switched to G (flan-t5-base + ClinicalTrials.gov pairs); summaries regenerating tonight.
 
-## Human-written code (team members write and explain these)
-- [ ] `search.py::reciprocal_rank_fusion`
-- [ ] `summarize.py::faithfulness_check`
-- [ ] `taxonomy.py::detect_cancer_types`: must use `data/umbrella_terms.json` and must never match the bare word "all"
+## Human to-dos (only a person can)
+- [ ] Fill in the "human review" column in `AI_USE.md` (all rows say "pending"); review and be able to explain `detect_cancer_types`, `reciprocal_rank_fusion`, `faithfulness_check`
+- [ ] License sign-off: certifi + tqdm (MPL-2.0), regex (CNRI-Python), typing_extensions + defusedxml (PSF-2.0), shellingham (ISC)
+- [ ] Hugging Face account, create the Space, log in / push (see `docs/DEPLOY.md`)
+- [ ] 3-5 human readers check the plain-language summaries; proofread `data/glossary.json`
+- [ ] Fill `relevant_ncts` in `data/test_queries.json` so true hit@5 / MRR / recall@10 can be computed
+- [ ] Click through the frontend in a real browser (keyboard only, phone width, print)
+- [ ] Record the demo (3 minutes max)
+- [ ] Write the technical-challenge answer (PDQ alignment + faithfulness)
+- [ ] Confirm district + deadline, team registration and eligibility on congressionalappchallenge.us; submit
 
-## Phase 2: Sat Oct 24 (search + model)
-- [ ] `pipeline/train.py` + `docs/TRAINING.md` (in progress)
-- [ ] HUMAN: run training on the GPU → checkpoint + val loss curve
-- [ ] `pipeline/embed.py` + FAISS index (all-MiniLM-L6-v2)
-- [ ] `search.py`: tag candidates → FTS5 top 50 + FAISS top 50 → RRF → filters → top 10, citation builder
-- [ ] `taxonomy.py` loader + tests for the human-written detector
-- [ ] `data/test_queries.json`: 25 lay queries + 10 off-topic (grunt drafts, humans pick correct NCTs)
-- [ ] `summarize.py`: chunking, beam 4, include/exclude split, faithfulness stub + tests
-- [ ] `backend/app.py` FastAPI endpoints wired to real search. **Turn uvicorn's access log off** (it would record `?q=` and `?zip=`, which breaks rule 8)
-- [ ] Gate 2: reviewer checks rules 1–4 and the faithfulness logic
-
-## Phase 3: Sun Oct 25 (batch, deploy, eval, submit)
-- [ ] `pipeline/batch_summarize.py` (HUMAN runs on GPU) → summaries table + pass rate
-- [ ] `/api/summary` + summary panel on live data (flip `USE_MOCK = false` in `frontend/api.js`)
-- [ ] `pipeline/evaluate.py` → `docs/EVAL.md` with real numbers
-- [ ] Deploy (Dockerfile). `trials.db` is 460 MB and not in git → plan how to ship it (Git LFS / HF Spaces upload / build step)
-- [ ] Final HOW_IT_WORKS.md, CREDITS.md, AI_USE.md
-- [ ] HUMAN: 3–5 people read summaries; record ≤3 min demo; write technical-challenge answer
-- [ ] Gate 3: reviewer full pass; code freeze 6 pm; submit
-
-## Known small issues (Phase 2)
-- 333 trials that mention cancer but fit no type were dropped (e.g. conditions just "Cancer"). Could add a "solid tumors / any cancer" type.
+## Known small issues
+- 333 trials that mention cancer but fit no type were dropped (conditions just "Cancer"). Could add a "solid tumors / any cancer" type.
 - Inverted names like "Myeloid Leukemia, Philadelphia Positive" can still mis-tag (1 known trial).
 - Incremental index refresh (`python -m pipeline.indexer --auto-since`) not scheduled yet (cut-list item 2).

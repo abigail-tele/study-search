@@ -307,6 +307,53 @@ def _run_causal(model_dir: str, sources_by_key: dict[str, list[str]], cpu: bool)
     return result
 
 
+def zero_shot_prompt(tokenizer, source: str) -> str:
+    """Chat prompt for the zero-shot 8B systems: fixed system message + the source as the user turn.
+
+    Qwen3 chat templates accept enable_thinking; we turn it off so the model answers directly (no <think> block).
+    Other templates ignore the extra kwarg.
+    """
+    msgs = [{"role": "system", "content": config.ZERO_SHOT_8B_SYSTEM}, {"role": "user", "content": source}]
+    return tokenizer.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True, enable_thinking=False)
+
+
+def strip_think(text: str) -> str:
+    """Drop any <think>...</think> block (safety net if a template ignores enable_thinking)."""
+    return re.sub(r"<think>.*?</think>", "", text, flags=re.S).strip()
+
+
+def _run_zero_shot_causal(model_id: str, sources_by_key: dict[str, list[str]], cpu: bool) -> dict[str, list[str]]:
+    """Greedy (1 beam) generation with an off-the-shelf chat model; prints throughput for the cost estimate."""
+    import time
+
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    from pipeline.train import pick_device
+
+    device, bf16 = pick_device(cpu)
+    tok = AutoTokenizer.from_pretrained(model_id, padding_side="left")
+    model = AutoModelForCausalLM.from_pretrained(model_id, dtype=torch.bfloat16 if bf16 else torch.float32).to(device).eval()
+    result, bs = {}, config.ZERO_SHOT_8B_BATCH
+    for key, sources in sources_by_key.items():
+        prompts = [zero_shot_prompt(tok, s) for s in sources]
+        order = sorted(range(len(prompts)), key=lambda i: len(prompts[i]))
+        outs, t0 = [""] * len(prompts), time.time()
+        for k in range(0, len(order), bs):
+            idx = order[k:k + bs]
+            enc = tok([prompts[i] for i in idx], return_tensors="pt", padding=True).to(device)
+            with torch.no_grad():
+                ids = model.generate(**enc, do_sample=False, num_beams=1, max_new_tokens=config.ZERO_SHOT_8B_MAX_NEW_TOKENS)
+            for i, t in zip(idx, tok.batch_decode(ids[:, enc["input_ids"].shape[1]:], skip_special_tokens=True)):
+                outs[i] = strip_think(t)
+        dt = time.time() - t0
+        print(f"  {key}: {len(prompts)} pieces in {dt:.0f}s = {len(prompts) / dt:.2f} pieces/s (batch {bs})", flush=True)
+        result[key] = outs
+    del model
+    torch.cuda.empty_cache()
+    return result
+
+
 def _store_predictions(system: str, split: str, rows: list[dict], outputs: list[str], shots: list[int] | None = None) -> None:
     path = config.RESULTS_DIR / f"raw_predictions_{system}.jsonl"
     config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -355,6 +402,12 @@ def cmd_generate(args: argparse.Namespace) -> None:
             _store_predictions(system, s, data[s], o, meta.get(key))
             if key in meta:
                 print(f"few-shot {s}: mean shots used {sum(meta[key]) / len(meta[key]):.2f} of {config.FEWSHOT_K}")
+    for name, model_id in config.ZERO_SHOT_8B_MODELS.items():
+        if wanted is not None and name in wanted:    # opt-in only (not part of "all": 15 GB downloads)
+            print(f"== {name} ({model_id})", flush=True)
+            res = _run_zero_shot_causal(model_id, {s: [r["source"] for r in rows] for s, rows in data.items()}, args.cpu)
+            for s, o in res.items():
+                _store_predictions(name, s, data[s], o)
     for ckpt in discover_checkpoints():
         if not use(ckpt.name):
             continue
@@ -372,7 +425,7 @@ def cmd_generate(args: argparse.Namespace) -> None:
 COLUMNS = ["system", "split", "n", "rouge1_p", "rouge1_r", "rouge1_f", "rouge2_p", "rouge2_r", "rouge2_f",
            "rougeL_p", "rougeL_r", "rougeL_f", "token_p", "token_r", "token_f", "keyterm_p", "keyterm_r", "keyterm_f",
            "keyterm_zero_halluc_pct", "support_precision", "fully_supported_pct", "boilerplate_pct", "guard_pass_pct",
-           "fk_out", "fk_src", "fk_target", "avg_out_words"]
+           "fk_out", "fk_src", "fk_target", "avg_out_words"]   # effective grade = effective_grade(guard_pass_pct, fk_out, fk_src)
 
 
 def score_system(rows: list[dict], encode=None) -> tuple[dict, dict]:
@@ -473,6 +526,12 @@ def cmd_score(args: argparse.Namespace) -> None:
             print(f"scored {system} / {split}", flush=True)
     _update_csv(out_rows)
     print_table(out_rows)
+
+
+def effective_grade(guard_pass_pct: float, fk_out: float, fk_src: float) -> float:
+    """Reading grade a patient sees on average: guarded-out pieces fall back to the (harder) source text."""
+    g = guard_pass_pct / 100
+    return g * fk_out + (1 - g) * fk_src
 
 
 def print_table(rows: list[dict]) -> None:

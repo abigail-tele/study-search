@@ -81,6 +81,24 @@ async def about_scenario(p: Page):
         print(dev, "overflow:", await p.js("document.documentElement.scrollWidth > document.documentElement.clientWidth"))
 
 
+async def toggle_scenario(p: Page):
+    """Mock-mode screenshots of the criteria panel in both wording states (original default, then simplified)."""
+    for dev, (w, h) in SIZES.items():
+        await p.size(w, h)
+        await p.goto(MOCK + "?mock=1#")
+        await p.js("document.getElementById('about-you').open=true;document.getElementById('age').value='45';"
+                   "document.getElementById('sex').value='female';"
+                   "document.getElementById('conditions').value='HER2 positive, pregnant, had chemotherapy'")
+        await p.js("document.getElementById('q').value='breast cancer';document.getElementById('search-form').requestSubmit()")
+        await asyncio.sleep(2.5)
+        await p.js("document.querySelector('#results .card .btn.primary').click()")
+        await asyncio.sleep(3)
+        await p.js("document.querySelector('.btn.toggle').scrollIntoView()")
+        await p.shot(f"criteria-original-{dev}.png", full=False)
+        await p.js("document.querySelector('.btn.toggle').click()")
+        await asyncio.sleep(0.5); await p.shot(f"criteria-simplified-{dev}.png", full=False)
+
+
 async def main():
     OUT.mkdir(parents=True, exist_ok=True)
     prof = tempfile.mkdtemp()
@@ -97,6 +115,9 @@ async def main():
         async with websockets.connect(ws_url, max_size=64_000_000) as ws:
             p = Page(ws)
             await p.call("Page.enable"); await p.call("Runtime.enable")
+            if "--toggle" in sys.argv:
+                await toggle_scenario(p)
+                return
             if "--about" in sys.argv:
                 await about_scenario(p)
                 return

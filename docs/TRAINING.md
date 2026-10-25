@@ -53,3 +53,21 @@ Winner (see docs/EVAL.md, "Model comparison"), copied to `checkpoints/flan-t5-pd
 ```
 Compare checkpoints on the frozen val set: `.\.venv-train\Scripts\python -m pipeline.compare_checkpoints checkpoints/<name>`.
 Full baseline comparison with precision/recall/F1: `.\.venv-train\Scripts\python -m pipeline.baselines generate --splits val,trials` (GPU), then `.\.venv\Scripts\python -m pipeline.baselines score --splits val,trials` (needs sentence-transformers, so use `.venv`). `--splits test --allow-test` is for the single final run. `python -m pipeline.baselines build-trials` rebuilds `data/trial_eval_set.jsonl`.
+
+## Production model (G: flan-t5-base + ClinicalTrials.gov pairs)
+Command that produced `checkpoints/flan-t5-base-pdq-ctgov` (from its `train_metadata.json`: lr 1e-4, min similarity 0.70, batch 8 x accum 2, up to 5 epochs, seed 42, bf16, best epoch 4, 3,434 train / 489 val pairs, best val loss 1.837):
+```powershell
+.\.venv-train\Scripts\python -m pipeline.train --model google/flan-t5-base --lr 1e-4 --min-similarity 0.70 --pairs data/pdq_pairs_clean.jsonl data/ctgov_pairs_mix.jsonl --out checkpoints/flan-t5-base-pdq-ctgov
+```
+`data/ctgov_pairs_mix.jsonl` is a random sample of `data/ctgov_pairs.jsonl` (2,000 train / 250 val pairs); `ctgov_pairs.jsonl` itself is built by `python -m pipeline.ctgov_pairs` (stats in `data/ctgov_pairs_stats.json`). Val loss of this mixed set is not comparable with the PDQ-only runs above.
+
+To make it production (rule 3 still applies: every summary goes through the faithfulness check):
+```powershell
+Copy-Item -Recurse -Force checkpoints\flan-t5-pdq-best checkpoints\flan-t5-pdq-best-prev-clean-sent   # optional backup
+Remove-Item -Recurse -Force checkpoints\flan-t5-pdq-best
+Copy-Item -Recurse checkpoints\flan-t5-base-pdq-ctgov checkpoints\flan-t5-pdq-best
+.\.venv-train\Scripts\python -m pipeline.batch_summarize generate          # GPU: raw rewrites into model_outputs
+.\.venv\Scripts\python -m pipeline.batch_summarize check                    # CPU: faithfulness check + guards, writes summaries
+.\.venv\Scripts\python -m pipeline.make_ship_db                              # slim data/trials_ship.db for deployment
+```
+The batch stats land in `data/batch_summary_stats.json`.

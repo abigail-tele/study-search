@@ -8,7 +8,7 @@ For education, not medical advice. Talk with your doctor before making any decis
 
 Trial records come from [ClinicalTrials.gov](https://clinicaltrials.gov/), a service of the U.S. National Library of Medicine (NLM) at the National Institutes of Health (NIH). ClinicalTrials.gov data is public domain. This project is not affiliated with, endorsed by, or sponsored by NLM, NIH, or the U.S. government.
 
-Plain-language training pairs are adapted from the National Cancer Institute (NCI) PDQ cancer information summaries. Glossary definitions are paraphrased from the NCI Dictionary of Cancer Terms. NCI text is public domain; credit: National Cancer Institute. NCI does not endorse this project. PDQ is a registered trademark of NCI; the name is used here only to identify the source data.
+Plain-language training pairs are adapted from the National Cancer Institute (NCI) PDQ cancer information summaries. Additional training pairs match each ClinicalTrials.gov trial's detailed description to its easier brief summary (public domain, built by `pipeline/ctgov_pairs.py`). Glossary definitions are paraphrased from the NCI Dictionary of Cancer Terms. NCI text is public domain; credit: National Cancer Institute. NCI does not endorse this project. PDQ is a registered trademark of NCI; the name is used here only to identify the source data.
 
 ZIP centroids come from the U.S. Census Bureau 2024 Gazetteer ZCTA file (public domain).
 
