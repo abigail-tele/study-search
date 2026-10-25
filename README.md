@@ -4,6 +4,16 @@ A web app that helps patients and families find cancer clinical trials in plain 
 
 For education, not medical advice. Talk with your doctor before making any decision about a clinical trial.
 
+## Data sources and attribution
+
+Trial records come from [ClinicalTrials.gov](https://clinicaltrials.gov/), a service of the U.S. National Library of Medicine (NLM) at the National Institutes of Health (NIH). ClinicalTrials.gov data is public domain. This project is not affiliated with, endorsed by, or sponsored by NLM, NIH, or the U.S. government.
+
+Plain-language training pairs are adapted from the National Cancer Institute (NCI) PDQ cancer information summaries. Glossary definitions are paraphrased from the NCI Dictionary of Cancer Terms. NCI text is public domain; credit: National Cancer Institute. NCI does not endorse this project. PDQ is a registered trademark of NCI; the name is used here only to identify the source data.
+
+ZIP centroids come from the U.S. Census Bureau 2024 Gazetteer ZCTA file (public domain).
+
+See [NOTICE](NOTICE) and [data/README.md](data/README.md) for full attribution and per-file details.
+
 ## Setup
 
 Requires Python 3.11.
@@ -29,19 +39,21 @@ The summarizer needs a trained checkpoint in `checkpoints/flan-t5-pdq-best` (see
 Start the whole app (API + frontend) at http://127.0.0.1:8000:
 
 ```
-.un_api.ps1
+.\run_api.ps1
 ```
 
-Frontend only, with mock data: `.un_frontend.ps1` → http://localhost:8765. Tests: `.venv\Scripts\python -m pytest -q`.
+Frontend only, with mock data: `.\run_frontend.ps1` → http://localhost:8765. Tests: `.venv\Scripts\python -m pytest -q`.
 
 ## Documentation
 
 - [docs/PLAN.md](docs/PLAN.md): schedule, user journey, API contract
 - [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md): plain-English tour of each module
 - [docs/EVAL.md](docs/EVAL.md): evaluation results
+- [NOTICE](NOTICE): data attribution and third-party licenses
+- [data/README.md](data/README.md): per-file data provenance
 - [CREDITS.md](CREDITS.md): dependencies, data sources, and licenses
 - [AI_USE.md](AI_USE.md): log of AI-assisted work
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+The original code and documentation are MIT-licensed; see [LICENSE](LICENSE). Third-party data and models keep their own public-domain or Apache-2.0 status as described in [NOTICE](NOTICE).

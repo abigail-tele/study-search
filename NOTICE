@@ -1,0 +1,60 @@
+# NOTICE
+
+This repository contains original code and documentation plus data derived from
+U.S. government sources. The MIT License in `LICENSE` applies to the original
+code and documentation in this repository. It does not relicense third-party
+data or model weights, which remain subject to their own terms described below.
+
+## Data sources and attribution
+
+### National Cancer Institute (NCI) PDQ and NCI Dictionary of Cancer Terms
+
+- Sources: <https://www.cancer.gov/publications/pdq> and
+  <https://www.cancer.gov/publications/dictionaries>
+- Status: U.S. government work; public domain unless otherwise indicated.
+- Credit: National Cancer Institute.
+- The PDQ-derived files in `data/` are adapted from NCI PDQ: the text was
+  cleaned, split, aligned, and filtered. They are not verbatim NCI products.
+- The glossary in `data/glossary.json` contains plain-language paraphrases of
+  definitions from the NCI Dictionary of Cancer Terms.
+- NCI does not endorse this project.
+- PDQ is a registered trademark of the National Cancer Institute. The name is
+  used here only to identify the source data. No NCI logo or PDQ branding is
+  used.
+- NCI reuse policy: <https://www.cancer.gov/policies/copyright-reuse>
+
+### ClinicalTrials.gov
+
+- Source: <https://clinicaltrials.gov/>
+- Status: public domain (U.S. government work).
+- ClinicalTrials.gov is a service of the U.S. National Library of Medicine
+  (NLM) at the National Institutes of Health (NIH). This project is not
+  affiliated with, endorsed by, or sponsored by NLM, NIH, or the U.S.
+  government.
+- Trial records in `data/` and `results/` are excerpts or summaries of
+  public-domain ClinicalTrials.gov records.
+
+### U.S. Census Bureau Gazetteer
+
+- Source: <https://www2.census.gov/geo/docs/maps-data/data/gazetteer/>
+- Status: public domain (U.S. government work).
+- `data/zip_centroids.csv` was built from the 2024 Gazetteer ZCTA file.
+
+## Models
+
+- `google/flan-t5-base`: Apache-2.0,
+  <https://huggingface.co/google/flan-t5-base>
+- `sentence-transformers/all-MiniLM-L6-v2`: Apache-2.0,
+  <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>
+
+Fine-tuned checkpoints are not stored in this repository.
+
+## Results and evaluation files
+
+The files in `results/` contain model outputs and excerpts of the public-domain
+source text used for evaluation. They are provided for reproducibility. The
+underlying source text remains public domain and is credited above.
+
+## No medical advice
+
+This project is for education only and is not medical advice. See `README.md`.

@@ -37,11 +37,19 @@ These are not listed in `requirements.txt` but are installed as dependencies of 
 | Name | Version / date | License | URL | What we use it for |
 |---|---|---|---|---|
 | ClinicalTrials.gov API v2 | live API, fetched offline | U.S. National Library of Medicine terms; public domain (U.S. government work) | https://clinicaltrials.gov/data-api/api | Source of every trial record (title, status, sites, eligibility, dates) |
-| NCI PDQ cancer information summaries | cancer.gov pages, fetched offline | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/pdq | Professional and patient-version text pairs for training the plain-language model |
+| NCI PDQ cancer information summaries | cancer.gov pages, fetched offline | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/pdq | Professional and patient-version text pairs for training the plain-language model; the pairs in `data/` are adapted (cleaned, split, aligned, filtered) from NCI PDQ |
 | NCI PDQ breast cancer treatment patient page (Internet Archive Wayback Machine snapshot) | Wayback snapshot 2025-11-22 (`web/20251122021816`) | Public domain (U.S. government work); content remains NCI public domain | http://web.archive.org/web/20251122021816id_/https://www.cancer.gov/types/breast/patient/breast-treatment-pdq | Used because the live cancer.gov URL redirect-looped on 2026-10-24. Stored in `data/pdq_pages.json` as `patient_fetch_url`. |
 | NCI Dictionary of Cancer Terms / NCI Thesaurus | current online edition | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/dictionaries | Clinical and lay wording used in `data/cancer_types.json` |
 | NCI Dictionary of Cancer Terms (cancer.gov) | Online edition, paraphrased 2026-10-24 | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/dictionaries | Plain-language definitions paraphrased (by an AI agent) into `data/glossary.json` (76 terms), shown to patients as a fallback |
 | U.S. Census Bureau Gazetteer ZCTA file | 2024 release (`2024_Gaz_zcta_national.zip`) | Public domain (U.S. government work) | https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_Gaz_zcta_national.zip | ZIP code centroid coordinates for distance calculation (`data/zip_centroids.csv`, built by `pipeline/zip_centroids.py`) |
+
+### Data licensing and attribution
+
+- NCI PDQ and NCI Dictionary text is public domain (U.S. government work). Credit: National Cancer Institute. The PDQ-derived pairs in `data/` are adapted from NCI PDQ; they are not verbatim NCI products. NCI does not endorse this project. PDQ is a registered trademark of the National Cancer Institute and is used here only to identify the source data. See https://www.cancer.gov/policies/copyright-reuse.
+- ClinicalTrials.gov data is public domain (U.S. government work). ClinicalTrials.gov is a service of NLM/NIH; this project is not affiliated with or endorsed by NLM, NIH, or the U.S. government.
+- U.S. Census Bureau Gazetteer data is public domain (U.S. government work).
+- The repository's MIT license covers original code and documentation only. It does not relicense the public-domain source text or third-party model weights.
+- Full attribution and per-file details: `NOTICE` and `data/README.md`.
 
 ## Models
 
