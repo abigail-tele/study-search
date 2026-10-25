@@ -67,7 +67,7 @@ $live = if ($IncludeModel) { "1" } else { "0" }
 @"
 ---
 title: Cancer Trials Plain-Language Finder
-emoji: 🔎
+emoji: $([char]::ConvertFromUtf32(0x1F50E))
 colorFrom: blue
 colorTo: green
 sdk: docker
@@ -78,7 +78,9 @@ license: mit
 
 Search cancer clinical trials in plain words. Trial data comes from ClinicalTrials.gov.
 For education, not medical advice.
-"@ | Set-Content -Encoding utf8 (Join-Path $Out "README.md")
+"@ | ForEach-Object { [IO.File]::WriteAllText((Join-Path $Out "README.md"), $_, (New-Object Text.UTF8Encoding $false)) }
+# ^ UTF-8 without BOM: Windows PowerShell's "-Encoding utf8" adds a BOM, which can hide the YAML header from Hugging Face.
+#   The emoji is built from its code point because PowerShell 5.1 reads this BOM-less script as ANSI and would garble it.
 
 # Git LFS: every big binary. (*.db, *.index, *.safetensors, etc. must NOT be stored as plain git blobs.)
 @"
