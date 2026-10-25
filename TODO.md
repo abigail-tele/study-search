@@ -30,7 +30,8 @@ Full plan: `docs/PLAN.md`. Last updated 2026-10-24 (after Gate 1).
 ## Human-written code (team members write and explain these)
 - [ ] `search.py::reciprocal_rank_fusion`
 - [ ] `summarize.py::faithfulness_check`
-- [ ] `taxonomy.py::detect_cancer_types`: must use `data/umbrella_terms.json` and must never match the bare word "all"
+- [ ] `taxonomy.py::detect_cancer_types`: must use `data/umbrella_terms.json`, must never match the bare word "all", and must use `cancer_type_term_matrix()` for the semantic fallback after exact/umbrella/fuzzy fail
+- [ ] Run `python -m pipeline.evaluate_types`, pick the semantic threshold, and paste the real counts into `docs/EVAL.md`
 
 ## Phase 2: Sat Oct 24 (search + model)
 - [ ] `pipeline/train.py` + `docs/TRAINING.md` (in progress)

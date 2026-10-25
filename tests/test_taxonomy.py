@@ -3,9 +3,19 @@ implements detect_cancer_types; remove the marker then (strict=True will remind 
 import pytest
 
 from backend import taxonomy
+from tests.fixtures import tiny_taxonomy
 
 HUMAN = pytest.mark.xfail(raises=NotImplementedError, strict=True,
                           reason="HUMAN-WRITTEN: detect_cancer_types")
+
+
+@pytest.fixture
+def semantic_taxonomy(monkeypatch):
+    """Tiny taxonomy + fake encoder so semantic tests never load MiniLM."""
+    tiny_taxonomy.install(monkeypatch)
+    yield
+    taxonomy.cancer_type_term_matrix.cache_clear()
+
 
 BLOOD = {"leukemia_all", "leukemia_aml", "leukemia_cll", "leukemia_cml",
          "lymphoma_hodgkin", "lymphoma_nhl", "multiple_myeloma"}
@@ -36,6 +46,18 @@ def test_detect_is_stubbed_or_returns_list():
         assert isinstance(taxonomy.detect_cancer_types("breast cancer"), list)
     except NotImplementedError:
         pass
+
+
+# ---- semantic term matrix (scaffolding, must pass now) ----
+def test_term_matrix_shape_and_ids(semantic_taxonomy):
+    terms, ids, matrix = taxonomy.cancer_type_term_matrix()
+    assert len(terms) == len(ids) == matrix.shape[0]
+    assert set(ids) == {t["id"] for t in tiny_taxonomy.TYPES}
+    assert matrix.shape[1] == 5
+
+
+def test_term_matrix_is_cached(semantic_taxonomy):
+    assert taxonomy.cancer_type_term_matrix() is taxonomy.cancer_type_term_matrix()
 
 
 # ---- detection (human) ----
@@ -126,3 +148,47 @@ def test_short_acronyms_not_matched_inside_words(q):
 @HUMAN
 def test_aml_whole_word_matches():
     assert "leukemia_aml" in taxonomy.detect_cancer_types("AML")
+
+
+# ---- semantic fallback (human, after exact/umbrella/fuzzy) ----
+@HUMAN
+def test_semantic_fallback_matches_paraphrase(semantic_taxonomy):
+    assert taxonomy.detect_cancer_types("a growth in the milk ducts") == ["breast"]
+
+
+@HUMAN
+def test_semantic_fallback_below_threshold_is_off_topic(semantic_taxonomy):
+    assert taxonomy.detect_cancer_types("weak match") == []
+
+
+@HUMAN
+def test_semantic_fallback_off_topic_is_empty(semantic_taxonomy):
+    assert taxonomy.detect_cancer_types("knee pain") == []
+
+
+@HUMAN
+def test_exact_match_wins_before_semantic(semantic_taxonomy):
+    assert taxonomy.detect_cancer_types("breast cancer") == ["breast"]
+
+
+@HUMAN
+def test_semantic_fallback_keeps_close_runners_up(semantic_taxonomy):
+    assert set(taxonomy.detect_cancer_types("close pair")) == {"breast", "lung"}
+
+
+@HUMAN
+def test_semantic_fallback_drops_distant_runner_up(semantic_taxonomy):
+    assert taxonomy.detect_cancer_types("clear winner") == ["breast"]
+
+
+@HUMAN
+def test_semantic_fallback_caps_types(semantic_taxonomy, monkeypatch):
+    monkeypatch.setattr(taxonomy.config, "TYPE_DETECT_EMBED_THRESHOLD", 0.45)
+    assert taxonomy.detect_cancer_types("four types") == ["breast", "lung", "prostate"]
+
+
+@HUMAN
+def test_semantic_fallback_is_deterministic(semantic_taxonomy):
+    first = taxonomy.detect_cancer_types("close pair")
+    second = taxonomy.detect_cancer_types("close pair")
+    assert first == second and len(first) == len(set(first))

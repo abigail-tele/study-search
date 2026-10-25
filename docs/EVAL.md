@@ -8,7 +8,9 @@ TODO: real numbers only.
 
 ## Off-topic redirect
 
-TODO: real numbers only.
+TODO: real numbers only. Run `python -m pipeline.evaluate_types` to sweep the semantic
+type-detection threshold over `data/test_queries.json` (25 lay + 10 off-topic) and paste
+the chosen threshold and real counts here.
 
 ## Summaries (ROUGE-L, reading level)
 

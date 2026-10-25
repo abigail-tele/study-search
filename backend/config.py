@@ -94,6 +94,8 @@ RADIUS_OPTIONS_MI = (25, 50, 100, 250)
 EMBED_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 TYPE_DETECT_FUZZY_THRESHOLD = 85      # rapid/fuzzy string match score (0-100)
 TYPE_DETECT_EMBED_THRESHOLD = 0.55    # cosine similarity for embedding fallback
+TYPE_DETECT_EMBED_MARGIN = 0.05       # keep runners-up within this of the best semantic score
+TYPE_DETECT_EMBED_MAX_TYPES = 3       # cap semantic fallback so search never widens too far
 
 # --- PDQ training data -----------------------------------------------------
 PDQ_ALIGN_SIM_THRESHOLD = 0.60  # min cosine similarity to keep a paragraph pair

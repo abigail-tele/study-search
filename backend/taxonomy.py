@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 from functools import lru_cache
+from typing import Any
 
 from backend import config
 
@@ -26,6 +27,35 @@ def load_umbrella_terms() -> dict[str, list[str]]:
 def cancer_type_chips() -> list[dict]:
     """[{id, label}] for the clickable chips shown on the landing/off-topic page."""
     return [{"id": t["id"], "label": t["label"]} for t in load_cancer_types()]
+
+
+@lru_cache(maxsize=1)
+def cancer_type_term_matrix() -> tuple[list[str], list[str], Any]:
+    """(terms, matching type ids, normalized MiniLM vectors) for the semantic fallback.
+
+    Why cache: the human-written detector only needs this after exact, umbrella
+    and fuzzy matching fail, but embedding every label/lay/clinical term on each
+    such query would be slow. We embed them once and reuse the matrix; the
+    detector scores the query against it and applies the config threshold,
+    margin and cap. The matrix has one row per term, so `matrix @ query_vector`
+    gives one cosine score per term. Terms are de-duplicated within each type,
+    and each term keeps the id of the type it belongs to, so one term can still
+    map to several types.
+    """
+    from backend.embedding import get_encoder
+
+    terms: list[str] = []
+    type_ids: list[str] = []
+    for ctype in load_cancer_types():
+        raw = [ctype.get("label", ""), *ctype.get("lay_terms", []),
+               *ctype.get("clinical_terms", [])]
+        for term in dict.fromkeys(t.strip() for t in raw if t and t.strip()):
+            terms.append(term)
+            type_ids.append(ctype["id"])
+    if not terms:
+        import numpy as np
+        return [], [], np.zeros((0, 0), dtype="float32")
+    return terms, type_ids, get_encoder()(terms)
 
 
 # HUMAN-WRITTEN
