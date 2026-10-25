@@ -25,7 +25,7 @@ from backend import config
 TRAIN_SPLIT, VAL_SPLIT = "train", "val"  # "test" is deliberately absent
 
 
-def load_pairs(path: Path, min_similarity: float) -> tuple[list[dict], list[dict]]:
+def load_pairs(path: "Path | list[Path]", min_similarity: float) -> tuple[list[dict], list[dict]]:
     """Return (train, val) rows with similarity >= min_similarity.
 
     Why filter: a pair that is only loosely aligned teaches the model to say
@@ -33,17 +33,18 @@ def load_pairs(path: Path, min_similarity: float) -> tuple[list[dict], list[dict
     forbids. Rows from any other split (test) are skipped on purpose.
     """
     train, val = [], []
-    with open(path, encoding="utf-8") as f:
-        for line in f:
-            if not line.strip():
-                continue
-            row = json.loads(line)
-            if row["similarity"] < min_similarity:
-                continue
-            if row["split"] == TRAIN_SPLIT:
-                train.append(row)
-            elif row["split"] == VAL_SPLIT:
-                val.append(row)
+    for one in (path if isinstance(path, (list, tuple)) else [path]):  # several files = one combined pool
+        with open(one, encoding="utf-8") as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                if row["similarity"] < min_similarity:
+                    continue
+                if row["split"] == TRAIN_SPLIT:
+                    train.append(row)
+                elif row["split"] == VAL_SPLIT:
+                    val.append(row)
     return train, val
 
 
@@ -144,8 +145,8 @@ def train(args: argparse.Namespace) -> Path:
         sys.exit("No train/val pairs left after filtering; lower --min-similarity.")
 
     device, use_bf16 = pick_device(args.cpu)
-    tokenizer = AutoTokenizer.from_pretrained(config.BASE_MODEL_NAME)
-    model = T5ForConditionalGeneration.from_pretrained(config.BASE_MODEL_NAME).to(device)
+    tokenizer = AutoTokenizer.from_pretrained(args.model)
+    model = T5ForConditionalGeneration.from_pretrained(args.model).to(device)
     collate = make_collate(tokenizer)
     gen = torch.Generator().manual_seed(config.RANDOM_SEED)
     train_dl = DataLoader(train_rows, batch_size=args.batch_size, shuffle=True, collate_fn=collate, generator=gen)
@@ -164,9 +165,9 @@ def train(args: argparse.Namespace) -> Path:
     scheduler = get_linear_schedule_with_warmup(optimizer, int(config.TRAIN_WARMUP_RATIO * total_steps), total_steps)
     print(f"Optimizer steps: {total_steps} ({steps_per_epoch}/epoch, batch {args.batch_size} x accum {accum})")
 
-    meta = {"base_model": config.BASE_MODEL_NAME, "min_similarity": args.min_similarity,
+    meta = {"base_model": args.model, "min_similarity": args.min_similarity,
             "git_commit": git_commit(), "train_pairs": len(train_rows), "val_pairs": len(val_rows),
-            "learning_rate": args.lr, "pairs_path": str(args.pairs), "batch_size": args.batch_size,
+            "learning_rate": args.lr, "pairs_path": [str(p) for p in args.pairs], "batch_size": args.batch_size,
             "grad_accum": accum, "epochs_max": args.epochs, "seed": config.RANDOM_SEED,
             "task_prefix": config.TASK_PREFIX, "bf16": use_bf16, "max_steps": args.max_steps}
     out: Path = args.out
@@ -221,7 +222,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Fine-tune flan-t5-base on PDQ pairs.")
     p.add_argument("--min-similarity", type=float, default=config.TRAIN_MIN_SIMILARITY)
     p.add_argument("--lr", type=float, default=config.TRAIN_LEARNING_RATE)
-    p.add_argument("--pairs", type=Path, default=config.PDQ_PAIRS_PATH, help="pairs JSONL (default: paragraph pairs)")
+    p.add_argument("--pairs", type=Path, nargs="+", default=[config.PDQ_PAIRS_PATH],
+                   help="one or more pairs JSONL files, pooled (default: paragraph pairs)")
+    p.add_argument("--model", default=config.BASE_MODEL_NAME, help="T5-family base model (recorded in metadata)")
     p.add_argument("--epochs", type=int, default=config.TRAIN_EPOCHS)
     p.add_argument("--batch-size", type=int, default=config.TRAIN_BATCH_SIZE)
     p.add_argument("--out", type=Path, default=config.CHECKPOINT_DIR / config.TRAIN_CHECKPOINT_NAME)

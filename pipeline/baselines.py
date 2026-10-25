@@ -273,6 +273,40 @@ def _run_model(model_dir: str, prompts_by_key: dict[str, list[str]], cpu: bool) 
     return {k: generate(model, tok, p, device, bf16) for k, p in prompts_by_key.items()}
 
 
+def is_causal(ckpt: Path) -> bool:
+    """True for LoRA/chat checkpoints (train_lora.py writes model_type=causal into train_metadata.json)."""
+    meta = Path(ckpt) / "train_metadata.json"
+    return meta.exists() and json.loads(meta.read_text(encoding="utf-8")).get("model_type") == "causal"
+
+
+def _run_causal(model_dir: str, sources_by_key: dict[str, list[str]], cpu: bool) -> dict[str, list[str]]:
+    """Generate with a decoder-only chat model: chat prompt in, new tokens out (same beams / n-gram rule as T5)."""
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    from pipeline.train import pick_device
+    from pipeline.train_lora import chat_prompt
+
+    device, bf16 = pick_device(cpu)
+    tok = AutoTokenizer.from_pretrained(model_dir, padding_side="left")
+    model = AutoModelForCausalLM.from_pretrained(model_dir, dtype=torch.bfloat16 if bf16 else torch.float32).to(device).eval()
+    result = {}
+    for key, sources in sources_by_key.items():
+        prompts = [chat_prompt(tok, s) for s in sources]
+        order = sorted(range(len(prompts)), key=lambda i: len(prompts[i]))
+        outs = [""] * len(prompts)
+        for k in range(0, len(order), 8):
+            idx = order[k:k + 8]
+            enc = tok([prompts[i] for i in idx], return_tensors="pt", padding=True).to(device)
+            with torch.no_grad():
+                ids = model.generate(**enc, num_beams=config.NUM_BEAMS, no_repeat_ngram_size=config.NO_REPEAT_NGRAM_SIZE,
+                                     max_new_tokens=config.MAX_OUTPUT_TOKENS, do_sample=False)
+            for i, t in zip(idx, tok.batch_decode(ids[:, enc["input_ids"].shape[1]:], skip_special_tokens=True)):
+                outs[i] = t.strip()
+        result[key] = outs
+    return result
+
+
 def _store_predictions(system: str, split: str, rows: list[dict], outputs: list[str], shots: list[int] | None = None) -> None:
     path = config.RESULTS_DIR / f"raw_predictions_{system}.jsonl"
     config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -325,15 +359,19 @@ def cmd_generate(args: argparse.Namespace) -> None:
         if not use(ckpt.name):
             continue
         print(f"== {ckpt.name}", flush=True)
-        keyed = {s: [config.TASK_PREFIX + r["source"] for r in rows] for s, rows in data.items()}
-        for s, o in _run_model(str(ckpt), keyed, args.cpu).items():
+        if is_causal(ckpt):
+            res = _run_causal(str(ckpt), {s: [r["source"] for r in rows] for s, rows in data.items()}, args.cpu)
+        else:
+            keyed = {s: [config.TASK_PREFIX + r["source"] for r in rows] for s, rows in data.items()}
+            res = _run_model(str(ckpt), keyed, args.cpu)
+        for s, o in res.items():
             _store_predictions(ckpt.name, s, data[s], o)
 
 
 # --- scoring ------------------------------------------------------------------------------
 COLUMNS = ["system", "split", "n", "rouge1_p", "rouge1_r", "rouge1_f", "rouge2_p", "rouge2_r", "rouge2_f",
            "rougeL_p", "rougeL_r", "rougeL_f", "token_p", "token_r", "token_f", "keyterm_p", "keyterm_r", "keyterm_f",
-           "keyterm_zero_halluc_pct", "support_precision", "fully_supported_pct", "boilerplate_pct",
+           "keyterm_zero_halluc_pct", "support_precision", "fully_supported_pct", "boilerplate_pct", "guard_pass_pct",
            "fk_out", "fk_src", "fk_target", "avg_out_words"]
 
 
@@ -364,6 +402,10 @@ def score_system(rows: list[dict], encode=None) -> tuple[dict, dict]:
         m["support_precision"] = (total - bad) / total if total else 1.0
         m["fully_supported_pct"] = 100 * sum(r[0] for r in res) / n
         unsupported = [r[1] for r in res]
+        # what actually reaches patients: no sentence flagged by support / boilerplate / risk / definition / direction
+        m["guard_pass_pct"] = 100 * sum(
+            not (set(bad) | set(support.boilerplate_sentences(s, o)) | set(support.direction_flipped_sentences(s, o)))
+            for (s, o), (_, bad, _n) in zip(zip(srcs, outs), res)) / n
     except ImportError:
         print("sentence-transformers missing: support metrics skipped (run score in .venv)", file=sys.stderr)
     return m, {"hallucinated": kt["hallucinated"], "unsupported": unsupported}

@@ -1,5 +1,6 @@
 """Tests for backend/summarize.py. No model is ever downloaded: generation is faked."""
 import json
+import zlib
 import re
 import sqlite3
 from pathlib import Path
@@ -11,8 +12,6 @@ from backend.readability import fk_grade, reading_grade
 
 FIX = Path(__file__).parent / "fixtures" / "eligibility_samples.json"
 SAMPLES = {s["nct_id"]: s for s in json.loads(FIX.read_text(encoding="utf-8"))}
-HUMAN = pytest.mark.xfail(raises=NotImplementedError, strict=True,
-                          reason="HUMAN-WRITTEN: faithfulness_check")
 
 
 # ----------------------------------------------------------------- split_eligibility
@@ -190,7 +189,7 @@ def _fake_encode(texts):
     out = np.zeros((len(texts), 256), dtype="float32")
     for r, t in enumerate(texts):
         for w in re.findall(r"[a-z0-9]+", t.lower()):
-            out[r, hash(w) % 256] += 1
+            out[r, zlib.crc32(w.encode()) % 256] += 1
     return out / np.maximum(np.linalg.norm(out, axis=1, keepdims=True), 1e-9)
 
 
@@ -268,8 +267,13 @@ def test_faithful_true_only_when_nothing_fell_back(fake_model, monkeypatch):
     assert s["faithful"] is True and s["fallback_used"] is False
 
 
-def test_summarize_trial_unimplemented_check_is_conservative(fake_model, caplog):
-    # no monkeypatch: the real HUMAN-WRITTEN stub raises NotImplementedError -> treated as FAILED
+def _unimplemented(source, output):
+    raise NotImplementedError("faithfulness_check")
+
+
+def test_summarize_trial_unimplemented_check_is_conservative(fake_model, caplog, monkeypatch):
+    # a missing/unfinished check must mean "reject", never "accept"
+    monkeypatch.setattr(summarize, "faithfulness_check", _unimplemented)
     s = summarize.summarize_trial(TRIAL)
     assert s["fallback_used"] is True
     assert "PLAIN" not in json.dumps(s)
@@ -313,7 +317,7 @@ def test_save_summary_roundtrips_through_get_summary(fake_model, monkeypatch):
     assert got == s
 
 
-# ------------------------------------------- faithfulness_check (HUMAN-WRITTEN) tests
+# ------------------------------------------- faithfulness_check tests
 # These document the rule for the teammate who writes it (CLAUDE.md rule 3).
 # They are xfail(strict) so they flip to FAIL-until-fixed once the function exists:
 # remove the marker as each behavior starts passing.
@@ -321,76 +325,63 @@ def fc(source, output):
     return summarize.faithfulness_check(source, output)
 
 
-@HUMAN
 def test_fc_identical_text_passes():
     assert fc("Age 18 years or older.", "Age 18 years or older.") == (True, [])
 
 
-@HUMAN
 def test_fc_words_without_protected_terms_may_change_freely():
     assert fc("Patients must have adequate organ function.", "You need healthy organs.")[0] is True
 
 
-@HUMAN
 def test_fc_integer_in_source_ok():
     assert fc("ANC >= 1500 per microliter", "Your ANC must be at least 1500.")[0] is True
 
 
-@HUMAN
 def test_fc_invented_number_fails_and_is_reported():
     ok, missing = fc("Age 18 or older", "You must be 21 or older")
     assert ok is False and any("21" in m for m in missing)
 
 
-@HUMAN
 def test_fc_decimals():
     assert fc("hemoglobin >= 9.5 g/dL", "hemoglobin of at least 9.5 g/dL")[0] is True
     assert fc("hemoglobin >= 9.5 g/dL", "hemoglobin of at least 9 g/dL")[0] is False   # 9 is not 9.5
 
 
-@HUMAN
 def test_fc_percentages():
     assert fc("LVEF >=50%", "heart pumping (LVEF) of 50% or more")[0] is True
     assert fc("LVEF >=50%", "heart pumping (LVEF) of 55% or more")[0] is False
 
 
-@HUMAN
 def test_fc_ranges():
     assert fc("Age 18-75 years", "between 18 and 75 years old")[0] is True
     assert fc("Age 18-75 years", "between 18-80 years old")[0] is False
 
 
-@HUMAN
 def test_fc_ages_with_units():
     assert fc("18 years or older", "at least 18 years old")[0] is True
     assert fc("18 years or older", "at least 18 months old")[0] is False   # wrong unit
 
 
-@HUMAN
 def test_fc_durations():
     assert fc("no chemotherapy within 6 months", "no chemo in the last 6 months")[0] is True
     assert fc("no chemotherapy within 6 months", "no chemo in the last 6 weeks")[0] is False
 
 
-@HUMAN
 def test_fc_dose_units():
     assert fc("dose 75 mg/m2 every 3 weeks", "75 mg/m2 every 3 weeks")[0] is True
     assert fc("dose 75 mg/m2 every 3 weeks", "75 mg/kg every 3 weeks")[0] is False
     assert fc("creatinine clearance <60 mL/min", "kidney function under 60 mL/min")[0] is True
 
 
-@HUMAN
 def test_fc_drug_names_in_source_ok_case_insensitive():
     assert fc("Prior Pembrolizumab allowed", "You may have had pembrolizumab before")[0] is True
 
 
-@HUMAN
 def test_fc_invented_drug_fails():
     ok, missing = fc("Treatment with trastuzumab", "Treatment with trastuzumab and pembrolizumab")
     assert ok is False and any("pembrolizumab" in m.lower() for m in missing)
 
 
-@HUMAN
 def test_fc_markers():
     assert fc("HER2-positive breast cancer", "breast cancer with too much HER2 protein")[0] is True
     assert fc("HER2-positive breast cancer", "breast cancer with EGFR changes")[0] is False
@@ -403,7 +394,6 @@ def test_fc_markers():
     assert fc("KRAS G12C mutation", "a KRAS G12D change")[0] is False
 
 
-@HUMAN
 def test_fc_stage_roman_arabic_equivalence():
     assert fc("stage III disease", "stage 3 disease")[0] is True
     assert fc("stage 3 disease", "stage III disease")[0] is True
@@ -411,54 +401,45 @@ def test_fc_stage_roman_arabic_equivalence():
     assert fc("stage III disease", "stage 2 disease")[0] is False
 
 
-@HUMAN
 def test_fc_stage_letter_suffix_must_match():
     assert fc("stage IIIB or IIIC", "stage 3B or 3C")[0] is True
     assert fc("stage IIIB", "stage IIIC")[0] is False
     assert fc("stage III", "stage IIIB")[0] is False        # model made it more specific
 
 
-@HUMAN
 def test_fc_case_insensitive():
     assert fc("HER2 NEGATIVE, AGE 18 YEARS", "her2 negative, age 18 years")[0] is True
 
 
-@HUMAN
 def test_fc_numbers_are_whole_tokens():
     assert fc("ANC 1500", "ANC 150")[0] is False            # not a substring match
     assert fc("ANC 150", "ANC 1500")[0] is False
 
 
-@HUMAN
 def test_fc_number_words_in_output_not_required_but_digits_checked():
     assert fc("ECOG 0-1", "ECOG score of 0 or 1")[0] is True
 
 
-@HUMAN
 def test_fc_empty_output_is_not_faithful():
     assert fc("Age 18 or older", "")[0] is False
     assert fc("Age 18 or older", "   ")[0] is False
 
 
-@HUMAN
 def test_fc_empty_source_with_no_terms_in_output():
     assert fc("", "You can join.")[0] is True
 
 
-@HUMAN
 def test_fc_returns_missing_list_empty_when_ok():
     ok, missing = fc("take 5 mg", "take 5 mg")
     assert ok is True and missing == []
 
 
-@HUMAN
 def test_fc_reports_every_missing_term():
     ok, missing = fc("Age 18", "Age 21, taking 5 mg of pembrolizumab")
     assert ok is False and len(missing) >= 3
 
 
 # direction / negation flips: every number and drug is present, yet the rule is reversed.
-@HUMAN
 @pytest.mark.parametrize("source,output", [
     ("Age at least 18 years", "Age under 18 years"),
     ("Patients must be 18 years or older", "You must be younger than 18 years"),
@@ -472,7 +453,6 @@ def test_fc_rejects_flipped_direction_or_negation(source, output):
     assert ok is False
 
 
-@HUMAN
 @pytest.mark.parametrize("source,output", [
     ("Patients must be 18 years or older", "You must be at least 18 years old"),
     ("No prior chemo", "You have not had chemotherapy before"),
@@ -539,7 +519,8 @@ def test_faithfulness_stub_still_forces_fallback_even_if_supported(monkeypatch):
     monkeypatch.setattr(summarize, "_token_counter", lambda: summarize._word_count_tokens)
     monkeypatch.setattr(summarize, "_generate_batch", lambda ps: ["You must have breast cancer." for _ in ps])
     monkeypatch.setattr(summarize, "_encode", _fake_encode)
-    (out,), fb = summarize._rewrite_pieces([SRC], "NCT9")   # real stub raises NotImplementedError
+    monkeypatch.setattr(summarize, "faithfulness_check", _unimplemented)
+    (out,), fb = summarize._rewrite_pieces([SRC], "NCT9")
     assert fb is True and out.startswith("Patients must have breast cancer. Patients must not")
 
 

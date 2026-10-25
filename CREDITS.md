@@ -42,6 +42,8 @@ These are not listed in `requirements.txt` but are installed as dependencies of 
 | NCI Dictionary of Cancer Terms / NCI Thesaurus | current online edition | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/dictionaries | Clinical and lay wording used in `data/cancer_types.json` |
 | NCI Dictionary of Cancer Terms (cancer.gov) | Online edition, paraphrased 2026-10-24 | Public domain (U.S. government work); credit: National Cancer Institute | https://www.cancer.gov/publications/dictionaries | Plain-language definitions paraphrased (by an AI agent) into `data/glossary.json` (76 terms), shown to patients as a fallback |
 | U.S. Census Bureau Gazetteer ZCTA file | 2024 release (`2024_Gaz_zcta_national.zip`) | Public domain (U.S. government work) | https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_Gaz_zcta_national.zip | ZIP code centroid coordinates for distance calculation (`data/zip_centroids.csv`, built by `pipeline/zip_centroids.py`) |
+| ClinicalTrials.gov detailed-description to brief-summary pairs | Fetched offline, 2026-10-24 | Public domain (U.S. government work, NLM) | https://clinicaltrials.gov/data-api/api | Training data only: brief-summary sentences aligned to detailed-description sentences (`pipeline/ctgov_pairs.py`, output `data/ctgov_pairs*.jsonl`); trials in the trial evaluation set are excluded |
+| data/drug_lexicon.txt | Written 2026-10-24 (85 lines) | Public domain (generic drug names; the file header says generic names are not copyrightable) | Not applicable (no third-party list copied) | List of generic drug names used by the faithfulness check (`backend/summarize.py`) for drugs its suffix rules miss; compiled by an AI agent for this project |
 
 ### Data licensing and attribution
 
@@ -57,10 +59,12 @@ These are not listed in `requirements.txt` but are installed as dependencies of 
 |---|---|---|---|---|
 | google/flan-t5-base | Hugging Face hub, base checkpoint | Apache-2.0 | https://huggingface.co/google/flan-t5-base | Base model that we fine-tune to rewrite trial text in plain language |
 | sentence-transformers/all-MiniLM-L6-v2 | Hugging Face hub | Apache-2.0 | https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2 | Sentence embeddings for semantic search and PDQ paragraph alignment |
+| google/flan-t5-large | Hugging Face hub, large checkpoint | Apache-2.0 | https://huggingface.co/google/flan-t5-large | Evaluated, not shipped: compared with flan-t5-base in `docs/EVAL.md` |
+| Qwen/Qwen2.5-1.5B-Instruct | Hugging Face hub | Apache-2.0 | https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct | Evaluated, not shipped: LoRA fine-tuned with `pipeline/train_lora.py` and compared in `docs/EVAL.md` |
 
 ## Training environment (.venv-train)
 
-A separate virtual environment used only for fine-tuning flan-t5-base on the GPU (`pipeline/train.py`). Kept apart from `.venv` so the CUDA build of torch does not replace the CPU build the server uses. Versions and licenses were read with `.venv-train/Scripts/python -m pip show` and `importlib.metadata`.
+A separate virtual environment used only for fine-tuning on the GPU: flan-t5-base (`pipeline/train.py`) and Qwen2.5-1.5B-Instruct with LoRA (`pipeline/train_lora.py`). Kept apart from `.venv` so the CUDA build of torch does not replace the CPU build the server uses. Versions and licenses were read with `.venv-train/Scripts/python -m pip show` and `importlib.metadata`.
 
 | Name | Version | License | URL | What we use it for |
 |---|---|---|---|---|
@@ -70,6 +74,10 @@ A separate virtual environment used only for fine-tuning flan-t5-base on the GPU
 | sentencepiece | 0.2.2 | Apache-2.0 | https://pypi.org/project/sentencepiece/ | T5 tokenizer |
 | tokenizers | 0.23.3 | Apache-2.0 (pip classifier: Apache Software License) | https://pypi.org/project/tokenizers/ | Fast tokenizer backend used by transformers |
 | safetensors | 0.8.0 | Apache-2.0 (pip classifier: Apache Software License) | https://pypi.org/project/safetensors/ | Saving and loading model checkpoints |
+| peft | 0.21.2 | Apache-2.0 (pip classifier: Apache Software License) | https://pypi.org/project/peft/ | LoRA adapters for the Qwen2.5-1.5B runs (`pipeline/train_lora.py`); training only |
+| trl | 1.16.0 | Apache-2.0 | https://pypi.org/project/trl/ | Supervised fine-tuning trainer with completion-only loss for the Qwen2.5 LoRA runs; training only |
+
+Attribution: LoRA hyperparameters for run J2 (r=64, alpha=16, lr 2e-4, completion-only loss) adapted from a team member's friend's fine-tuning script; no code copied. Our `pipeline/train_lora.py` code was written fresh. `peft` and `trl` are used only in `.venv-train` and are not imported by the app or the tests.
 
 ## Full installed dependency list (auto-generated 2026-10-24)
 
