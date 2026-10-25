@@ -1,0 +1,31 @@
+{
+  "trials_used": 16493,
+  "candidates": 115295,
+  "dropped_low_similarity": 63739,
+  "dropped_fk_drop": 21422,
+  "dropped_near_identical": 8035,
+  "dropped_length_bounds": 406,
+  "dropped_new_key_term": 3164,
+  "dropped_length_ratio": 5925,
+  "trial_without_usable_text": 787,
+  "dropped_boilerplate": 306,
+  "excluded_eval_nct": 25,
+  "kept_before_dedupe": 12298,
+  "dedupe": {
+    "exact_pair": 23,
+    "duplicate_target": 8,
+    "duplicate_source": 618,
+    "sentence_inside_paragraph_pair": 3731,
+    "near_duplicate_in_train": 45,
+    "total": 4425
+  },
+  "final": 7873,
+  "per_split": {
+    "train": 7143,
+    "val": 730
+  },
+  "distinct_trials": 5307,
+  "sim_threshold": 0.7,
+  "min_fk_drop": 2.0,
+  "trials_considered": 17305
+}
