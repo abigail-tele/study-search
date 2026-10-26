@@ -24,6 +24,7 @@ const $ = id => document.getElementById(id);
 let cancerTypes = [];
 let lastFocus = null;
 let lastCancer = "";
+let selectedCancer = "";
 
 /* Only ever link to a real ClinicalTrials.gov study page; rebuild from a validated NCT id, never trust data URLs. */
 function safeStudyUrl(url, nct) {
@@ -194,7 +195,7 @@ function copyButton(text) {
 
 function chipButton(t, fromOffTopic) {
   const b = el("button", { type: "button", class: "chip", text: t.label, "data-id": t.id, "aria-pressed": "false" });
-  b.addEventListener("click", () => { if (fromOffTopic) $("q").value = t.label; runSearch(t.id); });
+  b.addEventListener("click", () => { if (fromOffTopic) $("q").value = t.label; else $("q").value = ""; selectedCancer = t.id; runSearch(t.id); });
   return b;
 }
 
@@ -341,7 +342,10 @@ function backToResults() {
 
 /* ---------- init ---------- */
 async function init() {
-  $("search-form").addEventListener("submit", ev => { ev.preventDefault(); runSearch(""); });
+  $("search-form").addEventListener("submit", ev => { ev.preventDefault();
+    const c = $("q").value.trim() ? "" : selectedCancer;
+    if ($("q").value.trim()) selectedCancer = "";
+    runSearch(c); });
   $("sort").addEventListener("change", () => runSearch(lastCancer));
   $("back").addEventListener("click", backToResults);
   try {
