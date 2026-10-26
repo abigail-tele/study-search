@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import re
 from functools import lru_cache
+from typing import Any
 
 import numpy as np
 from rapidfuzz import fuzz
@@ -30,6 +31,7 @@ def load_umbrella_terms() -> dict[str, list[str]]:
 def cancer_type_chips() -> list[dict]:
     """[{id, label}] for the clickable chips shown on the landing/off-topic page."""
     return [{"id": t["id"], "label": t["label"]} for t in load_cancer_types()]
+
 
 
 # ---------------------------------------------------------------- detection helpers
@@ -151,26 +153,70 @@ def _type_embeddings() -> tuple[np.ndarray, list[str]]:
 
 
 def _embedding_match(norm_q: str) -> list[str]:
-    """Step 4: meaning-based fallback ("tummy cancer"). Best type(s) whose closest term is similar enough."""
+    """Step 4: meaning-based fallback ("tummy cancer"). Best type(s) whose closest term is similar enough.
+
+    Uses cancer_type_term_matrix() (PR semantic fallback) with threshold, margin and cap from config.
+    """
     from backend.embedding import get_encoder
-    if not re.search(config.TYPE_DETECT_CUE_REGEX, norm_q):
-        return []                 # no cancer cue: a symptom or another disease, not a cancer search
     try:
-        vecs, owners = _type_embeddings()
+        terms, owners, matrix = cancer_type_term_matrix()
         q = get_encoder()([norm_q])[0]
     except RuntimeError:          # model folder missing: behave as "no match" rather than crash
         return []
-    sims = vecs @ q               # vectors are normalized, so dot product == cosine
+    if not terms:
+        return []
+    sims = matrix @ q               # vectors are normalized, so dot product == cosine
     best: dict[str, float] = {}
     for sim, tid in zip(sims, owners):
         best[tid] = max(best.get(tid, -1.0), float(sim))
+    if not best:
+        return []
     top = max(best.values())
     if top < config.TYPE_DETECT_EMBED_THRESHOLD:
         return []
-    return [tid for tid, sc in best.items() if sc >= top - _EMBED_TIE_MARGIN]
+    margin = getattr(config, "TYPE_DETECT_EMBED_MARGIN", 0.05)
+    cap = getattr(config, "TYPE_DETECT_EMBED_MAX_TYPES", 3)
+    chosen = [tid for tid, sc in best.items() if sc >= top - margin]
+    chosen.sort(key=lambda tid: (-best[tid],))
+    chosen = chosen[:cap]
+    chosen_set = set(chosen)
+    return [t["id"] for t in load_cancer_types() if t["id"] in chosen_set]
 
 
 # AI-written (Claude Code, 2026-10-24) at the team's request - team must review
+
+
+@lru_cache(maxsize=1)
+def cancer_type_term_matrix() -> tuple[list[str], list[str], Any]:
+    """(terms, matching type ids, normalized MiniLM vectors) for the semantic fallback.
+
+    Why cache: the human-written detector only needs this after exact, umbrella
+    and fuzzy matching fail, but embedding every label/lay/clinical term on each
+    such query would be slow. We embed them once and reuse the matrix; the
+    detector scores the query against it and applies the config threshold,
+    margin and cap. The matrix has one row per term, so `matrix @ query_vector`
+    gives one cosine score per term. Terms are de-duplicated within each type,
+    and each term keeps the id of the type it belongs to, so one term can still
+    map to several types.
+    """
+    from backend.embedding import get_encoder
+
+    terms: list[str] = []
+    type_ids: list[str] = []
+    for ctype in load_cancer_types():
+        raw = [ctype.get("label", ""), *ctype.get("lay_terms", []),
+               *ctype.get("clinical_terms", [])]
+        for term in dict.fromkeys(t.strip() for t in raw if t and t.strip()):
+            terms.append(term)
+            type_ids.append(ctype["id"])
+    if not terms:
+        import numpy as np
+        return [], [], np.zeros((0, 0), dtype="float32")
+    return terms, type_ids, get_encoder()(terms)
+
+
+
+
 def detect_cancer_types(query: str) -> list[str]:
     """Return the cancer type ids a plain-words query refers to; [] if off-topic.
 
