@@ -107,6 +107,8 @@ TYPE_DETECT_CUE_REGEX = (
     r"metasta|oncolog|chemo|radiation|lump|growth|stage \d|\bstage (?:i|ii|iii|iv)\b|"
     r"\b(?:egfr|her2|kras|braf|alk|brca\d?|psa|nsclc|sclc)\b"
 )
+TYPE_DETECT_EMBED_MARGIN = 0.05       # keep runners-up within this of the best semantic score
+TYPE_DETECT_EMBED_MAX_TYPES = 3       # cap semantic fallback so search never widens too far
 
 # --- PDQ training data -----------------------------------------------------
 PDQ_ALIGN_SIM_THRESHOLD = 0.60  # min cosine similarity to keep a paragraph pair
