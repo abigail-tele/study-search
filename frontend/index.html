@@ -3,20 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cancer Trials Plain-Language Finder</title>
+<title>StudySearch - Cancer Trials Plain-Language Finder</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
 <header class="site-header">
-  <h1>Cancer Trials Plain-Language Finder</h1>
-  <p class="tagline">Search cancer clinical trials in plain words. For education, not medical advice.</p>
+  <div class="nav">
+    <div class="brand"><span class="logo" aria-hidden="true">+</span><span>StudySearch <small>Cancer Trials Plain-Language Finder</small></span></div>
+    <a class="nav-link no-print" href="https://clinicaltrials.gov/" target="_blank" rel="noopener">Official trial database <span aria-hidden="true">↗</span><span class="sr-only">(opens new tab)</span></a>
+  </div>
 </header>
 
 <main id="main" tabindex="-1">
   <div id="status" class="sr-status" role="status" aria-live="polite"></div>
 
   <section id="search-view" aria-labelledby="search-h">
+    <div class="hero no-print">
+      <div>
+        <span class="eyebrow">Built for patients and families</span>
+        <h1>Cancer clinical trials, made easier to understand.</h1>
+        <p class="tagline">Search cancer trials in plain words, check the details on ClinicalTrials.gov, and turn complicated study language into clearer questions for your care team. For education, not medical advice.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <span class="art-note note1">Plain-language summaries</span>
+        <div class="orb">⌕</div>
+        <span class="art-note note2">Sources you can verify ✓</span>
+      </div>
+    </div>
+
+    <div class="search-panel">
     <h2 id="search-h">Find a cancer trial</h2>
     <form id="search-form" novalidate>
       <div class="field">
@@ -84,8 +100,17 @@
       <button type="submit" class="btn primary">Search trials</button>
     </form>
     <p class="disclaimer">For education, not medical advice.</p>
+    <details class="howto">
+      <summary>How to use this tool</summary>
+      <ul>
+        <li>Search by a cancer type in your own words, or pick a type.</li>
+        <li>Open a study's official ClinicalTrials.gov page to check the details.</li>
+        <li>Use the summary to prepare questions for your care team, not to make treatment decisions.</li>
+      </ul>
+    </details>
+    </div>
 
-    <div id="results-area" hidden>
+    <div id="results-area" class="results-panel" hidden>
       <h2 id="results-h" tabindex="-1">Results</h2>
       <div id="sort-field" class="field sort-field" hidden>
         <label for="sort">Sort</label>

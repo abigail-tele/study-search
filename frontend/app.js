@@ -127,7 +127,7 @@ function renderResults(data) {
     (data.suggested_types || []).forEach(t => box.appendChild(chipButton(t, true)));
     say("We only cover cancer trials. Pick a cancer type to continue.");
   } else if (!data.results.length) {
-    list.appendChild(el("li", { text: "No trials matched. Try a wider distance or the status \"Any\"." }));
+    list.appendChild(el("li", { class: "empty", text: "No trials matched. Try a wider distance or the status \"Any\"." }));
     say("No results found.");
   } else {
     data.results.forEach(r => list.appendChild(card(r)));
