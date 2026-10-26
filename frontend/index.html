@@ -10,7 +10,7 @@
 <a class="skip" href="#main">Skip to main content</a>
 <header class="site-header">
   <h1>Cancer Trials Plain-Language Finder</h1>
-  <p class="tagline">Search cancer clinical trials in plain words. For education, not medical advice.</p>
+  <p class="tagline">Find cancer clinical trials.</p>
 </header>
 
 <main id="main" tabindex="-1">
@@ -58,7 +58,7 @@
         <summary>About you (optional)</summary>
         <fieldset>
           <legend class="sr-only">About you (optional)</legend>
-          <p class="help" id="about-help">Add your details to see how each trial lines up with them. <strong>Not saved. Only used for this search.</strong> The study team always decides who can join.</p>
+          <p class="help" id="about-help">Add your details to see which trials fit. Nothing is saved. The study team decides who can join.</p>
           <div class="about-grid">
             <div class="field">
               <label for="age">Age (years)</label>
@@ -76,14 +76,14 @@
           <div class="field">
             <label for="conditions">Conditions and history</label>
             <textarea id="conditions" rows="3" maxlength="600" aria-describedby="conditions-help"></textarea>
-            <span id="conditions-help" class="help">For example: HER2 positive, stage 3, had chemotherapy, diabetes, pregnant. Separate with commas. Not saved. Only used for this search.</span>
+            <span id="conditions-help" class="help">For example: HER2 positive, stage 3, had chemotherapy, diabetes, pregnant. Separate with commas. Nothing is saved.</span>
           </div>
         </fieldset>
       </details>
 
       <button type="submit" class="btn primary">Search trials</button>
     </form>
-    <p class="disclaimer">For education, not medical advice.</p>
+    <p class="disclaimer">Not medical advice.</p>
 
     <div id="results-area" hidden>
       <h2 id="results-h" tabindex="-1">Results</h2>
@@ -109,7 +109,7 @@
 </main>
 
 <footer class="site-footer no-print">
-  <p>Trial data comes from ClinicalTrials.gov. Glossary definitions are adapted from the NCI Dictionary of Cancer Terms. Plain-language text is machine-made and may contain mistakes; always check the original and talk with your care team. This project is not affiliated with or endorsed by NCI, NIH, or NLM.</p>
+  <p>Data: ClinicalTrials.gov. Glossary: NCI. Summaries may be wrong. Read the original. Not affiliated with NCI, NIH, or NLM.</p>
 </footer>
 
 <script src="api.js"></script>
