@@ -7,14 +7,10 @@ Full plan: `docs/PLAN.md`. Last updated 2026-10-24 (after Gate 1).
 Both branches start from commit `6f65350`, before `detect_cancer_types` was implemented on `main`. A trial merge
 (cancelled, nothing changed on their branches) showed everything merges except the taxonomy tests. To do, **by the
 teammate in their own files**:
-- [ ] `tests/test_taxonomy.py`: remove the `@HUMAN` (strict xfail) markers on the 8 new semantic-fallback tests: the
-      function is implemented now, so strict xfail turns them into failures (the file header already says to remove
-      them once implemented). `main` also no longer defines `HUMAN`, so the merged file won't load until this is done.
-- [ ] `tests/fixtures/tiny_taxonomy.py`: inside `install()`, add
-      `monkeypatch.setattr(taxonomy.config, "TYPE_DETECT_CUE_REGEX", r"")`. The real detector only runs the semantic
-      step when the query has a cancer word ("stomach ache" guard); the hand-set test phrases ("close pair",
-      "clear winner", "four types") have none, so 3 tests fail without this line.
-- [ ] Then merge both branches into `main`. Conflicts to resolve, all keep-both: `AI_USE.md` (rows),
+- [x] `tests/test_taxonomy.py`: removed the `HUMAN` definition (unused markers already gone).
+- [x] `tests/fixtures/tiny_taxonomy.py`: added `monkeypatch.setattr(taxonomy.config, "TYPE_DETECT_CUE_REGEX", r"")`.
+- [x] Implemented the cancer-word guard in `backend/taxonomy.py::_embedding_match` (uses TYPE_DETECT_CUE_REGEX).
+- [x] Merged `abigail/vector-search` and `abigail/attributions` into `main` (already on main).
       `backend/config.py` (keep `TYPE_DETECT_EMBED_MARGIN`/`_MAX_TYPES` **and** `TYPE_DETECT_CUE_REGEX`),
       `docs/EVAL.md`, `docs/HOW_IT_WORKS.md` (taxonomy paragraph), `backend/taxonomy.py` (keep
       `cancer_type_term_matrix()` and make `_embedding_match` use it with the margin and cap; the trial merge did

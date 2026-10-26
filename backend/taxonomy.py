@@ -156,7 +156,12 @@ def _embedding_match(norm_q: str) -> list[str]:
     """Step 4: meaning-based fallback ("tummy cancer"). Best type(s) whose closest term is similar enough.
 
     Uses cancer_type_term_matrix() (PR semantic fallback) with threshold, margin and cap from config.
+    The semantic step only runs when the query contains a cancer cue word, so a
+    symptom like "stomach ache" is not mistaken for stomach cancer (rule 1).
     """
+    cue = getattr(config, "TYPE_DETECT_CUE_REGEX", "")
+    if cue and not re.search(cue, norm_q, re.IGNORECASE):
+        return []
     from backend.embedding import get_encoder
     try:
         terms, owners, matrix = cancer_type_term_matrix()

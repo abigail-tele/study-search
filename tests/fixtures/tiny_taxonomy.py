@@ -68,3 +68,4 @@ def install(monkeypatch) -> None:
     monkeypatch.setattr(embedding, "get_encoder", lambda: fake_encode)
     # The human implementation may import get_encoder into taxonomy directly.
     monkeypatch.setattr(taxonomy, "get_encoder", lambda: fake_encode, raising=False)
+    monkeypatch.setattr(taxonomy.config, "TYPE_DETECT_CUE_REGEX", r"")

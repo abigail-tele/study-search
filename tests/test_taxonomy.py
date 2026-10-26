@@ -3,8 +3,6 @@ import pytest
 
 from backend import taxonomy
 
-HUMAN = pytest.mark.xfail(raises=NotImplementedError, strict=True,
-                          reason="HUMAN-WRITTEN: detect_cancer_types")
 from tests.fixtures import tiny_taxonomy
 
 
